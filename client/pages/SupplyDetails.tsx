@@ -91,7 +91,7 @@ export default function SupplyDetails() {
             <div className="px-4 py-3">
               <div className="bg-[#F7FCFA] border border-[#CCE8DE] rounded-xl overflow-hidden">
                 {/* Table Header */}
-                <div className="grid grid-cols-6 gap-4 p-4 bg-[#F7FCFA]">
+                <div className="hidden sm:grid grid-cols-6 gap-4 p-4 bg-[#F7FCFA]">
                   <span className="text-[#0D1C17] text-sm font-medium font-['Lexend'] leading-[21px]">
                     Supply Name
                   </span>
