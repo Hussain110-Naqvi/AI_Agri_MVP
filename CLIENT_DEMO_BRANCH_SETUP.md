@@ -116,7 +116,7 @@ git push origin client-demo
 - JWT token management
 - Backend API calls
 - Other pages (Market Trends, Alerts, Account, etc.)
-- Builder.io references
+- External service dependencies
 - Complex state management
 
 ## Running the Demo
