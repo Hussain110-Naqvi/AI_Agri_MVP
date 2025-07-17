@@ -4,6 +4,7 @@ import { Search, Bell, Menu, X } from "lucide-react";
 
 export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#F7FCFA] flex flex-col">
