@@ -26,7 +26,7 @@ export default function Dashboard() {
                 to="/supplies"
                 className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180]"
               >
-                Suppliers
+                Supplies
               </Link>
               <Link
                 to="/inventory"
