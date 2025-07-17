@@ -201,7 +201,7 @@ export default function Dashboard() {
               <div className="px-4">
                 <div className="bg-[#F7FCFA] border border-[#CCE8DE] rounded-xl overflow-hidden">
                   {/* Table Header */}
-                  <div className="grid grid-cols-5 gap-4 p-4 bg-[#F7FCFA]">
+                  <div className="hidden sm:grid grid-cols-5 gap-4 p-4 bg-[#F7FCFA]">
                     <span className="text-[#0D1C17] text-sm font-medium font-['Lexend'] leading-[21px]">
                       Product
                     </span>
