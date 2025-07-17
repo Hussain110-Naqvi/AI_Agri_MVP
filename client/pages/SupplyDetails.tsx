@@ -79,6 +79,48 @@ export default function SupplyDetails() {
             />
           </div>
         </div>
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="sm:hidden border-t border-[#E5E8EB] bg-white px-4 py-3">
+            <nav className="flex flex-col space-y-3">
+              <Link
+                to="/"
+                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/supplies"
+                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Supplies
+              </Link>
+              <Link
+                to="/orders"
+                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Orders
+              </Link>
+              <Link
+                to="/analytics"
+                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Analytics
+              </Link>
+              <Link
+                to="/settings"
+                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Settings
+              </Link>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* Main Content */}
