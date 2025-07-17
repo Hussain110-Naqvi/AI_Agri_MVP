@@ -73,7 +73,7 @@ export default function SupplyDetails() {
               />
             </div>
             <img
-              src="https://api.builder.io/api/v1/image/assets/TEMP/ac63d6656f0d5680e82b0e05c278c86945f01652?width=80"
+              src="/placeholder.svg"
               alt="Profile"
               className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
             />
