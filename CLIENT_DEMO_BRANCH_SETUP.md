@@ -47,7 +47,7 @@ rm -f client/pages/CustomerPatterns.tsx
 rm -f client/config/demo.ts
 rm -f client/components/DemoNavigation.tsx
 
-# Remove any Builder.io references
+# Remove any external references
 rm -rf client/components/ui/
 find client -name "*.tsx" -exec sed -i 's/@\/components\/ui/./g' {} \;
 ```
