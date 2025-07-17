@@ -5,399 +5,398 @@ import { Search, Bell } from "lucide-react";
 export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Static demo data
-  const demoData = {
-    metrics: {
-      total_revenue: 125000,
-      total_orders: 45,
-      avg_order_value: 2778,
-      low_stock_items: 3,
-      unread_alerts: 2,
-      active_customers: 12,
-    },
-    revenue_trend: [
-      { date: "2024-01-20", revenue: 8500, order_count: 3 },
-      { date: "2024-01-21", revenue: 12000, order_count: 4 },
-      { date: "2024-01-22", revenue: 6500, order_count: 2 },
-      { date: "2024-01-23", revenue: 15000, order_count: 5 },
-      { date: "2024-01-24", revenue: 18500, order_count: 7 },
-      { date: "2024-01-25", revenue: 22000, order_count: 8 },
-      { date: "2024-01-26", revenue: 25000, order_count: 9 },
-    ],
-    top_supplies: [
-      {
-        id: "1",
-        name: "Nitrogen Fertilizer",
-        category: "fertilizers",
-        total_sold: 2500,
-        total_revenue: 45000,
-      },
-      {
-        id: "2",
-        name: "Premium Corn Seeds",
-        category: "seeds",
-        total_sold: 500,
-        total_revenue: 38000,
-      },
-      {
-        id: "3",
-        name: "Organic Pesticide Pro",
-        category: "pesticides",
-        total_sold: 150,
-        total_revenue: 22000,
-      },
-    ],
-    recent_activities: [
-      {
-        id: "1",
-        order_number: "ORD-2024-001",
-        status: "completed",
-        total_amount: 8500,
-        created_at: "2024-01-26T10:30:00Z",
-        customer_name: "Green Valley Farms",
-      },
-      {
-        id: "2",
-        order_number: "ORD-2024-002",
-        status: "pending",
-        total_amount: 12000,
-        created_at: "2024-01-26T09:15:00Z",
-        customer_name: "Sunrise Agriculture",
-      },
-      {
-        id: "3",
-        order_number: "ORD-2024-003",
-        status: "completed",
-        total_amount: 6500,
-        created_at: "2024-01-25T16:20:00Z",
-        customer_name: "Prairie Harvest Co",
-      },
-    ],
-    alerts: [
-      {
-        id: "1",
-        title: "Low Stock Alert",
-        message: "Nitrogen Fertilizer running low",
-        severity: "high",
-        created_at: "2024-01-26T08:30:00Z",
-      },
-      {
-        id: "2",
-        title: "Market Alert",
-        message: "Corn price increase detected",
-        severity: "medium",
-        created_at: "2024-01-25T14:20:00Z",
-      },
-    ],
-  };
-
   return (
-    <div className="min-h-screen bg-[#F7FCFA] flex">
-      {/* Sidebar */}
-      <aside className="w-80 bg-[#F7FCFA] border-r border-[#E5E8EB] p-6 overflow-y-auto">
-        {/* Quick Actions */}
-        <section className="mb-8">
-          <h2 className="text-[#0D1C17] text-xl font-bold font-['Lexend'] mb-4">
-            Quick Actions
-          </h2>
-          <div className="space-y-3">
-            <button className="w-full h-10 px-4 bg-[#009963] rounded-2xl flex items-center justify-center transition-colors hover:bg-[#008055]">
-              <span className="text-[#F7FCFA] text-sm font-bold font-['Lexend']">
-                New Purchase Order
-              </span>
-            </button>
-            <button className="w-full h-10 px-4 bg-[#E5F5F0] rounded-2xl flex items-center justify-center transition-colors hover:bg-[#CCE8DE]">
-              <span className="text-[#0D1C17] text-sm font-bold font-['Lexend']">
-                View Inventory
-              </span>
-            </button>
-            <button className="w-full h-10 px-4 bg-[#E5F5F0] rounded-2xl flex items-center justify-center transition-colors hover:bg-[#CCE8DE]">
-              <span className="text-[#0D1C17] text-sm font-bold font-['Lexend']">
-                Market Analysis
-              </span>
-            </button>
-          </div>
-        </section>
-
-        {/* Alerts */}
-        <section>
-          <h2 className="text-[#0D1C17] text-xl font-bold font-['Lexend'] mb-4">
-            Alerts
-            <span className="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-500 rounded-full">
-              {demoData.metrics.unread_alerts}
-            </span>
-          </h2>
-          <div className="space-y-3">
-            {demoData.alerts.map((alert) => (
-              <div
-                key={alert.id}
-                className="flex items-center gap-4 p-2 bg-[#F7FCFA] rounded-lg"
+    <div className="min-h-screen bg-[#F7FCFA] flex flex-col">
+      {/* Header */}
+      <header className="bg-white border-b border-[#E5E8EB] px-4 sm:px-10 py-3 flex-shrink-0">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4 sm:gap-8">
+            <h1 className="text-[#0D1C17] text-lg font-bold font-['Lexend']">
+              AgriSupply Insights
+            </h1>
+            <nav className="hidden sm:flex items-center gap-6 lg:gap-9">
+              <Link
+                to="/"
+                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180]"
               >
-                <div
-                  className={`w-12 h-12 rounded-lg flex items-center justify-center ${
-                    alert.severity === "high" ? "bg-orange-100" : "bg-[#E5F5F0]"
-                  }`}
-                >
-                  <Bell
-                    className={`w-6 h-6 ${
-                      alert.severity === "high"
-                        ? "text-orange-600"
-                        : "text-[#0D1C17]"
-                    }`}
-                  />
+                Dashboard
+              </Link>
+              <Link
+                to="/supplies"
+                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180]"
+              >
+                Suppliers
+              </Link>
+              <Link
+                to="/inventory"
+                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180]"
+              >
+                Inventory
+              </Link>
+              <Link
+                to="/market-trends"
+                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180]"
+              >
+                Market Trends
+              </Link>
+              <Link
+                to="/reports"
+                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180]"
+              >
+                Reports
+              </Link>
+            </nav>
+          </div>
+          <div className="flex items-center gap-4 sm:gap-8">
+            <div className="flex items-center bg-[#E5F5F0] rounded-xl overflow-hidden min-w-[160px] max-w-[256px]">
+              <div className="pl-4 flex items-center">
+                <Search className="w-5 h-5 sm:w-6 sm:h-6 text-[#45A180]" />
+              </div>
+              <input
+                type="text"
+                placeholder="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="bg-transparent px-2 py-2 text-[#45A180] placeholder-[#45A180] text-base font-['Lexend'] outline-none flex-1"
+              />
+            </div>
+            <img
+              src="https://api.builder.io/api/v1/image/assets/TEMP/ccbb3417884ae43e228f3c29547a9c6e00cce21d?width=80"
+              alt="Profile"
+              className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
+            />
+          </div>
+        </div>
+      </header>
+
+      <div className="flex flex-1 min-h-0">
+        {/* Sidebar */}
+        <aside className="w-80 bg-[#F7FCFA] border-r border-[#E5E8EB] p-6 overflow-y-auto hidden lg:block flex-shrink-0">
+          {/* Quick Actions */}
+          <section className="mb-8">
+            <h2 className="text-[#0D1C17] text-[22px] font-bold font-['Lexend'] leading-7 mb-3 pt-5 pb-3">
+              Quick Actions
+            </h2>
+            <div className="space-y-3">
+              <button className="w-full h-10 px-4 bg-[#009963] rounded-[20px] flex items-center justify-center transition-colors hover:bg-[#008055]">
+                <span className="text-[#F7FCFA] text-sm font-bold font-['Lexend'] leading-[21px]">
+                  New Purchase Order
+                </span>
+              </button>
+              <button className="w-full h-10 px-4 bg-[#E5F5F0] rounded-[20px] flex items-center justify-center transition-colors hover:bg-[#CCE8DE]">
+                <span className="text-[#0D1C17] text-sm font-bold font-['Lexend'] leading-[21px]">
+                  View Inventory
+                </span>
+              </button>
+              <button className="w-full h-10 px-4 bg-[#E5F5F0] rounded-[20px] flex items-center justify-center transition-colors hover:bg-[#CCE8DE]">
+                <span className="text-[#0D1C17] text-sm font-bold font-['Lexend'] leading-[21px]">
+                  Market Analysis
+                </span>
+              </button>
+            </div>
+          </section>
+
+          {/* Alerts */}
+          <section>
+            <h2 className="text-[#0D1C17] text-[22px] font-bold font-['Lexend'] leading-7 mb-3 pt-5 pb-3">
+              Alerts
+            </h2>
+            <div className="space-y-0">
+              <div className="flex items-center gap-4 p-2 bg-[#F7FCFA] min-h-[72px]">
+                <div className="w-12 h-12 rounded-lg bg-[#E5F5F0] flex items-center justify-center">
+                  <Bell className="w-6 h-6 text-[#0D1C17]" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-[#0D1C17] text-sm font-medium font-['Lexend']">
-                    {alert.title}
+                  <h3 className="text-[#0D1C17] text-base font-medium font-['Lexend'] leading-6">
+                    Inventory Alert
                   </h3>
-                  <p className="text-[#45A180] text-xs font-['Lexend']">
-                    {alert.message}
+                  <p className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
+                    Low stock on fertilizer
                   </p>
                 </div>
-                <span className="text-[#45A180] text-xs font-['Lexend']">
-                  {new Date(alert.created_at).toLocaleDateString()}
+                <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
+                  2h ago
                 </span>
               </div>
-            ))}
-          </div>
-        </section>
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 flex flex-col">
-        {/* Header */}
-        <header className="bg-white border-b border-[#E5E8EB] px-10 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-8">
-              <h1 className="text-[#0D1C17] text-lg font-bold font-['Lexend']">
-                AgriSupply Insights
-              </h1>
-              <nav className="flex items-center gap-9">
-                <Link
-                  to="/"
-                  className="text-[#009963] text-sm font-bold font-['Lexend']"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  to="/supplies"
-                  className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180]"
-                >
-                  Supply Details
-                </Link>
-              </nav>
-            </div>
-            <div className="flex items-center gap-8">
-              <div className="flex items-center bg-[#E5F5F0] rounded-xl overflow-hidden">
-                <div className="pl-4 pr-2 flex items-center">
-                  <Search className="w-6 h-6 text-[#45A180]" />
+              <div className="flex items-center gap-4 p-2 bg-[#F7FCFA] min-h-[72px]">
+                <div className="w-12 h-12 rounded-lg bg-[#E5F5F0] flex items-center justify-center">
+                  <Bell className="w-6 h-6 text-[#0D1C17]" />
                 </div>
-                <input
-                  type="text"
-                  placeholder="Search"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-transparent px-2 py-2 text-[#45A180] placeholder-[#45A180] text-base font-['Lexend'] outline-none"
-                />
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 bg-[#45A180] rounded-full overflow-hidden">
-                  <img
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face"
-                    alt="Profile"
-                    className="w-full h-full object-cover"
-                  />
+                <div className="flex-1">
+                  <h3 className="text-[#0D1C17] text-base font-medium font-['Lexend'] leading-6">
+                    Market Alert
+                  </h3>
+                  <p className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
+                    Price increase on seeds
+                  </p>
                 </div>
+                <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
+                  4h ago
+                </span>
               </div>
             </div>
-          </div>
-        </header>
+          </section>
+        </aside>
 
-        {/* Dashboard Content */}
-        <div className="flex-1 px-6 py-5">
+        {/* Main Content */}
+        <main className="flex-1 min-w-0 px-5 sm:px-6 py-5">
           <div className="max-w-6xl mx-auto space-y-6">
             {/* Header Section */}
             <div className="px-4 py-4">
-              <h2 className="text-[#0D1C17] text-2xl font-bold font-['Lexend'] mb-3">
+              <h2 className="text-[#0D1C17] text-[32px] font-bold font-['Lexend'] leading-10 mb-3">
                 Dashboard Overview
               </h2>
-              <p className="text-[#45A180] text-sm font-['Lexend']">
+              <p className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
                 AI-driven insights for optimal supply purchasing
               </p>
             </div>
 
             {/* Key Metrics */}
             <section>
-              <h3 className="text-[#0D1C17] text-xl font-bold font-['Lexend'] mb-4 px-4">
+              <h3 className="text-[#0D1C17] text-[22px] font-bold font-['Lexend'] leading-7 mb-3 px-4 pt-5 pb-3">
                 Key Metrics
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-4">
                 <div className="bg-[#E5F5F0] rounded-xl p-6">
-                  <h4 className="text-[#0D1C17] text-base font-medium font-['Lexend'] mb-2">
-                    Total Revenue
+                  <h4 className="text-[#0D1C17] text-base font-medium font-['Lexend'] leading-6 mb-2">
+                    Total Supply Spend
                   </h4>
-                  <p className="text-[#0D1C17] text-2xl font-bold font-['Lexend'] mb-1">
-                    ${demoData.metrics.total_revenue.toLocaleString()}
+                  <p className="text-[#0D1C17] text-2xl font-bold font-['Lexend'] leading-[30px] mb-2">
+                    $250,000
                   </p>
-                  <span className="text-[#08872E] text-base font-medium font-['Lexend']">
-                    {demoData.metrics.total_orders} orders
+                  <span className="text-[#08872E] text-base font-medium font-['Lexend'] leading-6">
+                    +10%
                   </span>
                 </div>
                 <div className="bg-[#E5F5F0] rounded-xl p-6">
-                  <h4 className="text-[#0D1C17] text-base font-medium font-['Lexend'] mb-2">
+                  <h4 className="text-[#0D1C17] text-base font-medium font-['Lexend'] leading-6 mb-2">
                     Average Order Value
                   </h4>
-                  <p className="text-[#0D1C17] text-2xl font-bold font-['Lexend'] mb-1">
-                    ${demoData.metrics.avg_order_value.toLocaleString()}
+                  <p className="text-[#0D1C17] text-2xl font-bold font-['Lexend'] leading-[30px] mb-2">
+                    $5,000
                   </p>
-                  <span className="text-[#45A180] text-base font-medium font-['Lexend']">
-                    {demoData.metrics.active_customers} active customers
+                  <span className="text-[#E82E08] text-base font-medium font-['Lexend'] leading-6">
+                    -5%
                   </span>
                 </div>
                 <div className="bg-[#E5F5F0] rounded-xl p-6">
-                  <h4 className="text-[#0D1C17] text-base font-medium font-['Lexend'] mb-2">
-                    Low Stock Alerts
+                  <h4 className="text-[#0D1C17] text-base font-medium font-['Lexend'] leading-6 mb-2">
+                    On-Time Delivery Rate
                   </h4>
-                  <p className="text-[#0D1C17] text-2xl font-bold font-['Lexend'] mb-1">
-                    {demoData.metrics.low_stock_items}
+                  <p className="text-[#0D1C17] text-2xl font-bold font-['Lexend'] leading-[30px] mb-2">
+                    95%
                   </p>
-                  <span className="text-[#E82E08] text-base font-medium font-['Lexend']">
-                    {demoData.metrics.unread_alerts} unread alerts
+                  <span className="text-[#08872E] text-base font-medium font-['Lexend'] leading-6">
+                    +2%
                   </span>
                 </div>
               </div>
             </section>
 
-            {/* Top Selling Supplies */}
+            {/* Purchase Recommendations */}
             <section>
-              <h3 className="text-[#0D1C17] text-xl font-bold font-['Lexend'] mb-4 px-4">
-                Top Selling Supplies
+              <h3 className="text-[#0D1C17] text-[22px] font-bold font-['Lexend'] leading-7 mb-3 px-4 pt-5 pb-3">
+                Purchase Recommendations
               </h3>
               <div className="px-4">
                 <div className="bg-[#F7FCFA] border border-[#CCE8DE] rounded-xl overflow-hidden">
-                  <div className="grid grid-cols-4 gap-4 p-4 bg-[#F7FCFA] border-b border-[#E5E8EB]">
-                    <span className="text-[#0D1C17] text-sm font-medium font-['Lexend']">
+                  {/* Table Header */}
+                  <div className="grid grid-cols-5 gap-4 p-4 bg-[#F7FCFA]">
+                    <span className="text-[#0D1C17] text-sm font-medium font-['Lexend'] leading-[21px]">
                       Product
                     </span>
-                    <span className="text-[#0D1C17] text-sm font-medium font-['Lexend']">
-                      Category
+                    <span className="text-[#0D1C17] text-sm font-medium font-['Lexend'] leading-[21px]">
+                      Supplier
                     </span>
-                    <span className="text-[#0D1C17] text-sm font-medium font-['Lexend']">
-                      Total Sold
+                    <span className="text-[#0D1C17] text-sm font-medium font-['Lexend'] leading-[21px]">
+                      Recommended Quantity
                     </span>
-                    <span className="text-[#0D1C17] text-sm font-medium font-['Lexend']">
-                      Revenue
+                    <span className="text-[#0D1C17] text-sm font-medium font-['Lexend'] leading-[21px]">
+                      Reason
+                    </span>
+                    <span className="text-[#45A180] text-sm font-medium font-['Lexend'] leading-[21px]">
+                      Action
                     </span>
                   </div>
-                  {demoData.top_supplies.map((supply, index) => (
-                    <div
-                      key={supply.id}
-                      className={`grid grid-cols-4 gap-4 p-4 ${index < 2 ? "border-b border-[#E5E8EB]" : ""}`}
-                    >
-                      <span className="text-[#0D1C17] text-sm font-['Lexend']">
-                        {supply.name}
+
+                  {/* Table Rows */}
+                  <div className="border-t border-[#E5E8EB]">
+                    <div className="grid grid-cols-5 gap-4 p-4 min-h-[72px] items-center border-b border-[#E5E8EB]">
+                      <span className="text-[#0D1C17] text-sm font-normal font-['Lexend'] leading-[21px]">
+                        Nitrogen Fertilizer
                       </span>
-                      <span className="text-[#45A180] text-sm font-['Lexend'] capitalize">
-                        {supply.category}
+                      <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
+                        AgriChem Solutions
                       </span>
-                      <span className="text-[#45A180] text-sm font-['Lexend']">
-                        {supply.total_sold.toLocaleString()} units
+                      <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
+                        5000 lbs
                       </span>
-                      <span className="text-[#45A180] text-sm font-['Lexend']">
-                        ${supply.total_revenue.toLocaleString()}
+                      <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
+                        High demand, low inventory
+                      </span>
+                      <span className="text-[#45A180] text-sm font-bold font-['Lexend'] leading-[21px]">
+                        View Details
                       </span>
                     </div>
-                  ))}
+                    <div className="grid grid-cols-5 gap-4 p-4 min-h-[72px] items-center border-b border-[#E5E8EB]">
+                      <span className="text-[#0D1C17] text-sm font-normal font-['Lexend'] leading-[21px]">
+                        Corn Seeds
+                      </span>
+                      <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
+                        SeedCo Genetics
+                      </span>
+                      <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
+                        2000 bags
+                      </span>
+                      <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
+                        Seasonal price advantage
+                      </span>
+                      <span className="text-[#45A180] text-sm font-bold font-['Lexend'] leading-[21px]">
+                        View Details
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-5 gap-4 p-4 min-h-[72px] items-center">
+                      <span className="text-[#0D1C17] text-sm font-normal font-['Lexend'] leading-[21px]">
+                        Pesticide X
+                      </span>
+                      <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
+                        CropGuard Inc.
+                      </span>
+                      <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
+                        100 gallons
+                      </span>
+                      <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
+                        Upcoming pest forecast
+                      </span>
+                      <span className="text-[#45A180] text-sm font-bold font-['Lexend'] leading-[21px]">
+                        View Details
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </section>
 
-            {/* Business Analytics */}
+            {/* Market Trends */}
             <section>
-              <h3 className="text-[#0D1C17] text-xl font-bold font-['Lexend'] mb-4 px-4">
-                Business Analytics
+              <h3 className="text-[#0D1C17] text-[22px] font-bold font-['Lexend'] leading-7 mb-6 px-4 pt-5 pb-3">
+                Market Trends
               </h3>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 px-4">
-                <div className="bg-white border border-[#CCE8DE] rounded-xl p-6">
-                  <h4 className="text-[#0D1C17] text-base font-medium font-['Lexend'] mb-2">
-                    Revenue Trend
+                {/* Crop Yield Forecast */}
+                <div className="border border-[#CCE8DE] rounded-xl p-6">
+                  <h4 className="text-[#0D1C17] text-base font-medium font-['Lexend'] leading-6 mb-2">
+                    Crop Yield Forecast
                   </h4>
-                  <p className="text-[#0D1C17] text-2xl font-bold font-['Lexend'] mb-1">
-                    ${demoData.metrics.total_revenue.toLocaleString()}
+                  <p className="text-[#0D1C17] text-[32px] font-bold font-['Lexend'] leading-10 mb-2">
+                    +5%
                   </p>
                   <div className="flex items-center gap-1 mb-4">
-                    <span className="text-[#45A180] text-base font-['Lexend']">
-                      Total Revenue
+                    <span className="text-[#45A180] text-base font-normal font-['Lexend'] leading-6">
+                      vs. Last Year
                     </span>
-                    <span className="text-[#08872E] text-base font-medium font-['Lexend']">
-                      {demoData.metrics.total_orders} orders
+                    <span className="text-[#08872E] text-base font-medium font-['Lexend'] leading-6">
+                      +5%
                     </span>
                   </div>
-                  <div className="h-32 bg-[#E5F5F0] rounded-lg flex items-end justify-between px-2 pb-4">
-                    {demoData.revenue_trend.map((trend, index) => {
-                      const maxRevenue = Math.max(
-                        ...demoData.revenue_trend.map((t) => t.revenue),
-                      );
-                      const height = (trend.revenue / maxRevenue) * 100;
-                      return (
-                        <div
-                          key={index}
-                          className="w-6 bg-[#45A180] rounded-t"
-                          style={{ height: `${height}%` }}
-                          title={`${new Date(trend.date).toLocaleDateString()}: $${trend.revenue.toLocaleString()}`}
+                  {/* Chart SVG */}
+                  <div className="mb-8">
+                    <svg
+                      className="w-full h-[148px]"
+                      viewBox="0 0 380 148"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g clipPath="url(#clip0_1_1195)">
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M2.38494 86.6527C16.8168 86.6527 16.8168 16.6946 31.2488 16.6946C45.6807 16.6946 45.6807 32.5941 60.1127 32.5941C74.5445 32.5941 74.5445 73.9331 88.9764 73.9331C103.408 73.9331 103.408 26.2343 117.841 26.2343C132.273 26.2343 132.273 80.2929 146.704 80.2929C161.136 80.2929 161.136 48.4937 175.568 48.4937C190 48.4937 190 35.7741 204.432 35.7741C218.864 35.7741 218.864 96.1925 233.296 96.1925C247.727 96.1925 247.727 118.452 262.159 118.452C276.591 118.452 276.592 0.794979 291.024 0.794979C305.456 0.794979 305.456 64.3933 319.888 64.3933C334.319 64.3933 334.319 102.552 348.751 102.552C363.183 102.552 363.183 19.8745 377.615 19.8745V118.452H262.159H2.38494V86.6527Z"
+                          fill="url(#paint0_linear_1_1195)"
                         />
-                      );
-                    })}
+                        <path
+                          d="M2.38494 86.6527C16.8168 86.6527 16.8168 16.6946 31.2488 16.6946C45.6807 16.6946 45.6807 32.5941 60.1127 32.5941C74.5446 32.5941 74.5445 73.9331 88.9764 73.9331C103.408 73.9331 103.408 26.2343 117.841 26.2343C132.273 26.2343 132.273 80.2929 146.704 80.2929C161.136 80.2929 161.136 48.4937 175.568 48.4937C190 48.4937 190 35.7741 204.432 35.7741C218.864 35.7741 218.864 96.1925 233.296 96.1925C247.727 96.1925 247.727 118.452 262.159 118.452C276.592 118.452 276.592 0.794979 291.024 0.794979C305.456 0.794979 305.456 64.3933 319.888 64.3933C334.319 64.3933 334.319 102.552 348.751 102.552C363.183 102.552 363.183 19.8745 377.615 19.8745"
+                          stroke="#45A180"
+                          strokeWidth="3"
+                        />
+                      </g>
+                      <defs>
+                        <linearGradient
+                          id="paint0_linear_1_1195"
+                          x1="-190"
+                          y1="0"
+                          x2="-190"
+                          y2="148"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop stopColor="#E6F5F0" />
+                          <stop
+                            offset="0.5"
+                            stopColor="#E6F5F0"
+                            stopOpacity="0"
+                          />
+                        </linearGradient>
+                        <clipPath id="clip0_1_1195">
+                          <rect width="380" height="148" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>
                   </div>
-                  <div className="flex justify-between mt-2 text-xs text-[#45A180] font-bold font-['Lexend']">
-                    {demoData.revenue_trend.map((trend, index) => (
-                      <span key={index}>{new Date(trend.date).getDate()}</span>
-                    ))}
+                  <div className="flex justify-between text-[13px] font-bold text-[#45A180] font-['Lexend'] leading-5">
+                    <span>Jan</span>
+                    <span>Feb</span>
+                    <span>Mar</span>
+                    <span>Apr</span>
+                    <span>May</span>
+                    <span>Jun</span>
+                    <span>Jul</span>
                   </div>
                 </div>
-                <div className="bg-white border border-[#CCE8DE] rounded-xl p-6">
-                  <h4 className="text-[#0D1C17] text-base font-medium font-['Lexend'] mb-2">
-                    Recent Activities
+
+                {/* Supply Price Index */}
+                <div className="border border-[#CCE8DE] rounded-xl p-6">
+                  <h4 className="text-[#0D1C17] text-base font-medium font-['Lexend'] leading-6 mb-2">
+                    Supply Price Index
                   </h4>
-                  <div className="space-y-2">
-                    {demoData.recent_activities.map((activity) => (
-                      <div
-                        key={activity.id}
-                        className="flex items-center justify-between py-2"
-                      >
-                        <div className="flex-1">
-                          <p className="text-[#0D1C17] text-sm font-medium font-['Lexend']">
-                            Order #{activity.order_number}
-                          </p>
-                          <p className="text-[#45A180] text-xs font-['Lexend']">
-                            {activity.customer_name}
-                          </p>
+                  <p className="text-[#0D1C17] text-[32px] font-bold font-['Lexend'] leading-10 mb-2">
+                    -2%
+                  </p>
+                  <div className="flex items-center gap-1 mb-4">
+                    <span className="text-[#45A180] text-base font-normal font-['Lexend'] leading-6">
+                      vs. Last Month
+                    </span>
+                    <span className="text-[#E82E08] text-base font-medium font-['Lexend'] leading-6">
+                      -2%
+                    </span>
+                  </div>
+                  {/* Bar Chart */}
+                  <div className="flex items-end gap-6 h-[137px] px-3 mb-6">
+                    {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"].map(
+                      (month, index) => (
+                        <div
+                          key={month}
+                          className="flex flex-col items-center gap-6 flex-1"
+                        >
+                          <div className="bg-[#E5F5F0] border-t-2 border-[#757575] w-full h-[137px]"></div>
                         </div>
-                        <div className="text-right">
-                          <p className="text-[#0D1C17] text-sm font-bold font-['Lexend']">
-                            ${activity.total_amount.toLocaleString()}
-                          </p>
-                          <p
-                            className={`text-xs font-['Lexend'] capitalize ${
-                              activity.status === "completed"
-                                ? "text-[#08872E]"
-                                : activity.status === "pending"
-                                  ? "text-[#FF8F00]"
-                                  : "text-[#45A180]"
-                            }`}
-                          >
-                            {activity.status}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
+                      ),
+                    )}
+                  </div>
+                  <div className="flex justify-between text-[13px] font-bold text-[#45A180] font-['Lexend'] leading-5">
+                    <span>Jan</span>
+                    <span>Feb</span>
+                    <span>Mar</span>
+                    <span>Apr</span>
+                    <span>May</span>
+                    <span>Jun</span>
+                    <span>Jul</span>
                   </div>
                 </div>
               </div>
             </section>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 }
