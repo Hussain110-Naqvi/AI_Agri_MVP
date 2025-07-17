@@ -95,7 +95,7 @@ export default function Dashboard() {
                 className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Suppliers
+                Supplies
               </Link>
               <Link
                 to="/inventory"
