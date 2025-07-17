@@ -4,6 +4,7 @@ import { Search, Menu, X } from "lucide-react";
 
 export default function SupplyDetails() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#F7FCFA] flex flex-col">
