@@ -79,6 +79,48 @@ export default function Dashboard() {
             />
           </div>
         </div>
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="sm:hidden border-t border-[#E5E8EB] bg-white px-4 py-3">
+            <nav className="flex flex-col space-y-3">
+              <Link
+                to="/"
+                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/supplies"
+                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Suppliers
+              </Link>
+              <Link
+                to="/inventory"
+                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Inventory
+              </Link>
+              <Link
+                to="/market-trends"
+                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Market Trends
+              </Link>
+              <Link
+                to="/reports"
+                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Reports
+              </Link>
+            </nav>
+          </div>
+        )}
       </header>
 
       <div className="flex flex-1 min-h-0">
