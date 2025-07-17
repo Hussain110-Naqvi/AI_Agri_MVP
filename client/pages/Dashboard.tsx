@@ -346,9 +346,12 @@ export default function Dashboard() {
                       <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
                         High demand, low inventory
                       </span>
-                      <span className="text-[#45A180] text-sm font-bold font-['Lexend'] leading-[21px]">
-                        View Details
-                      </span>
+                      <a
+                        href="#"
+                        className="text-[#45A180] text-sm font-bold font-['Lexend'] leading-[21px] cursor-pointer"
+                      >
+                        <p>View Details</p>
+                      </a>
                     </div>
                     <div className="grid grid-cols-5 gap-4 p-4 min-h-[72px] items-center border-b border-[#E5E8EB]">
                       <span className="text-[#0D1C17] text-sm font-normal font-['Lexend'] leading-[21px]">
@@ -363,9 +366,12 @@ export default function Dashboard() {
                       <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
                         Seasonal price advantage
                       </span>
-                      <span className="text-[#45A180] text-sm font-bold font-['Lexend'] leading-[21px]">
+                      <a
+                        href="#"
+                        className="text-[#45A180] text-sm font-bold font-['Lexend'] leading-[21px] cursor-pointer"
+                      >
                         View Details
-                      </span>
+                      </a>
                     </div>
                     <div className="grid grid-cols-5 gap-4 p-4 min-h-[72px] items-center">
                       <span className="text-[#0D1C17] text-sm font-normal font-['Lexend'] leading-[21px]">
@@ -380,9 +386,12 @@ export default function Dashboard() {
                       <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
                         Upcoming pest forecast
                       </span>
-                      <span className="text-[#45A180] text-sm font-bold font-['Lexend'] leading-[21px]">
+                      <a
+                        href="#"
+                        className="text-[#45A180] text-sm font-bold font-['Lexend'] leading-[21px] cursor-pointer"
+                      >
                         View Details
-                      </span>
+                      </a>
                     </div>
                   </div>
                 </div>
