@@ -114,7 +114,57 @@ export default function SupplyDetails() {
 
                 {/* Table Row */}
                 <div className="border-t border-[#E5E8EB]">
-                  <div className="grid grid-cols-6 gap-4 p-4 min-h-[72px] items-center">
+                  {/* Mobile Card Layout */}
+                  <div className="sm:hidden p-4">
+                    <div className="space-y-2">
+                      <div className="text-[#0D1C17] text-sm font-bold font-['Lexend']">
+                        Nitrogen Fertilizer
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 text-sm">
+                        <div>
+                          <span className="text-[#0D1C17] font-medium font-['Lexend']">
+                            Category:
+                          </span>
+                          <span className="text-[#45A180] font-['Lexend']">
+                            {" "}
+                            Fertilizers
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-[#0D1C17] font-medium font-['Lexend']">
+                            Stock:
+                          </span>
+                          <span className="text-[#45A180] font-['Lexend']">
+                            {" "}
+                            5000 lbs
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-[#0D1C17] font-medium font-['Lexend']">
+                            Price:
+                          </span>
+                          <span className="text-[#45A180] font-['Lexend']">
+                            {" "}
+                            $0.50/lb
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-[#0D1C17] font-medium font-['Lexend']">
+                            Supplier:
+                          </span>
+                          <span className="text-[#45A180] font-['Lexend']">
+                            {" "}
+                            AgriChem Inc.
+                          </span>
+                        </div>
+                      </div>
+                      <div className="text-[#45A180] text-xs font-['Lexend']">
+                        Updated: 2024-07-26
+                      </div>
+                    </div>
+                  </div>
+                  {/* Desktop Table Layout */}
+                  <div className="hidden sm:grid grid-cols-6 gap-4 p-4 min-h-[72px] items-center">
                     <span className="text-[#0D1C17] text-sm font-normal font-['Lexend'] leading-[21px]">
                       Nitrogen Fertilizer
                     </span>
