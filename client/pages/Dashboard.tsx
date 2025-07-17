@@ -305,7 +305,7 @@ export default function Dashboard() {
                           </span>
                         </div>
                         <div className="text-[#45A180] text-sm font-normal font-['Lexend']">
-                          SeedCo Genetics • 2000 bags
+                          SeedCo Genetics �� 2000 bags
                         </div>
                         <div className="text-[#45A180] text-xs font-normal font-['Lexend']">
                           Seasonal price advantage
@@ -366,9 +366,12 @@ export default function Dashboard() {
                       <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
                         Seasonal price advantage
                       </span>
-                      <span className="text-[#45A180] text-sm font-bold font-['Lexend'] leading-[21px]">
+                      <a
+                        href="#"
+                        className="text-[#45A180] text-sm font-bold font-['Lexend'] leading-[21px] cursor-pointer"
+                      >
                         View Details
-                      </span>
+                      </a>
                     </div>
                     <div className="grid grid-cols-5 gap-4 p-4 min-h-[72px] items-center">
                       <span className="text-[#0D1C17] text-sm font-normal font-['Lexend'] leading-[21px]">
