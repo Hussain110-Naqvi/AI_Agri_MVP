@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Search } from "lucide-react";
+import { Search, Menu, X } from "lucide-react";
 
 export default function SupplyDetails() {
   const [searchQuery, setSearchQuery] = useState("");
