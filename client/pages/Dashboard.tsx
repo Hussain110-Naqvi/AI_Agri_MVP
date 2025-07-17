@@ -220,7 +220,65 @@ export default function Dashboard() {
                   </div>
 
                   {/* Table Rows */}
-                  <div className="border-t border-[#E5E8EB]">
+                  <div className="border-t border-[#E5E8EB] sm:hidden">
+                    {/* Mobile Card Layout */}
+                    <div className="p-4 border-b border-[#E5E8EB]">
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-[#0D1C17] text-sm font-bold font-['Lexend']">
+                            Nitrogen Fertilizer
+                          </span>
+                          <span className="text-[#45A180] text-sm font-bold font-['Lexend']">
+                            View Details
+                          </span>
+                        </div>
+                        <div className="text-[#45A180] text-sm font-normal font-['Lexend']">
+                          AgriChem Solutions • 5000 lbs
+                        </div>
+                        <div className="text-[#45A180] text-xs font-normal font-['Lexend']">
+                          High demand, low inventory
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4 border-b border-[#E5E8EB]">
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-[#0D1C17] text-sm font-bold font-['Lexend']">
+                            Corn Seeds
+                          </span>
+                          <span className="text-[#45A180] text-sm font-bold font-['Lexend']">
+                            View Details
+                          </span>
+                        </div>
+                        <div className="text-[#45A180] text-sm font-normal font-['Lexend']">
+                          SeedCo Genetics • 2000 bags
+                        </div>
+                        <div className="text-[#45A180] text-xs font-normal font-['Lexend']">
+                          Seasonal price advantage
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-[#0D1C17] text-sm font-bold font-['Lexend']">
+                            Pesticide X
+                          </span>
+                          <span className="text-[#45A180] text-sm font-bold font-['Lexend']">
+                            View Details
+                          </span>
+                        </div>
+                        <div className="text-[#45A180] text-sm font-normal font-['Lexend']">
+                          CropGuard Inc. • 100 gallons
+                        </div>
+                        <div className="text-[#45A180] text-xs font-normal font-['Lexend']">
+                          Upcoming pest forecast
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {/* Desktop Table Layout */}
+                  <div className="border-t border-[#E5E8EB] hidden sm:block">
                     <div className="grid grid-cols-5 gap-4 p-4 min-h-[72px] items-center border-b border-[#E5E8EB]">
                       <span className="text-[#0D1C17] text-sm font-normal font-['Lexend'] leading-[21px]">
                         Nitrogen Fertilizer
