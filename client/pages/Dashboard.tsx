@@ -47,6 +47,17 @@ export default function Dashboard() {
                 Reports
               </Link>
             </nav>
+            <button
+              className="sm:hidden p-2 -m-2"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle mobile menu"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-5 h-5 text-[#0D1C17]" />
+              ) : (
+                <Menu className="w-5 h-5 text-[#0D1C17]" />
+              )}
+            </button>
           </div>
           <div className="flex items-center gap-4 sm:gap-8">
             <div className="flex items-center bg-[#E5F5F0] rounded-xl overflow-hidden min-w-[160px] max-w-[256px]">
