@@ -73,7 +73,7 @@ export default function Dashboard() {
               />
             </div>
             <img
-              src="https://api.builder.io/api/v1/image/assets/TEMP/ccbb3417884ae43e228f3c29547a9c6e00cce21d?width=80"
+              src="/placeholder.svg"
               alt="Profile"
               className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
             />
