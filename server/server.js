@@ -40,6 +40,22 @@ app.use("/api/placeholder", placeholderRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/alerts", alertsRoutes);
 
+// Root route handler
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "AgriSupply Insights API Server",
+    version: "1.0.0",
+    endpoints: [
+      "GET /api/health - Health check",
+      "POST /api/auth/signin - User login", 
+      "POST /api/auth/signup - User registration",
+      "GET /api/dashboard/overview - Dashboard data",
+      "GET /api/alerts/stats/overview - Alerts overview"
+    ]
+  });
+});
+
 // 404 handler
 app.use("*", (req, res) => {
   res.status(404).json({
