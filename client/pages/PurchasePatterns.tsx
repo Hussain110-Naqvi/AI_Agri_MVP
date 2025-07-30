@@ -265,18 +265,25 @@ export default function PurchasePatterns() {
                     -2%
                   </span>
                 </div>
-                <div className="h-37 mb-8 px-3">
-                  <div className="flex items-end gap-6 h-[137px]">
+                <div className="h-[180px] mb-4">
+                  <div className="flex items-end gap-3 h-[137px] mb-4">
                     {purchaseWindowsData.map((item) => (
                       <div
                         key={item.month}
-                        className="flex flex-col items-center gap-6"
+                        className="flex flex-col items-center flex-1"
                       >
-                        <div className="w-12 h-[137px] bg-[#E5F5F0] border-t-2 border-[#757575]"></div>
-                        <span className="text-[13px] font-bold text-[#45A180] font-['Lexend']">
-                          {item.month}
-                        </span>
+                        <div className="w-full h-[137px] bg-[#E5F5F0] border-t-2 border-[#757575]"></div>
                       </div>
+                    ))}
+                  </div>
+                  <div className="flex justify-between px-1">
+                    {purchaseWindowsData.map((item) => (
+                      <span
+                        key={item.month}
+                        className="text-[13px] font-bold text-[#45A180] font-['Lexend'] text-center flex-1"
+                      >
+                        {item.month}
+                      </span>
                     ))}
                   </div>
                 </div>
