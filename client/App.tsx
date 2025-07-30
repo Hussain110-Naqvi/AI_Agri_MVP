@@ -25,6 +25,9 @@ const App = () => (
           <Route path="/" element={<Dashboard />} />
           <Route path="/supplies" element={<SupplyDetails />} />
           <Route path="/supply-details" element={<SupplyDetails />} />
+          <Route path="/purchase-patterns" element={<PurchasePatterns />} />
+          <Route path="/market-trends" element={<MarketTrends />} />
+          <Route path="/alerts" element={<Alerts />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
