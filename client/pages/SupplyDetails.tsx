@@ -29,22 +29,22 @@ export default function SupplyDetails() {
                 Supplies
               </Link>
               <Link
-                to="/orders"
+                to="/purchase-patterns"
                 className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180]"
               >
-                Orders
+                Insights
               </Link>
               <Link
-                to="/analytics"
+                to="/market-trends"
                 className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180]"
               >
-                Analytics
+                Market Trends
               </Link>
               <Link
-                to="/settings"
+                to="/alerts"
                 className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180]"
               >
-                Settings
+                Alerts
               </Link>
             </nav>
             <button
@@ -98,25 +98,25 @@ export default function SupplyDetails() {
                 Supplies
               </Link>
               <Link
-                to="/orders"
+                to="/purchase-patterns"
                 className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Orders
+                Insights
               </Link>
               <Link
-                to="/analytics"
+                to="/market-trends"
                 className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Analytics
+                Market Trends
               </Link>
               <Link
-                to="/settings"
+                to="/alerts"
                 className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Settings
+                Alerts
               </Link>
             </nav>
           </div>

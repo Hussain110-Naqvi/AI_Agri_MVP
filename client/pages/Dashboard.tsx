@@ -29,10 +29,10 @@ export default function Dashboard() {
                 Supplies
               </Link>
               <Link
-                to="/inventory"
+                to="/purchase-patterns"
                 className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180]"
               >
-                Inventory
+                Insights
               </Link>
               <Link
                 to="/market-trends"
@@ -41,10 +41,10 @@ export default function Dashboard() {
                 Market Trends
               </Link>
               <Link
-                to="/reports"
+                to="/alerts"
                 className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180]"
               >
-                Reports
+                Alerts
               </Link>
             </nav>
             <button
@@ -98,11 +98,11 @@ export default function Dashboard() {
                 Supplies
               </Link>
               <Link
-                to="/inventory"
+                to="/purchase-patterns"
                 className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Inventory
+                Insights
               </Link>
               <Link
                 to="/market-trends"
@@ -112,11 +112,11 @@ export default function Dashboard() {
                 Market Trends
               </Link>
               <Link
-                to="/reports"
+                to="/alerts"
                 className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Reports
+                Alerts
               </Link>
             </nav>
           </div>
