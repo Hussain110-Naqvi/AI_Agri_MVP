@@ -18,7 +18,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const user: User = {
     name: "John Farmer",
     email: "john@example.com",
-    farmName: "Green Valley Farm"
+    farmName: "Green Valley Farm",
   };
 
   const logout = () => {
