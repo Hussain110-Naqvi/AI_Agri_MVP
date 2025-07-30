@@ -47,7 +47,7 @@ export default function Layout({ children }: LayoutProps) {
                 to="/purchase-patterns"
                 className={`text-sm font-normal text-[#0D1C17] font-['Lexend'] ${isActive("/purchase-patterns") ? "font-medium" : ""}`}
               >
-                Purchase Patterns
+                Insights
               </Link>
               <Link
                 to="/market-trends"
