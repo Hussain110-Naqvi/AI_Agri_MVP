@@ -44,10 +44,10 @@ export default function Layout({ children }: LayoutProps) {
                 Supplies
               </Link>
               <Link
-                to="/customers"
-                className={`text-sm font-normal text-[#0D1C17] font-['Lexend'] ${isActive("/customers") ? "font-medium" : ""}`}
+                to="/purchase-patterns"
+                className={`text-sm font-normal text-[#0D1C17] font-['Lexend'] ${isActive("/purchase-patterns") ? "font-medium" : ""}`}
               >
-                Customers
+                Purchase Patterns
               </Link>
               <Link
                 to="/market-trends"
