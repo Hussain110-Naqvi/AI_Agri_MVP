@@ -14,6 +14,7 @@ import MarketTrends from "./pages/MarketTrends";
 import Alerts from "./pages/Alerts";
 import AIBot from "./pages/AIBot";
 import Index from "./pages/Index";
+import TestRoute from "./pages/TestRoute";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
