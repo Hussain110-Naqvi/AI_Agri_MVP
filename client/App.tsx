@@ -31,6 +31,7 @@ const App = () => (
             <Route path="/purchase-patterns" element={<PurchasePatterns />} />
             <Route path="/market-trends" element={<MarketTrends />} />
             <Route path="/alerts" element={<Alerts />} />
+            <Route path="/ai-bot" element={<AIBot />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
