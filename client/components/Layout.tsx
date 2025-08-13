@@ -61,6 +61,12 @@ export default function Layout({ children }: LayoutProps) {
               >
                 Alerts
               </Link>
+              <Link
+                to="/ai-bot"
+                className={`text-sm font-normal text-[#0D1C17] font-['Lexend'] ${isActive("/ai-bot") ? "font-medium" : ""}`}
+              >
+                AI Assistant
+              </Link>
             </nav>
           </div>
           <div className="flex items-center gap-8">
