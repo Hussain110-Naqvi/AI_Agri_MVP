@@ -1,11 +1,11 @@
-require('dotenv').config();
-const bigQueryService = require('./bigquery-service');
+require("dotenv").config();
+const bigQueryService = require("./bigquery-service");
 
 class GeminiService {
   constructor() {
     this.apiKey = process.env.GEMINI_API_KEY;
-    this.model = process.env.GEMINI_MODEL || 'gemini-pro';
-    this.baseUrl = 'https://generativelanguage.googleapis.com/v1beta';
+    this.model = process.env.GEMINI_MODEL || "gemini-pro";
+    this.baseUrl = "https://generativelanguage.googleapis.com/v1beta";
   }
 
   /**
@@ -19,29 +19,32 @@ class GeminiService {
     try {
       // Determine what data is needed based on the query
       const dataNeeds = this.analyzeDataNeeds(userQuery);
-      
+
       // Fetch relevant data from BigQuery
-      const relevantData = await this.fetchRelevantData(dataNeeds, organizationId);
-      
+      const relevantData = await this.fetchRelevantData(
+        dataNeeds,
+        organizationId,
+      );
+
       // Create context-aware prompt
       const prompt = this.buildPrompt(userQuery, relevantData, context);
-      
+
       // Get AI response
       const response = await this.callGeminiAPI(prompt);
-      
+
       // Process and format the response
       const processedResponse = this.processResponse(response, dataNeeds);
-      
+
       return {
         query: userQuery,
         response: processedResponse.text,
         insights: processedResponse.insights,
         actions: processedResponse.actions,
         data_used: dataNeeds,
-        confidence: processedResponse.confidence
+        confidence: processedResponse.confidence,
       };
     } catch (error) {
-      console.error('Error processing Gemini query:', error);
+      console.error("Error processing Gemini query:", error);
       throw error;
     }
   }
@@ -56,32 +59,48 @@ class GeminiService {
     const dataNeeds = [];
 
     // Inventory-related queries
-    if (queryLower.includes('inventory') || queryLower.includes('stock') || 
-        queryLower.includes('supply') || queryLower.includes('reorder')) {
-      dataNeeds.push('inventory');
+    if (
+      queryLower.includes("inventory") ||
+      queryLower.includes("stock") ||
+      queryLower.includes("supply") ||
+      queryLower.includes("reorder")
+    ) {
+      dataNeeds.push("inventory");
     }
 
     // Sales-related queries
-    if (queryLower.includes('sales') || queryLower.includes('revenue') || 
-        queryLower.includes('customer') || queryLower.includes('purchase')) {
-      dataNeeds.push('sales_patterns');
+    if (
+      queryLower.includes("sales") ||
+      queryLower.includes("revenue") ||
+      queryLower.includes("customer") ||
+      queryLower.includes("purchase")
+    ) {
+      dataNeeds.push("sales_patterns");
     }
 
     // Market-related queries
-    if (queryLower.includes('market') || queryLower.includes('price') || 
-        queryLower.includes('trend') || queryLower.includes('commodity')) {
-      dataNeeds.push('market_conditions');
+    if (
+      queryLower.includes("market") ||
+      queryLower.includes("price") ||
+      queryLower.includes("trend") ||
+      queryLower.includes("commodity")
+    ) {
+      dataNeeds.push("market_conditions");
     }
 
     // Customer-related queries
-    if (queryLower.includes('customer') || queryLower.includes('buyer') || 
-        queryLower.includes('segment') || queryLower.includes('behavior')) {
-      dataNeeds.push('customer_behavior');
+    if (
+      queryLower.includes("customer") ||
+      queryLower.includes("buyer") ||
+      queryLower.includes("segment") ||
+      queryLower.includes("behavior")
+    ) {
+      dataNeeds.push("customer_behavior");
     }
 
     // If no specific data needs identified, default to inventory and sales
     if (dataNeeds.length === 0) {
-      dataNeeds.push('inventory', 'sales_patterns');
+      dataNeeds.push("inventory", "sales_patterns");
     }
 
     return [...new Set(dataNeeds)]; // Remove duplicates
@@ -95,11 +114,13 @@ class GeminiService {
    */
   async fetchRelevantData(dataNeeds, organizationId) {
     const data = {};
-    
+
     try {
       const dataPromises = dataNeeds.map(async (dataType) => {
         try {
-          const result = await bigQueryService.getDataForAI(dataType, { organizationId });
+          const result = await bigQueryService.getDataForAI(dataType, {
+            organizationId,
+          });
           return [dataType, result];
         } catch (error) {
           console.error(`Error fetching ${dataType}:`, error);
@@ -114,7 +135,7 @@ class GeminiService {
 
       return data;
     } catch (error) {
-      console.error('Error fetching data for AI:', error);
+      console.error("Error fetching data for AI:", error);
       return {};
     }
   }
@@ -138,17 +159,21 @@ Your role is to:
 
 Always base your responses on the actual data provided. Be specific with numbers and trends when possible.`;
 
-    const dataContext = Object.entries(data).map(([dataType, dataArray]) => {
-      if (!Array.isArray(dataArray) || dataArray.length === 0) {
-        return `${dataType}: No data available`;
-      }
+    const dataContext = Object.entries(data)
+      .map(([dataType, dataArray]) => {
+        if (!Array.isArray(dataArray) || dataArray.length === 0) {
+          return `${dataType}: No data available`;
+        }
 
-      const summary = this.summarizeData(dataType, dataArray);
-      return `${dataType}: ${summary}`;
-    }).join('\n\n');
+        const summary = this.summarizeData(dataType, dataArray);
+        return `${dataType}: ${summary}`;
+      })
+      .join("\n\n");
 
-    const userContext = context.userRole ? `User Role: ${context.userRole}\n` : '';
-    const currentDate = `Current Date: ${new Date().toISOString().split('T')[0]}\n`;
+    const userContext = context.userRole
+      ? `User Role: ${context.userRole}\n`
+      : "";
+    const currentDate = `Current Date: ${new Date().toISOString().split("T")[0]}\n`;
 
     return `${systemPrompt}
 
@@ -182,28 +207,37 @@ Format your response as JSON with the following structure:
    */
   summarizeData(dataType, dataArray) {
     if (!Array.isArray(dataArray) || dataArray.length === 0) {
-      return 'No data available';
+      return "No data available";
     }
 
     const count = dataArray.length;
-    
+
     switch (dataType) {
-      case 'inventory':
-        const lowStock = dataArray.filter(item => item.stock_status === 'low').length;
+      case "inventory":
+        const lowStock = dataArray.filter(
+          (item) => item.stock_status === "low",
+        ).length;
         return `${count} inventory items tracked. ${lowStock} items are running low on stock.`;
-        
-      case 'sales_patterns':
-        const totalRevenue = dataArray.reduce((sum, item) => sum + (item.revenue || 0), 0);
+
+      case "sales_patterns":
+        const totalRevenue = dataArray.reduce(
+          (sum, item) => sum + (item.revenue || 0),
+          0,
+        );
         return `${count} sales transactions. Total revenue: $${totalRevenue.toLocaleString()}.`;
-        
-      case 'market_conditions':
-        const commodities = [...new Set(dataArray.map(item => item.commodity))];
-        return `Market data for ${commodities.length} commodities: ${commodities.join(', ')}.`;
-        
-      case 'customer_behavior':
-        const segments = [...new Set(dataArray.map(item => item.customer_segment))];
-        return `${count} customers across ${segments.length} segments: ${segments.join(', ')}.`;
-        
+
+      case "market_conditions":
+        const commodities = [
+          ...new Set(dataArray.map((item) => item.commodity)),
+        ];
+        return `Market data for ${commodities.length} commodities: ${commodities.join(", ")}.`;
+
+      case "customer_behavior":
+        const segments = [
+          ...new Set(dataArray.map((item) => item.customer_segment)),
+        ];
+        return `${count} customers across ${segments.length} segments: ${segments.join(", ")}.`;
+
       default:
         return `${count} data points available.`;
     }
@@ -219,39 +253,45 @@ Format your response as JSON with the following structure:
       const response = await fetch(
         `${this.baseUrl}/models/${this.model}:generateContent?key=${this.apiKey}`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            contents: [{
-              parts: [{
-                text: prompt
-              }]
-            }],
+            contents: [
+              {
+                parts: [
+                  {
+                    text: prompt,
+                  },
+                ],
+              },
+            ],
             generationConfig: {
               temperature: 0.7,
               topK: 40,
               topP: 0.95,
               maxOutputTokens: 2048,
-            }
-          })
-        }
+            },
+          }),
+        },
       );
 
       if (!response.ok) {
-        throw new Error(`Gemini API error: ${response.status} ${response.statusText}`);
+        throw new Error(
+          `Gemini API error: ${response.status} ${response.statusText}`,
+        );
       }
 
       const data = await response.json();
-      
+
       if (!data.candidates || data.candidates.length === 0) {
-        throw new Error('No response generated by Gemini');
+        throw new Error("No response generated by Gemini");
       }
 
       return data.candidates[0].content.parts[0].text;
     } catch (error) {
-      console.error('Gemini API call failed:', error);
+      console.error("Gemini API call failed:", error);
       throw error;
     }
   }
@@ -272,11 +312,11 @@ Format your response as JSON with the following structure:
           text: parsed.text || response,
           insights: parsed.insights || [],
           actions: parsed.actions || [],
-          confidence: parsed.confidence || 'Medium'
+          confidence: parsed.confidence || "Medium",
         };
       }
     } catch (error) {
-      console.log('Response is not JSON, processing as text');
+      console.log("Response is not JSON, processing as text");
     }
 
     // Fallback: process as plain text
@@ -284,7 +324,7 @@ Format your response as JSON with the following structure:
       text: response,
       insights: this.extractInsights(response),
       actions: this.extractActions(response),
-      confidence: 'Medium'
+      confidence: "Medium",
     };
   }
 
@@ -295,10 +335,14 @@ Format your response as JSON with the following structure:
    */
   extractInsights(text) {
     const insights = [];
-    const lines = text.split('\n');
-    
-    lines.forEach(line => {
-      if (line.includes('insight') || line.includes('trend') || line.includes('pattern')) {
+    const lines = text.split("\n");
+
+    lines.forEach((line) => {
+      if (
+        line.includes("insight") ||
+        line.includes("trend") ||
+        line.includes("pattern")
+      ) {
         insights.push(line.trim());
       }
     });
@@ -313,10 +357,14 @@ Format your response as JSON with the following structure:
    */
   extractActions(text) {
     const actions = [];
-    const lines = text.split('\n');
-    
-    lines.forEach(line => {
-      if (line.includes('recommend') || line.includes('should') || line.includes('action')) {
+    const lines = text.split("\n");
+
+    lines.forEach((line) => {
+      if (
+        line.includes("recommend") ||
+        line.includes("should") ||
+        line.includes("action")
+      ) {
         actions.push(line.trim());
       }
     });
@@ -331,20 +379,28 @@ Format your response as JSON with the following structure:
    */
   getQuickResponse(query) {
     const queryLower = query.toLowerCase();
-    
+
     const quickResponses = {
-      'hello': {
-        text: 'Hello! I\'m your agricultural supply chain AI assistant. I can help you with inventory management, market analysis, sales insights, and more. What would you like to know?',
+      hello: {
+        text: "Hello! I'm your agricultural supply chain AI assistant. I can help you with inventory management, market analysis, sales insights, and more. What would you like to know?",
         insights: [],
-        actions: ['Ask me about your current inventory status', 'Inquire about market trends', 'Request sales analysis'],
-        confidence: 'High'
+        actions: [
+          "Ask me about your current inventory status",
+          "Inquire about market trends",
+          "Request sales analysis",
+        ],
+        confidence: "High",
       },
-      'help': {
-        text: 'I can assist you with various aspects of your agricultural supply chain management including inventory tracking, market analysis, sales patterns, customer insights, and predictive recommendations.',
+      help: {
+        text: "I can assist you with various aspects of your agricultural supply chain management including inventory tracking, market analysis, sales patterns, customer insights, and predictive recommendations.",
         insights: [],
-        actions: ['Try asking "What items are running low?"', 'Ask "What are the current market trends?"', 'Request "Show me top selling products"'],
-        confidence: 'High'
-      }
+        actions: [
+          'Try asking "What items are running low?"',
+          'Ask "What are the current market trends?"',
+          'Request "Show me top selling products"',
+        ],
+        confidence: "High",
+      },
     };
 
     return quickResponses[queryLower] || null;
@@ -356,11 +412,13 @@ Format your response as JSON with the following structure:
    */
   async testConnection() {
     try {
-      const testResponse = await this.callGeminiAPI('Test connection. Respond with "Connection successful".');
-      console.log('✅ Gemini API connection successful');
+      const testResponse = await this.callGeminiAPI(
+        'Test connection. Respond with "Connection successful".',
+      );
+      console.log("✅ Gemini API connection successful");
       return true;
     } catch (error) {
-      console.error('❌ Gemini API connection failed:', error);
+      console.error("❌ Gemini API connection failed:", error);
       return false;
     }
   }

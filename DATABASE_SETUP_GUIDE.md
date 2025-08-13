@@ -3,6 +3,7 @@
 ## Overview
 
 The AgriSupply Insights platform has been enhanced with:
+
 1. **Supabase Database Integration** - Complete schema with all required tables
 2. **BigQuery Data Integration** - Service to fetch data from your existing BigQuery tables
 3. **AI Bot with Gemini** - Intelligent assistant for supply chain insights
@@ -13,17 +14,20 @@ The AgriSupply Insights platform has been enhanced with:
 ### 1. Supabase Configuration
 
 1. **Create a Supabase Project**:
+
    - Go to [supabase.com](https://supabase.com)
    - Create a new project
    - Note down your project URL and API keys
 
 2. **Update Environment Variables**:
+
    ```bash
    cd server
    cp .env.example .env
    ```
-   
+
    Update the following in your `.env` file:
+
    ```env
    # Supabase Configuration
    SUPABASE_URL=your_supabase_project_url
@@ -40,21 +44,24 @@ The AgriSupply Insights platform has been enhanced with:
 ### 2. BigQuery Integration
 
 **Option A: Copy Data to Supabase (Recommended)**
+
 - This provides faster queries and better integration
 - We can help you migrate your BigQuery data to Supabase
 
 **Option B: Keep Data in BigQuery**
+
 - Configure BigQuery API access in your `.env`:
-   ```env
-   BIGQUERY_PROJECT_ID=your_bigquery_project_id
-   BIGQUERY_DATASET_ID=your_bigquery_dataset_id
-   BIGQUERY_API_KEY=your_bigquery_api_key
-   BIGQUERY_SERVICE_ACCOUNT_KEY=your_service_account_json_key
-   ```
+  ```env
+  BIGQUERY_PROJECT_ID=your_bigquery_project_id
+  BIGQUERY_DATASET_ID=your_bigquery_dataset_id
+  BIGQUERY_API_KEY=your_bigquery_api_key
+  BIGQUERY_SERVICE_ACCOUNT_KEY=your_service_account_json_key
+  ```
 
 ### 3. AI Assistant (Gemini) Setup
 
 1. **Get Gemini API Key**:
+
    - Go to [Google AI Studio](https://makersuite.google.com/app/apikey)
    - Create an API key
 
@@ -75,6 +82,7 @@ npm run dev
 ```
 
 The application will be available at:
+
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:5000
 - AI Bot: http://localhost:5173/ai-bot
@@ -84,6 +92,7 @@ The application will be available at:
 The following tables have been created:
 
 ### Core Tables
+
 - **organizations** - Multi-tenant organization data
 - **users** - User accounts with role-based access
 - **suppliers** - Supplier information and contacts
@@ -93,12 +102,14 @@ The following tables have been created:
 - **purchase_transactions** - Sales transaction history
 
 ### Analytics Tables
+
 - **market_data** - Market prices and trends
 - **reports** - Generated reports storage
 - **predictions** - ML predictions and insights
 - **alerts** - System alerts and notifications
 
 ### Features Included
+
 - ✅ UUID primary keys for all tables
 - ✅ Row Level Security (RLS) policies
 - ✅ Multi-tenant architecture
@@ -110,24 +121,28 @@ The following tables have been created:
 The AI assistant can help with:
 
 ### Inventory Management
+
 - Stock level monitoring
 - Reorder recommendations
 - Low stock alerts
 - Supplier analysis
 
 ### Sales Insights
+
 - Customer behavior analysis
 - Purchase pattern recognition
 - Revenue trends
 - Product performance
 
 ### Market Intelligence
+
 - Price trend analysis
 - Market opportunity identification
 - Competitive insights
 - Demand forecasting
 
 ### Quick Actions
+
 - Generate reports
 - Process natural language queries
 - Provide actionable recommendations
@@ -136,6 +151,7 @@ The AI assistant can help with:
 ## 🔗 API Endpoints
 
 ### AI Bot Endpoints
+
 ```
 POST /api/ai-bot/query           - Process user queries
 GET  /api/ai-bot/dashboard-data  - Get BigQuery dashboard data
@@ -146,7 +162,9 @@ POST /api/ai-bot/feedback        - Submit feedback
 ```
 
 ### Authentication Required
+
 All endpoints require a valid JWT token in the Authorization header:
+
 ```
 Authorization: Bearer <your-jwt-token>
 ```
@@ -156,6 +174,7 @@ Authorization: Bearer <your-jwt-token>
 For optimal AI integration, your BigQuery tables should include:
 
 ### inventory_data
+
 ```sql
 - organization_id (STRING)
 - product_name (STRING)
@@ -169,6 +188,7 @@ For optimal AI integration, your BigQuery tables should include:
 ```
 
 ### sales_transactions
+
 ```sql
 - organization_id (STRING)
 - transaction_date (TIMESTAMP)
@@ -181,6 +201,7 @@ For optimal AI integration, your BigQuery tables should include:
 ```
 
 ### market_prices
+
 ```sql
 - commodity (STRING)
 - price_date (DATE)
@@ -193,12 +214,14 @@ For optimal AI integration, your BigQuery tables should include:
 ## 📞 Next Steps & Support
 
 ### Immediate Actions Needed:
+
 1. **Provide Supabase credentials** or create a Supabase project
 2. **Share BigQuery access details** or decide on data migration approach
 3. **Get Gemini API key** for AI functionality
 4. **Test the AI bot** with sample queries
 
 ### For the Client Meeting:
+
 - Demo the AI bot functionality
 - Show dashboard integration
 - Discuss data migration preferences
@@ -206,6 +229,7 @@ For optimal AI integration, your BigQuery tables should include:
 - Set up production deployment strategy
 
 ### Questions for Client:
+
 1. **Data Preference**: Keep in BigQuery or migrate to Supabase?
 2. **BigQuery Schema**: Can you share the exact table structures?
 3. **Access Permissions**: What level of access can you provide?
@@ -215,12 +239,14 @@ For optimal AI integration, your BigQuery tables should include:
 ## 🔧 Troubleshooting
 
 ### Common Issues:
+
 - **Supabase Connection**: Check URL and API keys
 - **BigQuery Access**: Verify service account permissions
 - **Gemini API**: Ensure API key is valid and has quota
 - **CORS Issues**: Update CLIENT_URL in environment variables
 
 ### Health Check:
+
 Visit `/api/ai-bot/health` to check all service connections.
 
 ---

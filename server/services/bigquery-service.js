@@ -1,9 +1,11 @@
-require('dotenv').config();
+require("dotenv").config();
 
 // BigQuery service for integrating with client's data
 class BigQueryService {
   constructor() {
-    this.baseUrl = process.env.BIGQUERY_API_URL || 'https://bigquery.googleapis.com/bigquery/v2';
+    this.baseUrl =
+      process.env.BIGQUERY_API_URL ||
+      "https://bigquery.googleapis.com/bigquery/v2";
     this.projectId = process.env.BIGQUERY_PROJECT_ID;
     this.datasetId = process.env.BIGQUERY_DATASET_ID;
     this.apiKey = process.env.BIGQUERY_API_KEY;
@@ -21,30 +23,32 @@ class BigQueryService {
       const requestBody = {
         query: query,
         useLegacySql: false,
-        parameterMode: Object.keys(parameters).length > 0 ? 'NAMED' : undefined,
-        queryParameters: this.formatParameters(parameters)
+        parameterMode: Object.keys(parameters).length > 0 ? "NAMED" : undefined,
+        queryParameters: this.formatParameters(parameters),
       };
 
       const response = await fetch(
         `${this.baseUrl}/projects/${this.projectId}/queries`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Authorization': `Bearer ${await this.getAccessToken()}`,
-            'Content-Type': 'application/json',
+            Authorization: `Bearer ${await this.getAccessToken()}`,
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(requestBody)
-        }
+          body: JSON.stringify(requestBody),
+        },
       );
 
       if (!response.ok) {
-        throw new Error(`BigQuery API error: ${response.status} ${response.statusText}`);
+        throw new Error(
+          `BigQuery API error: ${response.status} ${response.statusText}`,
+        );
       }
 
       const data = await response.json();
       return this.formatResults(data);
     } catch (error) {
-      console.error('BigQuery query execution failed:', error);
+      console.error("BigQuery query execution failed:", error);
       throw error;
     }
   }
@@ -123,22 +127,24 @@ class BigQueryService {
             AND status = 'active'
           ORDER BY created_at DESC
           LIMIT 10
-        `
+        `,
       };
 
       const results = {};
       const parameters = { orgId: organizationId };
 
       // Execute all queries in parallel
-      const queryPromises = Object.entries(queries).map(async ([key, query]) => {
-        try {
-          const data = await this.executeQuery(query, parameters);
-          return [key, data];
-        } catch (error) {
-          console.error(`Error executing ${key} query:`, error);
-          return [key, []];
-        }
-      });
+      const queryPromises = Object.entries(queries).map(
+        async ([key, query]) => {
+          try {
+            const data = await this.executeQuery(query, parameters);
+            return [key, data];
+          } catch (error) {
+            console.error(`Error executing ${key} query:`, error);
+            return [key, []];
+          }
+        },
+      );
 
       const queryResults = await Promise.all(queryPromises);
       queryResults.forEach(([key, data]) => {
@@ -147,7 +153,7 @@ class BigQueryService {
 
       return results;
     } catch (error) {
-      console.error('Error fetching dashboard data:', error);
+      console.error("Error fetching dashboard data:", error);
       throw error;
     }
   }
@@ -213,7 +219,7 @@ class BigQueryService {
             growth_potential
           FROM \`${this.projectId}.${this.datasetId}.customer_analytics\`
           WHERE organization_id = @orgId
-        `
+        `,
       };
 
       if (!baseQueries[dataType]) {
@@ -256,11 +262,11 @@ class BigQueryService {
     return Object.entries(parameters).map(([name, value]) => ({
       name,
       parameterType: {
-        type: typeof value === 'number' ? 'INT64' : 'STRING'
+        type: typeof value === "number" ? "INT64" : "STRING",
       },
       parameterValue: {
-        value: value.toString()
-      }
+        value: value.toString(),
+      },
     }));
   }
 
@@ -273,7 +279,7 @@ class BigQueryService {
     if (!rawResults.rows) return [];
 
     const schema = rawResults.schema?.fields || [];
-    return rawResults.rows.map(row => {
+    return rawResults.rows.map((row) => {
       const formattedRow = {};
       row.f.forEach((field, index) => {
         const fieldName = schema[index]?.name || `field_${index}`;
@@ -292,18 +298,21 @@ class BigQueryService {
   formatForAI(data, dataType) {
     // Add specific formatting logic based on data type
     switch (dataType) {
-      case 'inventory':
-        return data.map(item => ({
+      case "inventory":
+        return data.map((item) => ({
           ...item,
-          stock_status: item.current_stock <= item.reorder_level ? 'low' : 'normal',
-          days_of_supply: Math.floor(item.current_stock / (item.avg_monthly_consumption / 30))
+          stock_status:
+            item.current_stock <= item.reorder_level ? "low" : "normal",
+          days_of_supply: Math.floor(
+            item.current_stock / (item.avg_monthly_consumption / 30),
+          ),
         }));
 
-      case 'sales_patterns':
-        return data.map(item => ({
+      case "sales_patterns":
+        return data.map((item) => ({
           ...item,
           revenue_per_unit: item.revenue / item.quantity_sold,
-          trend: this.calculateTrend(item)
+          trend: this.calculateTrend(item),
         }));
 
       default:
@@ -319,8 +328,11 @@ class BigQueryService {
   calculateTrend(item) {
     // Simple trend calculation - in a real implementation,
     // this would be more sophisticated
-    return item.seasonality_factor > 1.1 ? 'increasing' : 
-           item.seasonality_factor < 0.9 ? 'decreasing' : 'stable';
+    return item.seasonality_factor > 1.1
+      ? "increasing"
+      : item.seasonality_factor < 0.9
+        ? "decreasing"
+        : "stable";
   }
 
   /**
@@ -334,7 +346,7 @@ class BigQueryService {
       // This would typically use Google Auth Library
       return await this.getServiceAccountToken();
     }
-    
+
     // For API key authentication (simpler but less secure)
     return this.apiKey;
   }
@@ -357,10 +369,10 @@ class BigQueryService {
     try {
       const testQuery = `SELECT 1 as test_value`;
       await this.executeQuery(testQuery);
-      console.log('✅ BigQuery connection successful');
+      console.log("✅ BigQuery connection successful");
       return true;
     } catch (error) {
-      console.error('❌ BigQuery connection failed:', error);
+      console.error("❌ BigQuery connection failed:", error);
       return false;
     }
   }

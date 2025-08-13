@@ -56,8 +56,8 @@ app.get("/", (req, res) => {
       "GET /api/alerts/stats/overview - Alerts overview",
       "POST /api/ai-bot/query - AI bot query processing",
       "GET /api/ai-bot/dashboard-data - BigQuery dashboard data",
-      "GET /api/ai-bot/health - AI services health check"
-    ]
+      "GET /api/ai-bot/health - AI services health check",
+    ],
   });
 });
 

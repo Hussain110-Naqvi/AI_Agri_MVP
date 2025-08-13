@@ -1,27 +1,32 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Badge } from '../components/ui/badge';
-import { Alert, AlertDescription } from '../components/ui/alert';
-import { ScrollArea } from '../components/ui/scroll-area';
-import { Separator } from '../components/ui/separator';
-import { 
-  Send, 
-  Bot, 
-  User, 
-  Lightbulb, 
-  TrendingUp, 
+import React, { useState, useRef, useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Badge } from "../components/ui/badge";
+import { Alert, AlertDescription } from "../components/ui/alert";
+import { ScrollArea } from "../components/ui/scroll-area";
+import { Separator } from "../components/ui/separator";
+import {
+  Send,
+  Bot,
+  User,
+  Lightbulb,
+  TrendingUp,
   AlertTriangle,
   CheckCircle,
   Clock,
   ThumbsUp,
-  ThumbsDown
-} from 'lucide-react';
+  ThumbsDown,
+} from "lucide-react";
 
 interface Message {
   id: string;
-  type: 'user' | 'bot';
+  type: "user" | "bot";
   content: string;
   timestamp: Date;
   insights?: string[];
@@ -33,7 +38,7 @@ interface Message {
 
 interface Suggestion {
   type: string;
-  priority: 'high' | 'medium' | 'low';
+  priority: "high" | "medium" | "low";
   title: string;
   message: string;
   action: string;
@@ -42,22 +47,29 @@ interface Suggestion {
 
 const AIBot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
-  const [connectionStatus, setConnectionStatus] = useState<'healthy' | 'degraded' | 'unknown'>('unknown');
+  const [connectionStatus, setConnectionStatus] = useState<
+    "healthy" | "degraded" | "unknown"
+  >("unknown");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Add welcome message
     const welcomeMessage: Message = {
-      id: '1',
-      type: 'bot',
-      content: 'Hello! I\'m your AI agricultural supply chain assistant. I can help you analyze inventory, understand market trends, and provide actionable insights. What would you like to know?',
+      id: "1",
+      type: "bot",
+      content:
+        "Hello! I'm your AI agricultural supply chain assistant. I can help you analyze inventory, understand market trends, and provide actionable insights. What would you like to know?",
       timestamp: new Date(),
       insights: [],
-      actions: ['Ask about inventory status', 'Inquire about market trends', 'Request sales analysis'],
-      confidence: 'High'
+      actions: [
+        "Ask about inventory status",
+        "Inquire about market trends",
+        "Request sales analysis",
+      ],
+      confidence: "High",
     };
     setMessages([welcomeMessage]);
 
@@ -71,15 +83,15 @@ const AIBot: React.FC = () => {
   }, [messages]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const loadSuggestions = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch('/api/ai-bot/suggestions', {
+      const token = localStorage.getItem("token");
+      const response = await fetch("/api/ai-bot/suggestions", {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -88,16 +100,16 @@ const AIBot: React.FC = () => {
         setSuggestions(data.data.suggestions || []);
       }
     } catch (error) {
-      console.error('Failed to load suggestions:', error);
+      console.error("Failed to load suggestions:", error);
     }
   };
 
   const checkHealth = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch('/api/ai-bot/health', {
+      const token = localStorage.getItem("token");
+      const response = await fetch("/api/ai-bot/health", {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -106,8 +118,8 @@ const AIBot: React.FC = () => {
         setConnectionStatus(data.data.status);
       }
     } catch (error) {
-      console.error('Health check failed:', error);
-      setConnectionStatus('degraded');
+      console.error("Health check failed:", error);
+      setConnectionStatus("degraded");
     }
   };
 
@@ -116,28 +128,28 @@ const AIBot: React.FC = () => {
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      type: 'user',
+      type: "user",
       content: query,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
-    setInputValue('');
+    setMessages((prev) => [...prev, userMessage]);
+    setInputValue("");
     setIsLoading(true);
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch('/api/ai-bot/query', {
-        method: 'POST',
+      const token = localStorage.getItem("token");
+      const response = await fetch("/api/ai-bot/query", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ query }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to get response');
+        throw new Error("Failed to get response");
       }
 
       const data = await response.json();
@@ -145,26 +157,27 @@ const AIBot: React.FC = () => {
 
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        type: 'bot',
+        type: "bot",
         content: result.response,
         timestamp: new Date(),
         insights: result.insights || [],
         actions: result.actions || [],
         confidence: result.confidence,
         responseTime: result.responseTime,
-        isQuickResponse: result.isQuickResponse
+        isQuickResponse: result.isQuickResponse,
       };
 
-      setMessages(prev => [...prev, botMessage]);
+      setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
-      console.error('Failed to send message:', error);
+      console.error("Failed to send message:", error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        type: 'bot',
-        content: 'Sorry, I encountered an error while processing your request. Please try again.',
-        timestamp: new Date()
+        type: "bot",
+        content:
+          "Sorry, I encountered an error while processing your request. Please try again.",
+        timestamp: new Date(),
       };
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
@@ -184,24 +197,35 @@ const AIBot: React.FC = () => {
   };
 
   const formatTimestamp = (timestamp: Date) => {
-    return timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return timestamp.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   };
 
   const getConfidenceBadgeColor = (confidence?: string) => {
     switch (confidence?.toLowerCase()) {
-      case 'high': return 'bg-green-100 text-green-800';
-      case 'medium': return 'bg-yellow-100 text-yellow-800';
-      case 'low': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case "high":
+        return "bg-green-100 text-green-800";
+      case "medium":
+        return "bg-yellow-100 text-yellow-800";
+      case "low":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'high': return 'border-red-200 bg-red-50';
-      case 'medium': return 'border-yellow-200 bg-yellow-50';
-      case 'low': return 'border-blue-200 bg-blue-50';
-      default: return 'border-gray-200 bg-gray-50';
+      case "high":
+        return "border-red-200 bg-red-50";
+      case "medium":
+        return "border-yellow-200 bg-yellow-50";
+      case "low":
+        return "border-blue-200 bg-blue-50";
+      default:
+        return "border-gray-200 bg-gray-50";
     }
   };
 
@@ -215,21 +239,31 @@ const AIBot: React.FC = () => {
             <div className="flex items-center space-x-3">
               <Bot className="h-8 w-8 text-blue-600" />
               <div>
-                <h1 className="text-xl font-semibold text-gray-900">AI Assistant</h1>
-                <p className="text-sm text-gray-500">Agricultural Supply Chain Intelligence</p>
+                <h1 className="text-xl font-semibold text-gray-900">
+                  AI Assistant
+                </h1>
+                <p className="text-sm text-gray-500">
+                  Agricultural Supply Chain Intelligence
+                </p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
-              <Badge 
-                variant={connectionStatus === 'healthy' ? 'default' : 'destructive'}
-                className={connectionStatus === 'healthy' ? 'bg-green-100 text-green-800' : ''}
+              <Badge
+                variant={
+                  connectionStatus === "healthy" ? "default" : "destructive"
+                }
+                className={
+                  connectionStatus === "healthy"
+                    ? "bg-green-100 text-green-800"
+                    : ""
+                }
               >
-                {connectionStatus === 'healthy' ? (
+                {connectionStatus === "healthy" ? (
                   <CheckCircle className="h-3 w-3 mr-1" />
                 ) : (
                   <AlertTriangle className="h-3 w-3 mr-1" />
                 )}
-                {connectionStatus === 'healthy' ? 'Online' : 'Limited'}
+                {connectionStatus === "healthy" ? "Online" : "Limited"}
               </Badge>
             </div>
           </div>
@@ -241,30 +275,34 @@ const AIBot: React.FC = () => {
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+                className={`flex ${message.type === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div
                   className={`max-w-2xl ${
-                    message.type === 'user'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-white border border-gray-200'
+                    message.type === "user"
+                      ? "bg-blue-600 text-white"
+                      : "bg-white border border-gray-200"
                   } rounded-lg p-4 shadow-sm`}
                 >
                   {/* Message Header */}
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center space-x-2">
-                      {message.type === 'user' ? (
+                      {message.type === "user" ? (
                         <User className="h-4 w-4" />
                       ) : (
                         <Bot className="h-4 w-4 text-blue-600" />
                       )}
                       <span className="text-sm font-medium">
-                        {message.type === 'user' ? 'You' : 'AI Assistant'}
+                        {message.type === "user" ? "You" : "AI Assistant"}
                       </span>
                     </div>
                     <div className="flex items-center space-x-2">
                       {message.confidence && (
-                        <Badge className={getConfidenceBadgeColor(message.confidence)}>
+                        <Badge
+                          className={getConfidenceBadgeColor(
+                            message.confidence,
+                          )}
+                        >
                           {message.confidence}
                         </Badge>
                       )}
@@ -280,21 +318,26 @@ const AIBot: React.FC = () => {
                   </div>
 
                   {/* Response Metadata */}
-                  {message.type === 'bot' && (message.responseTime || message.isQuickResponse) && (
-                    <div className="flex items-center space-x-2 mt-2 text-xs opacity-70">
-                      <Clock className="h-3 w-3" />
-                      <span>
-                        {message.isQuickResponse ? 'Instant response' : `${message.responseTime}ms`}
-                      </span>
-                    </div>
-                  )}
+                  {message.type === "bot" &&
+                    (message.responseTime || message.isQuickResponse) && (
+                      <div className="flex items-center space-x-2 mt-2 text-xs opacity-70">
+                        <Clock className="h-3 w-3" />
+                        <span>
+                          {message.isQuickResponse
+                            ? "Instant response"
+                            : `${message.responseTime}ms`}
+                        </span>
+                      </div>
+                    )}
 
                   {/* Insights */}
                   {message.insights && message.insights.length > 0 && (
                     <div className="mt-3 p-3 bg-blue-50 rounded-lg">
                       <div className="flex items-center space-x-2 mb-2">
                         <Lightbulb className="h-4 w-4 text-blue-600" />
-                        <span className="text-sm font-medium text-blue-900">Key Insights</span>
+                        <span className="text-sm font-medium text-blue-900">
+                          Key Insights
+                        </span>
                       </div>
                       <ul className="space-y-1">
                         {message.insights.map((insight, index) => (
@@ -311,7 +354,9 @@ const AIBot: React.FC = () => {
                     <div className="mt-3 p-3 bg-green-50 rounded-lg">
                       <div className="flex items-center space-x-2 mb-2">
                         <TrendingUp className="h-4 w-4 text-green-600" />
-                        <span className="text-sm font-medium text-green-900">Recommended Actions</span>
+                        <span className="text-sm font-medium text-green-900">
+                          Recommended Actions
+                        </span>
                       </div>
                       <ul className="space-y-1">
                         {message.actions.map((action, index) => (
@@ -324,7 +369,7 @@ const AIBot: React.FC = () => {
                   )}
 
                   {/* Feedback (for bot messages) */}
-                  {message.type === 'bot' && (
+                  {message.type === "bot" && (
                     <div className="flex items-center justify-end space-x-1 mt-3">
                       <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
                         <ThumbsUp className="h-3 w-3" />
@@ -346,8 +391,14 @@ const AIBot: React.FC = () => {
                     <span className="text-sm">AI Assistant is thinking...</span>
                     <div className="flex space-x-1">
                       <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div
+                        className="w-2 h-2 bg-blue-600 rounded-full animate-bounce"
+                        style={{ animationDelay: "0.1s" }}
+                      ></div>
+                      <div
+                        className="w-2 h-2 bg-blue-600 rounded-full animate-bounce"
+                        style={{ animationDelay: "0.2s" }}
+                      ></div>
                     </div>
                   </div>
                 </div>
@@ -374,31 +425,37 @@ const AIBot: React.FC = () => {
 
           {/* Quick Query Buttons */}
           <div className="flex flex-wrap gap-2 mt-3">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => handleQuickQuery('What items are running low on stock?')}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                handleQuickQuery("What items are running low on stock?")
+              }
             >
               Low Stock Items
             </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => handleQuickQuery('Show me current market trends')}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handleQuickQuery("Show me current market trends")}
             >
               Market Trends
             </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => handleQuickQuery('What are my top selling products?')}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                handleQuickQuery("What are my top selling products?")
+              }
             >
               Top Products
             </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => handleQuickQuery('Give me sales insights for this month')}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                handleQuickQuery("Give me sales insights for this month")
+              }
             >
               Sales Insights
             </Button>
@@ -427,13 +484,19 @@ const AIBot: React.FC = () => {
                       onClick={() => handleSuggestionClick(suggestion)}
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-medium text-sm">{suggestion.title}</h4>
+                        <h4 className="font-medium text-sm">
+                          {suggestion.title}
+                        </h4>
                         <Badge variant="outline" className="text-xs">
                           {suggestion.priority}
                         </Badge>
                       </div>
-                      <p className="text-xs text-gray-600 mb-2">{suggestion.message}</p>
-                      <p className="text-xs font-medium text-blue-600">{suggestion.action}</p>
+                      <p className="text-xs text-gray-600 mb-2">
+                        {suggestion.message}
+                      </p>
+                      <p className="text-xs font-medium text-blue-600">
+                        {suggestion.action}
+                      </p>
                       {suggestion.items && suggestion.items.length > 0 && (
                         <div className="mt-2">
                           <p className="text-xs text-gray-500">Items:</p>
@@ -451,7 +514,9 @@ const AIBot: React.FC = () => {
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-gray-500">No suggestions available</p>
+                <p className="text-sm text-gray-500">
+                  No suggestions available
+                </p>
               )}
             </CardContent>
           </Card>
@@ -463,30 +528,30 @@ const AIBot: React.FC = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-start" 
-                  onClick={() => handleQuickQuery('Generate inventory report')}
+                <Button
+                  variant="outline"
+                  className="w-full justify-start"
+                  onClick={() => handleQuickQuery("Generate inventory report")}
                 >
                   Generate Report
                 </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-start" 
-                  onClick={() => handleQuickQuery('What should I reorder?')}
+                <Button
+                  variant="outline"
+                  className="w-full justify-start"
+                  onClick={() => handleQuickQuery("What should I reorder?")}
                 >
                   Reorder Recommendations
                 </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-start" 
-                  onClick={() => handleQuickQuery('Show customer insights')}
+                <Button
+                  variant="outline"
+                  className="w-full justify-start"
+                  onClick={() => handleQuickQuery("Show customer insights")}
                 >
                   Customer Insights
                 </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-start" 
+                <Button
+                  variant="outline"
+                  className="w-full justify-start"
                   onClick={checkHealth}
                 >
                   Check System Status

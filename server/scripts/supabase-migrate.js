@@ -1,11 +1,13 @@
-const { createClient } = require('@supabase/supabase-js');
-require('dotenv').config();
+const { createClient } = require("@supabase/supabase-js");
+require("dotenv").config();
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
 
 if (!supabaseUrl || !supabaseServiceKey) {
-  console.error('❌ Missing Supabase configuration. Please set SUPABASE_URL and SUPABASE_SERVICE_KEY in your .env file');
+  console.error(
+    "❌ Missing Supabase configuration. Please set SUPABASE_URL and SUPABASE_SERVICE_KEY in your .env file",
+  );
   process.exit(1);
 }
 
@@ -260,52 +262,60 @@ ON CONFLICT DO NOTHING;
 
 async function runMigration() {
   try {
-    console.log('🚀 Starting Supabase database migration...');
-    
+    console.log("🚀 Starting Supabase database migration...");
+
     // Execute the main schema creation
-    console.log('📋 Creating database tables and schema...');
-    const { data: schemaResult, error: schemaError } = await supabase.rpc('exec_sql', {
-      sql: createTablesSQL
-    });
-    
+    console.log("📋 Creating database tables and schema...");
+    const { data: schemaResult, error: schemaError } = await supabase.rpc(
+      "exec_sql",
+      {
+        sql: createTablesSQL,
+      },
+    );
+
     if (schemaError) {
-      console.error('❌ Schema creation failed:', schemaError);
+      console.error("❌ Schema creation failed:", schemaError);
       throw schemaError;
     }
-    
-    console.log('✅ Database schema created successfully');
-    
+
+    console.log("✅ Database schema created successfully");
+
     // Insert sample data
-    console.log('📊 Inserting sample data...');
-    const { data: dataResult, error: dataError } = await supabase.rpc('exec_sql', {
-      sql: insertSampleDataSQL
-    });
-    
+    console.log("📊 Inserting sample data...");
+    const { data: dataResult, error: dataError } = await supabase.rpc(
+      "exec_sql",
+      {
+        sql: insertSampleDataSQL,
+      },
+    );
+
     if (dataError) {
-      console.error('❌ Sample data insertion failed:', dataError);
+      console.error("❌ Sample data insertion failed:", dataError);
       throw dataError;
     }
-    
-    console.log('✅ Sample data inserted successfully');
-    
+
+    console.log("✅ Sample data inserted successfully");
+
     // Test the connection by querying a table
-    console.log('🔍 Testing database connection...');
+    console.log("🔍 Testing database connection...");
     const { data: testData, error: testError } = await supabase
-      .from('organizations')
-      .select('*')
+      .from("organizations")
+      .select("*")
       .limit(1);
-    
+
     if (testError) {
-      console.error('❌ Database test failed:', testError);
+      console.error("❌ Database test failed:", testError);
       throw testError;
     }
-    
-    console.log('✅ Database migration completed successfully!');
-    console.log(`📈 Found ${testData?.length || 0} organizations in the database`);
-    
+
+    console.log("✅ Database migration completed successfully!");
+    console.log(
+      `📈 Found ${testData?.length || 0} organizations in the database`,
+    );
+
     return true;
   } catch (error) {
-    console.error('❌ Migration failed:', error.message);
+    console.error("❌ Migration failed:", error.message);
     throw error;
   }
 }
@@ -314,11 +324,11 @@ async function runMigration() {
 if (require.main === module) {
   runMigration()
     .then(() => {
-      console.log('🎉 Migration process completed successfully!');
+      console.log("🎉 Migration process completed successfully!");
       process.exit(0);
     })
     .catch((error) => {
-      console.error('💥 Migration process failed:', error);
+      console.error("💥 Migration process failed:", error);
       process.exit(1);
     });
 }
