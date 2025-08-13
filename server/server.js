@@ -50,10 +50,13 @@ app.get("/", (req, res) => {
     version: "1.0.0",
     endpoints: [
       "GET /api/health - Health check",
-      "POST /api/auth/signin - User login", 
+      "POST /api/auth/signin - User login",
       "POST /api/auth/signup - User registration",
       "GET /api/dashboard/overview - Dashboard data",
-      "GET /api/alerts/stats/overview - Alerts overview"
+      "GET /api/alerts/stats/overview - Alerts overview",
+      "POST /api/ai-bot/query - AI bot query processing",
+      "GET /api/ai-bot/dashboard-data - BigQuery dashboard data",
+      "GET /api/ai-bot/health - AI services health check"
     ]
   });
 });
