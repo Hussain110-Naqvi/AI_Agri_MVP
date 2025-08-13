@@ -46,6 +46,12 @@ export default function Dashboard() {
               >
                 Alerts
               </Link>
+              <Link
+                to="/ai-bot"
+                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] bg-gradient-to-r from-blue-50 to-green-50 px-3 py-1 rounded-lg border border-blue-200"
+              >
+                🤖 AI Assistant
+              </Link>
             </nav>
             <button
               className="sm:hidden p-2 -m-2"
