@@ -37,6 +37,7 @@ const App = () => (
             <Route path="/market-trends" element={<MarketTrends />} />
             <Route path="/alerts" element={<Alerts />} />
             <Route path="/ai-bot" element={<AIBot />} />
+            <Route path="/test" element={<TestRoute />} />
 
             {/* Case variations for common URL patterns */}
             <Route path="/Index" element={<Index />} />
