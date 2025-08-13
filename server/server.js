@@ -7,6 +7,7 @@ const authRoutes = require("./routes/auth-test");
 const placeholderRoutes = require("./routes/placeholder");
 const dashboardRoutes = require("./routes/dashboard-demo");
 const alertsRoutes = require("./routes/alerts-demo");
+const aiBotRoutes = require("./routes/ai-bot");
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/placeholder", placeholderRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/alerts", alertsRoutes);
+app.use("/api/ai-bot", aiBotRoutes);
 
 // Root route handler
 app.get("/", (req, res) => {
@@ -48,11 +50,14 @@ app.get("/", (req, res) => {
     version: "1.0.0",
     endpoints: [
       "GET /api/health - Health check",
-      "POST /api/auth/signin - User login", 
+      "POST /api/auth/signin - User login",
       "POST /api/auth/signup - User registration",
       "GET /api/dashboard/overview - Dashboard data",
-      "GET /api/alerts/stats/overview - Alerts overview"
-    ]
+      "GET /api/alerts/stats/overview - Alerts overview",
+      "POST /api/ai-bot/query - AI bot query processing",
+      "GET /api/ai-bot/dashboard-data - BigQuery dashboard data",
+      "GET /api/ai-bot/health - AI services health check",
+    ],
   });
 });
 

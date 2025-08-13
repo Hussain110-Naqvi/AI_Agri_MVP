@@ -9,6 +9,7 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "migrate": "node scripts/migrate.js",
+    "migrate:supabase": "node scripts/supabase-migrate.js",
     "setup": "node scripts/setup-dev.js",
     "lint": "eslint . --ext .js",
     "lint:fix": "eslint . --ext .js --fix",
