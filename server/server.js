@@ -7,6 +7,7 @@ const authRoutes = require("./routes/auth-test");
 const placeholderRoutes = require("./routes/placeholder");
 const dashboardRoutes = require("./routes/dashboard-demo");
 const alertsRoutes = require("./routes/alerts-demo");
+const aiBotRoutes = require("./routes/ai-bot");
 
 const app = express();
 
