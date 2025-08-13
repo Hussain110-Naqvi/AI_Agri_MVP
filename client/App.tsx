@@ -26,13 +26,30 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
+            {/* Main routes */}
             <Route path="/" element={<Dashboard />} />
+            <Route path="/index" element={<Index />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/supplies" element={<SupplyDetails />} />
             <Route path="/supply-details" element={<SupplyDetails />} />
             <Route path="/purchase-patterns" element={<PurchasePatterns />} />
             <Route path="/market-trends" element={<MarketTrends />} />
             <Route path="/alerts" element={<Alerts />} />
             <Route path="/ai-bot" element={<AIBot />} />
+
+            {/* Case variations for common URL patterns */}
+            <Route path="/Index" element={<Index />} />
+            <Route path="/Dashboard" element={<Dashboard />} />
+            <Route path="/Supplies" element={<SupplyDetails />} />
+            <Route path="/AIBot" element={<AIBot />} />
+            <Route path="/AI-Bot" element={<AIBot />} />
+            <Route path="/Alerts" element={<Alerts />} />
+            <Route path="/MarketTrends" element={<MarketTrends />} />
+            <Route path="/Market-Trends" element={<MarketTrends />} />
+            <Route path="/PurchasePatterns" element={<PurchasePatterns />} />
+            <Route path="/Purchase-Patterns" element={<PurchasePatterns />} />
+
+            {/* 404 fallback */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
