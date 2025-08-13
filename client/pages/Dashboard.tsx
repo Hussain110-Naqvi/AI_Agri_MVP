@@ -124,6 +124,13 @@ export default function Dashboard() {
               >
                 Alerts
               </Link>
+              <Link
+                to="/ai-bot"
+                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2 bg-gradient-to-r from-blue-50 to-green-50 px-3 rounded-lg border border-blue-200"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                🤖 AI Assistant
+              </Link>
             </nav>
           </div>
         )}
