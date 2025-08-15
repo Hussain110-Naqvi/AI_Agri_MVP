@@ -67,6 +67,12 @@ export default function Layout({ children }: LayoutProps) {
               >
                 AI Assistant
               </Link>
+              <Link
+                to="/data-sync"
+                className={`text-sm font-normal text-[#0D1C17] font-['Lexend'] ${isActive("/data-sync") ? "font-medium" : ""}`}
+              >
+                Data Sync
+              </Link>
             </nav>
           </div>
           <div className="flex items-center gap-8">
