@@ -42,6 +42,7 @@ app.use("/api/placeholder", placeholderRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/alerts", alertsRoutes);
 app.use("/api/ai-bot", aiBotRoutes);
+app.use("/api/data-sync", dataSyncRoutes);
 
 // Root route handler
 app.get("/", (req, res) => {
