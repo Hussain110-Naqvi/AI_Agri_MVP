@@ -38,6 +38,7 @@ export default function App() {
               <Route path="/alerts" element={<Alerts />} />
               <Route path="/ai-bot" element={<AIBot />} />
               <Route path="/ai-bot-simple" element={<AIBotSimple />} />
+              <Route path="/data-sync" element={<DataSync />} />
               <Route path="/test" element={<TestRoute />} />
 
               {/* Case variations for common URL patterns */}
