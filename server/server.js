@@ -8,6 +8,7 @@ const placeholderRoutes = require("./routes/placeholder");
 const dashboardRoutes = require("./routes/dashboard-demo");
 const alertsRoutes = require("./routes/alerts-demo");
 const aiBotRoutes = require("./routes/ai-bot");
+const dataSyncRoutes = require("./routes/data-sync");
 
 const app = express();
 
