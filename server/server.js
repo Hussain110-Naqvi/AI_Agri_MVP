@@ -59,6 +59,9 @@ app.get("/", (req, res) => {
       "POST /api/ai-bot/query - AI bot query processing",
       "GET /api/ai-bot/dashboard-data - BigQuery dashboard data",
       "GET /api/ai-bot/health - AI services health check",
+      "POST /api/data-sync/sync - Sync all data from BigQuery to Supabase",
+      "GET /api/data-sync/status - Get sync status and statistics",
+      "GET /api/data-sync/health - Check BigQuery and Supabase connections",
     ],
   });
 });
