@@ -52,6 +52,8 @@ export default function App() {
               <Route path="/Market-Trends" element={<MarketTrends />} />
               <Route path="/PurchasePatterns" element={<PurchasePatterns />} />
               <Route path="/Purchase-Patterns" element={<PurchasePatterns />} />
+              <Route path="/DataSync" element={<DataSync />} />
+              <Route path="/Data-Sync" element={<DataSync />} />
 
               {/* 404 fallback */}
               <Route path="*" element={<NotFound />} />
