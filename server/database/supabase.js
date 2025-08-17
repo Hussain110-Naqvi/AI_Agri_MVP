@@ -24,6 +24,11 @@ try {
 // Test Supabase connection
 const testSupabaseConnection = async () => {
   try {
+    if (!supabase) {
+      console.log("⚠️ Supabase not initialized (running in mock mode)");
+      return false;
+    }
+
     const { data, error } = await supabase
       .from("users")
       .select("count", { count: "exact", head: true });
@@ -37,7 +42,7 @@ const testSupabaseConnection = async () => {
     return true;
   } catch (error) {
     console.error("❌ Supabase connection failed:", error.message);
-    throw error;
+    return false;
   }
 };
 
