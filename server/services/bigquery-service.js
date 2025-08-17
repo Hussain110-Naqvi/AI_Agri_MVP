@@ -384,12 +384,24 @@ class BigQueryService {
    */
   async testConnection() {
     try {
+      if (!this.bigquery) {
+        console.log("❌ BigQuery client not initialized");
+        return false;
+      }
+
+      // Simple test query
       const testQuery = `SELECT 1 as test_value`;
-      await this.executeQuery(testQuery);
-      console.log("✅ BigQuery connection successful");
-      return true;
+      const results = await this.executeQuery(testQuery);
+
+      if (results && results.length > 0) {
+        console.log("✅ BigQuery connection successful");
+        return true;
+      } else {
+        console.log("❌ BigQuery connection failed - no results");
+        return false;
+      }
     } catch (error) {
-      console.error("❌ BigQuery connection failed:", error);
+      console.error("❌ BigQuery connection failed:", error.message);
       return false;
     }
   }
