@@ -44,33 +44,26 @@ class BigQueryService {
    */
   async executeQuery(query, parameters = {}) {
     try {
-      const requestBody = {
-        query: query,
-        useLegacySql: false,
-        parameterMode: Object.keys(parameters).length > 0 ? "NAMED" : undefined,
-        queryParameters: this.formatParameters(parameters),
-      };
-
-      const response = await fetch(
-        `${this.baseUrl}/projects/${this.projectId}/queries`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${await this.getAccessToken()}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error(
-          `BigQuery API error: ${response.status} ${response.statusText}`,
-        );
+      if (!this.bigquery) {
+        throw new Error('BigQuery client not initialized');
       }
 
-      const data = await response.json();
-      return this.formatResults(data);
+      // Prepare query options
+      const options = {
+        query: query,
+        useLegacySql: false,
+      };
+
+      // Add parameters if provided
+      if (Object.keys(parameters).length > 0) {
+        options.params = parameters;
+      }
+
+      // Execute query
+      const [rows] = await this.bigquery.query(options);
+
+      console.log(`✅ BigQuery query executed successfully: ${rows.length} rows returned`);
+      return rows;
     } catch (error) {
       console.error("BigQuery query execution failed:", error);
       throw error;
