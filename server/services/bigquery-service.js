@@ -1,15 +1,39 @@
 require("dotenv").config();
+const { BigQuery } = require('@google-cloud/bigquery');
 
 // BigQuery service for integrating with client's data
 class BigQueryService {
   constructor() {
-    this.baseUrl =
-      process.env.BIGQUERY_API_URL ||
-      "https://bigquery.googleapis.com/bigquery/v2";
     this.projectId = process.env.BIGQUERY_PROJECT_ID;
     this.datasetId = process.env.BIGQUERY_DATASET_ID;
-    this.apiKey = process.env.BIGQUERY_API_KEY;
     this.serviceAccountKey = process.env.BIGQUERY_SERVICE_ACCOUNT_KEY;
+
+    // Initialize BigQuery client
+    this.bigquery = null;
+    this.initializeBigQuery();
+  }
+
+  /**
+   * Initialize BigQuery client with proper authentication
+   */
+  initializeBigQuery() {
+    try {
+      if (this.serviceAccountKey && this.projectId) {
+        // Parse service account key from environment variable
+        const credentials = JSON.parse(this.serviceAccountKey);
+
+        this.bigquery = new BigQuery({
+          projectId: this.projectId,
+          credentials: credentials
+        });
+
+        console.log('✅ BigQuery client initialized with service account');
+      } else {
+        console.log('⚠️ BigQuery credentials missing');
+      }
+    } catch (error) {
+      console.error('❌ Failed to initialize BigQuery:', error.message);
+    }
   }
 
   /**
