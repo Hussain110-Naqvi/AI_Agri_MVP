@@ -67,6 +67,10 @@ const supabaseQuery = {
   // Select with filters
   select: async (table, columns = "*", filters = {}) => {
     try {
+      if (!supabase) {
+        throw new Error('Supabase not initialized');
+      }
+
       let query = supabase.from(table).select(columns);
 
       Object.entries(filters).forEach(([key, value]) => {
