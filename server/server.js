@@ -10,6 +10,7 @@ const alertsRoutes = require("./routes/alerts-demo");
 const aiBotRoutes = require("./routes/ai-bot");
 const dataSyncRoutes = require("./routes/data-sync");
 const testBigQueryRoutes = require("./routes/test-bigquery");
+const systemStatusRoutes = require("./routes/system-status");
 
 const app = express();
 
