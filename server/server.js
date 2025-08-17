@@ -9,6 +9,7 @@ const dashboardRoutes = require("./routes/dashboard-demo");
 const alertsRoutes = require("./routes/alerts-demo");
 const aiBotRoutes = require("./routes/ai-bot");
 const dataSyncRoutes = require("./routes/data-sync");
+const testBigQueryRoutes = require("./routes/test-bigquery");
 
 const app = express();
 
