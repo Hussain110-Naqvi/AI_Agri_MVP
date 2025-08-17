@@ -5,11 +5,21 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
 
-// Create Supabase client for general operations
-const supabase = createClient(supabaseUrl, supabaseKey);
+// Create Supabase client for general operations (with fallback for testing)
+let supabase = null;
+let supabaseAdmin = null;
 
-// Create Supabase client with service role for admin operations
-const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+try {
+  if (supabaseUrl && supabaseKey && supabaseUrl !== 'https://mock-project.supabase.co') {
+    supabase = createClient(supabaseUrl, supabaseKey);
+    supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+    console.log('✅ Supabase clients initialized');
+  } else {
+    console.log('⚠️ Supabase running in mock mode (no real credentials)');
+  }
+} catch (error) {
+  console.log('⚠️ Supabase initialization failed, running without database:', error.message);
+}
 
 // Test Supabase connection
 const testSupabaseConnection = async () => {
