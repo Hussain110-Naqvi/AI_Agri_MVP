@@ -1,5 +1,10 @@
 import Layout from "../components/Layout";
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
 import { Link } from "react-router-dom";
 import { CheckCircle, ArrowRight, Zap } from "lucide-react";
 
@@ -16,7 +21,8 @@ export default function TestRoute() {
               </h1>
             </div>
             <p className="text-[#45A180] text-sm sm:text-base font-['Lexend']">
-              If you can see this, routing is working correctly in the AgriSupply Insights platform.
+              If you can see this, routing is working correctly in the
+              AgriSupply Insights platform.
             </p>
           </div>
 
@@ -31,19 +37,27 @@ export default function TestRoute() {
               <CardContent className="p-6 pt-0">
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-[#45A180] font-['Lexend']">React Router</span>
+                    <span className="text-sm text-[#45A180] font-['Lexend']">
+                      React Router
+                    </span>
                     <CheckCircle className="w-4 h-4 text-green-500" />
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-[#45A180] font-['Lexend']">Layout Component</span>
+                    <span className="text-sm text-[#45A180] font-['Lexend']">
+                      Layout Component
+                    </span>
                     <CheckCircle className="w-4 h-4 text-green-500" />
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-[#45A180] font-['Lexend']">Header Navigation</span>
+                    <span className="text-sm text-[#45A180] font-['Lexend']">
+                      Header Navigation
+                    </span>
                     <CheckCircle className="w-4 h-4 text-green-500" />
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-[#45A180] font-['Lexend']">Responsive Design</span>
+                    <span className="text-sm text-[#45A180] font-['Lexend']">
+                      Responsive Design
+                    </span>
                     <CheckCircle className="w-4 h-4 text-green-500" />
                   </div>
                 </div>
@@ -67,7 +81,7 @@ export default function TestRoute() {
                     </span>
                     <ArrowRight className="w-4 h-4 text-[#45A180]" />
                   </Link>
-                  
+
                   <Link
                     to="/ai-bot"
                     className="flex items-center justify-between p-3 bg-[#F7FCFA] rounded-lg border border-[#E5E8EB] hover:bg-[#E5F5F0] transition-colors"
@@ -77,7 +91,7 @@ export default function TestRoute() {
                     </span>
                     <ArrowRight className="w-4 h-4 text-[#45A180]" />
                   </Link>
-                  
+
                   <Link
                     to="/supplies"
                     className="flex items-center justify-between p-3 bg-[#F7FCFA] rounded-lg border border-[#E5E8EB] hover:bg-[#E5F5F0] transition-colors"
@@ -87,7 +101,7 @@ export default function TestRoute() {
                     </span>
                     <ArrowRight className="w-4 h-4 text-[#45A180]" />
                   </Link>
-                  
+
                   <Link
                     to="/alerts"
                     className="flex items-center justify-between p-3 bg-[#F7FCFA] rounded-lg border border-[#E5E8EB] hover:bg-[#E5F5F0] transition-colors"
@@ -119,7 +133,8 @@ export default function TestRoute() {
                   🎉 All Systems Operational
                 </h3>
                 <p className="text-[#45A180] text-sm font-['Lexend']">
-                  The AgriSupply Insights platform is running smoothly with all navigation and routing working correctly.
+                  The AgriSupply Insights platform is running smoothly with all
+                  navigation and routing working correctly.
                 </p>
               </div>
             </CardContent>

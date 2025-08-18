@@ -1,16 +1,16 @@
-const { Client } = require('pg');
-require('dotenv').config();
+const { Client } = require("pg");
+require("dotenv").config();
 
 // Direct PostgreSQL connection for migration
 const client = new Client({
-  host: 'db.tikavcrrcteebxsrwfzi.supabase.co',
+  host: "db.tikavcrrcteebxsrwfzi.supabase.co",
   port: 5432,
-  database: 'postgres',
-  user: 'postgres',
-  password: '9UG%Lhj2B96Lb%k',
+  database: "postgres",
+  user: "postgres",
+  password: "9UG%Lhj2B96Lb%k",
   ssl: {
-    rejectUnauthorized: false
-  }
+    rejectUnauthorized: false,
+  },
 });
 
 // SQL for creating the database schema
@@ -236,36 +236,42 @@ ON CONFLICT DO NOTHING;
 
 async function runMigration() {
   try {
-    console.log('🚀 Starting PostgreSQL database migration...');
+    console.log("🚀 Starting PostgreSQL database migration...");
     console.log(`🔗 Connecting to: db.tikavcrrcteebxsrwfzi.supabase.co`);
 
     // Connect to database
     await client.connect();
-    console.log('✅ Connected to PostgreSQL database');
+    console.log("✅ Connected to PostgreSQL database");
 
     // Execute the main schema creation
-    console.log('📋 Creating database tables and schema...');
+    console.log("📋 Creating database tables and schema...");
     await client.query(createTablesSQL);
-    console.log('✅ Database schema created successfully');
+    console.log("✅ Database schema created successfully");
 
     // Insert sample data
-    console.log('📊 Inserting sample data...');
+    console.log("📊 Inserting sample data...");
     await client.query(insertSampleDataSQL);
-    console.log('✅ Sample data inserted successfully');
+    console.log("✅ Sample data inserted successfully");
 
     // Test the connection by querying a table
-    console.log('🔍 Testing database queries...');
-    const testResult = await client.query('SELECT COUNT(*) as org_count FROM organizations');
+    console.log("🔍 Testing database queries...");
+    const testResult = await client.query(
+      "SELECT COUNT(*) as org_count FROM organizations",
+    );
     const orgCount = testResult.rows[0].org_count;
-    
-    const inventoryResult = await client.query('SELECT COUNT(*) as inv_count FROM inventory');
+
+    const inventoryResult = await client.query(
+      "SELECT COUNT(*) as inv_count FROM inventory",
+    );
     const invCount = inventoryResult.rows[0].inv_count;
 
     console.log(`✅ Database migration completed successfully!`);
-    console.log(`📈 Found ${orgCount} organizations and ${invCount} inventory items`);
-    
+    console.log(
+      `📈 Found ${orgCount} organizations and ${invCount} inventory items`,
+    );
+
     // List all tables
-    console.log('📋 Created tables:');
+    console.log("📋 Created tables:");
     const tablesResult = await client.query(`
       SELECT table_name 
       FROM information_schema.tables 
@@ -273,18 +279,18 @@ async function runMigration() {
       AND table_type = 'BASE TABLE'
       ORDER BY table_name
     `);
-    
-    tablesResult.rows.forEach(row => {
+
+    tablesResult.rows.forEach((row) => {
       console.log(`   - ${row.table_name}`);
     });
 
     return true;
   } catch (error) {
-    console.error('❌ Migration failed:', error.message);
+    console.error("❌ Migration failed:", error.message);
     throw error;
   } finally {
     await client.end();
-    console.log('🔌 Database connection closed');
+    console.log("🔌 Database connection closed");
   }
 }
 
@@ -292,13 +298,15 @@ async function runMigration() {
 if (require.main === module) {
   runMigration()
     .then(() => {
-      console.log('🎉 Migration process completed successfully!');
-      console.log('🌐 Your Supabase database is now ready with AgriSupply schema');
-      console.log('🔗 Database URL: https://tikavcrrcteebxsrwfzi.supabase.co');
+      console.log("🎉 Migration process completed successfully!");
+      console.log(
+        "🌐 Your Supabase database is now ready with AgriSupply schema",
+      );
+      console.log("🔗 Database URL: https://tikavcrrcteebxsrwfzi.supabase.co");
       process.exit(0);
     })
     .catch((error) => {
-      console.error('💥 Migration process failed:', error);
+      console.error("💥 Migration process failed:", error);
       process.exit(1);
     });
 }

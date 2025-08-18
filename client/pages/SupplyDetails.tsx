@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout";
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
 import {
@@ -24,8 +29,8 @@ const inventoryData = [
     category: "Fertilizer",
     currentStock: 45,
     reorderLevel: 50,
-    unitCost: 25.50,
-    unitPrice: 35.00,
+    unitCost: 25.5,
+    unitPrice: 35.0,
     supplier: "AgriCorp Supplies",
     lastOrdered: "2 weeks ago",
     status: "low",
@@ -37,8 +42,8 @@ const inventoryData = [
     category: "Seeds",
     currentStock: 120,
     reorderLevel: 75,
-    unitCost: 45.00,
-    unitPrice: 65.00,
+    unitCost: 45.0,
+    unitPrice: 65.0,
     supplier: "AgriCorp Supplies",
     lastOrdered: "1 month ago",
     status: "good",
@@ -51,7 +56,7 @@ const inventoryData = [
     currentStock: 25,
     reorderLevel: 30,
     unitCost: 18.75,
-    unitPrice: 28.50,
+    unitPrice: 28.5,
     supplier: "AgriCorp Supplies",
     lastOrdered: "3 weeks ago",
     status: "critical",
@@ -63,8 +68,8 @@ const inventoryData = [
     category: "Fertilizer",
     currentStock: 85,
     reorderLevel: 40,
-    unitCost: 22.00,
-    unitPrice: 32.00,
+    unitCost: 22.0,
+    unitPrice: 32.0,
     supplier: "Farm Equipment Co",
     lastOrdered: "1 week ago",
     status: "good",
@@ -76,8 +81,8 @@ const inventoryData = [
     category: "Seeds",
     currentStock: 60,
     reorderLevel: 50,
-    unitCost: 38.00,
-    unitPrice: 52.00,
+    unitCost: 38.0,
+    unitPrice: 52.0,
     supplier: "AgriCorp Supplies",
     lastOrdered: "2 weeks ago",
     status: "good",
@@ -88,7 +93,12 @@ const inventoryStats = [
   { label: "Total Items", value: 156, icon: Package, color: "bg-blue-500" },
   { label: "Low Stock", value: 8, icon: AlertTriangle, color: "bg-orange-500" },
   { label: "Critical", value: 3, icon: AlertTriangle, color: "bg-red-500" },
-  { label: "Total Value", value: "$47,850", icon: TrendingUp, color: "bg-green-500" },
+  {
+    label: "Total Value",
+    value: "$47,850",
+    icon: TrendingUp,
+    color: "bg-green-500",
+  },
 ];
 
 const categories = ["All", "Fertilizer", "Seeds", "Pesticides", "Equipment"];
@@ -100,28 +110,39 @@ export default function SupplyDetails() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "critical": return "bg-red-100 text-red-800 border-red-200";
-      case "low": return "bg-yellow-100 text-yellow-800 border-yellow-200";
-      case "good": return "bg-green-100 text-green-800 border-green-200";
-      default: return "bg-gray-100 text-gray-800 border-gray-200";
+      case "critical":
+        return "bg-red-100 text-red-800 border-red-200";
+      case "low":
+        return "bg-yellow-100 text-yellow-800 border-yellow-200";
+      case "good":
+        return "bg-green-100 text-green-800 border-green-200";
+      default:
+        return "bg-gray-100 text-gray-800 border-gray-200";
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case "critical": return <AlertTriangle className="w-4 h-4 text-red-600" />;
-      case "low": return <AlertTriangle className="w-4 h-4 text-yellow-600" />;
-      case "good": return <Package className="w-4 h-4 text-green-600" />;
-      default: return <Package className="w-4 h-4 text-gray-600" />;
+      case "critical":
+        return <AlertTriangle className="w-4 h-4 text-red-600" />;
+      case "low":
+        return <AlertTriangle className="w-4 h-4 text-yellow-600" />;
+      case "good":
+        return <Package className="w-4 h-4 text-green-600" />;
+      default:
+        return <Package className="w-4 h-4 text-gray-600" />;
     }
   };
 
-  const filteredInventory = inventoryData.filter(item => {
-    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         item.sku.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
-    const matchesStatus = selectedStatus === "all" || item.status === selectedStatus;
-    
+  const filteredInventory = inventoryData.filter((item) => {
+    const matchesSearch =
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.sku.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory =
+      selectedCategory === "All" || item.category === selectedCategory;
+    const matchesStatus =
+      selectedStatus === "all" || item.status === selectedStatus;
+
     return matchesSearch && matchesCategory && matchesStatus;
   });
 
@@ -160,11 +181,18 @@ export default function SupplyDetails() {
           {/* Inventory Statistics */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
             {inventoryStats.map((stat, index) => (
-              <Card key={index} className="bg-white border border-[#E5E8EB] shadow-sm">
+              <Card
+                key={index}
+                className="bg-white border border-[#E5E8EB] shadow-sm"
+              >
                 <CardContent className="p-4 sm:p-6">
                   <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-lg ${stat.color} bg-opacity-10 flex items-center justify-center`}>
-                      <stat.icon className={`w-5 h-5 ${stat.color.replace('bg-', 'text-')}`} />
+                    <div
+                      className={`w-10 h-10 rounded-lg ${stat.color} bg-opacity-10 flex items-center justify-center`}
+                    >
+                      <stat.icon
+                        className={`w-5 h-5 ${stat.color.replace("bg-", "text-")}`}
+                      />
                     </div>
                     <div>
                       <p className="text-2xl sm:text-3xl font-bold text-[#0D1C17] font-['Lexend']">
@@ -206,7 +234,9 @@ export default function SupplyDetails() {
                   {categories.map((category) => (
                     <Button
                       key={category}
-                      variant={selectedCategory === category ? "default" : "outline"}
+                      variant={
+                        selectedCategory === category ? "default" : "outline"
+                      }
                       size="sm"
                       onClick={() => setSelectedCategory(category)}
                       className="text-xs"
@@ -229,7 +259,9 @@ export default function SupplyDetails() {
                   ].map((status) => (
                     <Button
                       key={status.id}
-                      variant={selectedStatus === status.id ? "default" : "outline"}
+                      variant={
+                        selectedStatus === status.id ? "default" : "outline"
+                      }
                       size="sm"
                       onClick={() => setSelectedStatus(status.id)}
                       className="text-xs"
@@ -253,7 +285,9 @@ export default function SupplyDetails() {
               {filteredInventory.length === 0 ? (
                 <div className="p-8 text-center">
                   <Package className="w-12 h-12 text-[#45A180] mx-auto mb-4 opacity-50" />
-                  <p className="text-[#45A180] font-['Lexend']">No inventory items found</p>
+                  <p className="text-[#45A180] font-['Lexend']">
+                    No inventory items found
+                  </p>
                 </div>
               ) : (
                 <div className="overflow-x-auto">
@@ -285,7 +319,10 @@ export default function SupplyDetails() {
                     </thead>
                     <tbody className="divide-y divide-[#F0F0F0]">
                       {filteredInventory.map((item) => (
-                        <tr key={item.id} className="hover:bg-[#F7FCFA] transition-colors">
+                        <tr
+                          key={item.id}
+                          className="hover:bg-[#F7FCFA] transition-colors"
+                        >
                           <td className="py-3 px-4 sm:px-6">
                             <div>
                               <div className="font-medium text-[#0D1C17] text-sm font-['Lexend']">
@@ -319,20 +356,34 @@ export default function SupplyDetails() {
                           <td className="py-3 px-4 sm:px-6">
                             <div className="flex items-center gap-2">
                               {getStatusIcon(item.status)}
-                              <Badge className={`text-xs ${getStatusColor(item.status)}`}>
+                              <Badge
+                                className={`text-xs ${getStatusColor(item.status)}`}
+                              >
                                 {item.status}
                               </Badge>
                             </div>
                           </td>
                           <td className="py-3 px-4 sm:px-6">
                             <div className="flex items-center gap-1">
-                              <Button variant="ghost" size="sm" className="text-xs p-1">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="text-xs p-1"
+                              >
                                 <Eye className="w-3 h-3" />
                               </Button>
-                              <Button variant="ghost" size="sm" className="text-xs p-1">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="text-xs p-1"
+                              >
                                 <Edit className="w-3 h-3" />
                               </Button>
-                              <Button variant="ghost" size="sm" className="text-xs p-1">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="text-xs p-1"
+                              >
                                 <MoreHorizontal className="w-3 h-3" />
                               </Button>
                             </div>

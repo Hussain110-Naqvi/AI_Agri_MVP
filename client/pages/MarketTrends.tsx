@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout";
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import {
   LineChart,
@@ -15,25 +20,25 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import { 
-  TrendingUp, 
-  TrendingDown, 
-  Cloud, 
-  Thermometer, 
+import {
+  TrendingUp,
+  TrendingDown,
+  Cloud,
+  Thermometer,
   Droplets,
   Calendar,
   Filter,
-  Download
+  Download,
 } from "lucide-react";
 
 const priceData = [
-  { date: "Jan 1", corn: 6.25, soybeans: 14.50, wheat: 8.75, fertilizer: 1200 },
-  { date: "Jan 15", corn: 6.18, soybeans: 14.75, wheat: 8.60, fertilizer: 1180 },
-  { date: "Feb 1", corn: 6.35, soybeans: 14.90, wheat: 8.95, fertilizer: 1220 },
-  { date: "Feb 15", corn: 6.42, soybeans: 15.10, wheat: 9.15, fertilizer: 1250 },
-  { date: "Mar 1", corn: 6.55, soybeans: 15.25, wheat: 9.30, fertilizer: 1280 },
-  { date: "Mar 15", corn: 6.48, soybeans: 14.95, wheat: 9.10, fertilizer: 1260 },
-  { date: "Apr 1", corn: 6.70, soybeans: 15.40, wheat: 9.45, fertilizer: 1300 },
+  { date: "Jan 1", corn: 6.25, soybeans: 14.5, wheat: 8.75, fertilizer: 1200 },
+  { date: "Jan 15", corn: 6.18, soybeans: 14.75, wheat: 8.6, fertilizer: 1180 },
+  { date: "Feb 1", corn: 6.35, soybeans: 14.9, wheat: 8.95, fertilizer: 1220 },
+  { date: "Feb 15", corn: 6.42, soybeans: 15.1, wheat: 9.15, fertilizer: 1250 },
+  { date: "Mar 1", corn: 6.55, soybeans: 15.25, wheat: 9.3, fertilizer: 1280 },
+  { date: "Mar 15", corn: 6.48, soybeans: 14.95, wheat: 9.1, fertilizer: 1260 },
+  { date: "Apr 1", corn: 6.7, soybeans: 15.4, wheat: 9.45, fertilizer: 1300 },
 ];
 
 const commodityOverview = [
@@ -87,19 +92,22 @@ const marketNews = [
     title: "Corn Futures Rally on Export Demand",
     time: "2 hours ago",
     impact: "Positive",
-    summary: "Strong export demand from China drives corn prices higher in morning trading.",
+    summary:
+      "Strong export demand from China drives corn prices higher in morning trading.",
   },
   {
     title: "Weather Concerns in Argentina",
     time: "5 hours ago",
     impact: "Neutral",
-    summary: "Drought conditions in Argentina may affect global soybean supply projections.",
+    summary:
+      "Drought conditions in Argentina may affect global soybean supply projections.",
   },
   {
     title: "Fertilizer Costs Continue to Rise",
     time: "1 day ago",
     impact: "Negative",
-    summary: "Energy costs and supply chain issues drive fertilizer prices to new highs.",
+    summary:
+      "Energy costs and supply chain issues drive fertilizer prices to new highs.",
   },
 ];
 
@@ -146,7 +154,9 @@ export default function MarketTrends() {
             {timeframes.map((timeframe) => (
               <Button
                 key={timeframe}
-                variant={selectedTimeframe === timeframe ? "default" : "outline"}
+                variant={
+                  selectedTimeframe === timeframe ? "default" : "outline"
+                }
                 size="sm"
                 onClick={() => setSelectedTimeframe(timeframe)}
                 className="text-xs"
@@ -154,14 +164,16 @@ export default function MarketTrends() {
                 {timeframe}
               </Button>
             ))}
-            
+
             <span className="text-sm font-medium text-[#0D1C17] font-['Lexend'] ml-4">
               Commodity:
             </span>
             {commodities.map((commodity) => (
               <Button
                 key={commodity}
-                variant={selectedCommodity === commodity ? "default" : "outline"}
+                variant={
+                  selectedCommodity === commodity ? "default" : "outline"
+                }
                 size="sm"
                 onClick={() => setSelectedCommodity(commodity)}
                 className="text-xs"
@@ -174,34 +186,50 @@ export default function MarketTrends() {
           {/* Commodity Overview Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
             {commodityOverview.map((commodity, index) => (
-              <Card key={index} className="bg-white border border-[#E5E8EB] shadow-sm">
+              <Card
+                key={index}
+                className="bg-white border border-[#E5E8EB] shadow-sm"
+              >
                 <CardContent className="p-4 sm:p-6">
                   <div className="flex items-center justify-between mb-3">
                     <h3 className="text-base font-bold text-[#0D1C17] font-['Lexend']">
                       {commodity.name}
                     </h3>
-                    <div className={`flex items-center gap-1 ${
-                      commodity.trend === "up" ? "text-green-600" : "text-red-600"
-                    }`}>
+                    <div
+                      className={`flex items-center gap-1 ${
+                        commodity.trend === "up"
+                          ? "text-green-600"
+                          : "text-red-600"
+                      }`}
+                    >
                       {commodity.trend === "up" ? (
                         <TrendingUp className="w-4 h-4" />
                       ) : (
                         <TrendingDown className="w-4 h-4" />
                       )}
-                      <span className="text-xs font-bold">{commodity.change}</span>
+                      <span className="text-xs font-bold">
+                        {commodity.change}
+                      </span>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <div className="text-xl sm:text-2xl font-bold text-[#0D1C17] font-['Lexend']">
                       {commodity.currentPrice}
                     </div>
                     <div className="flex justify-between text-xs font-['Lexend']">
-                      <span className="text-[#45A180]">Volume: {commodity.volume}</span>
-                      <span className={`font-medium ${
-                        commodity.forecast === "Bullish" ? "text-green-600" :
-                        commodity.forecast === "Bearish" ? "text-red-600" : "text-yellow-600"
-                      }`}>
+                      <span className="text-[#45A180]">
+                        Volume: {commodity.volume}
+                      </span>
+                      <span
+                        className={`font-medium ${
+                          commodity.forecast === "Bullish"
+                            ? "text-green-600"
+                            : commodity.forecast === "Bearish"
+                              ? "text-red-600"
+                              : "text-yellow-600"
+                        }`}
+                      >
                         {commodity.forecast}
                       </span>
                     </div>
@@ -224,28 +252,49 @@ export default function MarketTrends() {
                 <div className="h-64 sm:h-80">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={priceData}>
-                      <XAxis 
-                        dataKey="date" 
+                      <XAxis
+                        dataKey="date"
                         tick={{ fontSize: 10 }}
                         axisLine={false}
                       />
-                      <YAxis 
-                        tick={{ fontSize: 10 }}
-                        axisLine={false}
-                      />
-                      <Tooltip 
-                        contentStyle={{ 
-                          backgroundColor: 'white', 
-                          border: '1px solid #E5E8EB',
-                          borderRadius: '8px',
-                          fontSize: '12px'
+                      <YAxis tick={{ fontSize: 10 }} axisLine={false} />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: "white",
+                          border: "1px solid #E5E8EB",
+                          borderRadius: "8px",
+                          fontSize: "12px",
                         }}
                       />
                       <Legend />
-                      <Line type="monotone" dataKey="corn" stroke="#45A180" strokeWidth={2} name="Corn" />
-                      <Line type="monotone" dataKey="soybeans" stroke="#7DD3FC" strokeWidth={2} name="Soybeans" />
-                      <Line type="monotone" dataKey="wheat" stroke="#FB7185" strokeWidth={2} name="Wheat" />
-                      <Line type="monotone" dataKey="fertilizer" stroke="#A78BFA" strokeWidth={2} name="Fertilizer" />
+                      <Line
+                        type="monotone"
+                        dataKey="corn"
+                        stroke="#45A180"
+                        strokeWidth={2}
+                        name="Corn"
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="soybeans"
+                        stroke="#7DD3FC"
+                        strokeWidth={2}
+                        name="Soybeans"
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="wheat"
+                        stroke="#FB7185"
+                        strokeWidth={2}
+                        name="Wheat"
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="fertilizer"
+                        stroke="#A78BFA"
+                        strokeWidth={2}
+                        name="Fertilizer"
+                      />
                     </LineChart>
                   </ResponsiveContainer>
                 </div>
@@ -263,15 +312,12 @@ export default function MarketTrends() {
                 <div className="h-64 sm:h-80">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={priceData}>
-                      <XAxis 
-                        dataKey="date" 
+                      <XAxis
+                        dataKey="date"
                         tick={{ fontSize: 10 }}
                         axisLine={false}
                       />
-                      <YAxis 
-                        tick={{ fontSize: 10 }}
-                        axisLine={false}
-                      />
+                      <YAxis tick={{ fontSize: 10 }} axisLine={false} />
                       <Tooltip />
                       <Bar dataKey="corn" fill="#45A180" name="Corn" />
                       <Bar dataKey="soybeans" fill="#7DD3FC" name="Soybeans" />
@@ -296,7 +342,10 @@ export default function MarketTrends() {
               <CardContent className="p-4 sm:p-6 pt-0">
                 <div className="space-y-4">
                   {weatherData.map((region, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 bg-[#F7FCFA] rounded-lg">
+                    <div
+                      key={index}
+                      className="flex items-center justify-between p-3 bg-[#F7FCFA] rounded-lg"
+                    >
                       <div className="flex-1">
                         <h4 className="font-medium text-[#0D1C17] text-sm font-['Lexend']">
                           {region.region}
@@ -308,11 +357,15 @@ export default function MarketTrends() {
                       <div className="flex items-center gap-4 text-sm font-['Lexend']">
                         <div className="flex items-center gap-1">
                           <Thermometer className="w-4 h-4 text-orange-500" />
-                          <span className="text-[#0D1C17]">{region.temp}°F</span>
+                          <span className="text-[#0D1C17]">
+                            {region.temp}°F
+                          </span>
                         </div>
                         <div className="flex items-center gap-1">
                           <Droplets className="w-4 h-4 text-blue-500" />
-                          <span className="text-[#0D1C17]">{region.rainfall}"</span>
+                          <span className="text-[#0D1C17]">
+                            {region.rainfall}"
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -331,16 +384,23 @@ export default function MarketTrends() {
               <CardContent className="p-4 sm:p-6 pt-0">
                 <div className="space-y-4">
                   {marketNews.map((news, index) => (
-                    <div key={index} className="border-l-4 border-[#45A180] pl-4 py-2">
+                    <div
+                      key={index}
+                      className="border-l-4 border-[#45A180] pl-4 py-2"
+                    >
                       <div className="flex items-start justify-between gap-2 mb-2">
                         <h4 className="font-medium text-[#0D1C17] text-sm font-['Lexend'] leading-snug">
                           {news.title}
                         </h4>
-                        <span className={`text-xs px-2 py-1 rounded-full font-['Lexend'] flex-shrink-0 ${
-                          news.impact === "Positive" ? "bg-green-100 text-green-700" :
-                          news.impact === "Negative" ? "bg-red-100 text-red-700" :
-                          "bg-yellow-100 text-yellow-700"
-                        }`}>
+                        <span
+                          className={`text-xs px-2 py-1 rounded-full font-['Lexend'] flex-shrink-0 ${
+                            news.impact === "Positive"
+                              ? "bg-green-100 text-green-700"
+                              : news.impact === "Negative"
+                                ? "bg-red-100 text-red-700"
+                                : "bg-yellow-100 text-yellow-700"
+                          }`}
+                        >
                           {news.impact}
                         </span>
                       </div>

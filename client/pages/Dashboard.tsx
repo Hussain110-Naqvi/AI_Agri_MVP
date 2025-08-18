@@ -1,6 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Bell, TrendingUp, DollarSign, Package, Users, BarChart3 } from "lucide-react";
+import {
+  Bell,
+  TrendingUp,
+  DollarSign,
+  Package,
+  Users,
+  BarChart3,
+} from "lucide-react";
 import Layout from "../components/Layout";
 import MetricCard from "../components/MetricCard";
 import ChartCard from "../components/ChartCard";
@@ -69,7 +76,7 @@ export default function Dashboard() {
                     View All →
                   </Link>
                 </div>
-                
+
                 {/* Responsive Table */}
                 <div className="overflow-x-auto -mx-4 sm:mx-0">
                   <div className="inline-block min-w-full align-middle">
@@ -241,7 +248,7 @@ export default function Dashboard() {
                       </span>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-3 p-3 bg-[#F0F8FF] rounded-lg border border-blue-200">
                     <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
                       <TrendingUp className="w-4 h-4 text-blue-600" />

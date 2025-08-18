@@ -1,6 +1,11 @@
 import React from "react";
 import Layout from "../components/Layout";
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
 import {
   LineChart,
   Line,
@@ -20,8 +25,10 @@ import { TrendingUp, Users, DollarSign, Calendar, Eye } from "lucide-react";
 const segmentationData = [
   {
     segment: "High-Demand Crops",
-    description: "Customers focusing on high-demand crops like corn and soybeans.",
-    predictedNeeds: "Increased fertilizer and pesticide needs over the next quarter.",
+    description:
+      "Customers focusing on high-demand crops like corn and soybeans.",
+    predictedNeeds:
+      "Increased fertilizer and pesticide needs over the next quarter.",
     optimalPurchaseTime: "Purchase during off-peak season to maximize savings.",
     potentialSavings: "$5,000 - $10,000",
     customers: 156,
@@ -29,7 +36,8 @@ const segmentationData = [
   },
   {
     segment: "Specialty Crops",
-    description: "Customers growing specialty crops such as fruits and vegetables.",
+    description:
+      "Customers growing specialty crops such as fruits and vegetables.",
     predictedNeeds: "Consistent need for specific nutrients and pest control.",
     optimalPurchaseTime: "Optimal purchase times vary; monitor market trends.",
     potentialSavings: "$2,000 - $5,000",
@@ -40,7 +48,8 @@ const segmentationData = [
     segment: "Livestock Feed",
     description: "Customers involved in livestock farming.",
     predictedNeeds: "High demand for feed supplements and related products.",
-    optimalPurchaseTime: "Purchase in bulk during harvest season for cost efficiency.",
+    optimalPurchaseTime:
+      "Purchase in bulk during harvest season for cost efficiency.",
     potentialSavings: "$3,000 - $7,000",
     customers: 124,
     revenue: 298000,
@@ -122,8 +131,12 @@ export default function PurchasePatterns() {
               <CardContent className="p-4 sm:p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-[#45A180] text-sm font-['Lexend']">Total Customers</p>
-                    <p className="text-2xl sm:text-3xl font-bold text-[#0D1C17] font-['Lexend']">369</p>
+                    <p className="text-[#45A180] text-sm font-['Lexend']">
+                      Total Customers
+                    </p>
+                    <p className="text-2xl sm:text-3xl font-bold text-[#0D1C17] font-['Lexend']">
+                      369
+                    </p>
                   </div>
                   <Users className="w-8 h-8 text-[#45A180]" />
                 </div>
@@ -134,8 +147,12 @@ export default function PurchasePatterns() {
               <CardContent className="p-4 sm:p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-[#45A180] text-sm font-['Lexend']">Avg Purchase</p>
-                    <p className="text-2xl sm:text-3xl font-bold text-[#0D1C17] font-['Lexend']">$2,150</p>
+                    <p className="text-[#45A180] text-sm font-['Lexend']">
+                      Avg Purchase
+                    </p>
+                    <p className="text-2xl sm:text-3xl font-bold text-[#0D1C17] font-['Lexend']">
+                      $2,150
+                    </p>
                   </div>
                   <DollarSign className="w-8 h-8 text-[#45A180]" />
                 </div>
@@ -146,8 +163,12 @@ export default function PurchasePatterns() {
               <CardContent className="p-4 sm:p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-[#45A180] text-sm font-['Lexend']">Purchase Frequency</p>
-                    <p className="text-2xl sm:text-3xl font-bold text-[#0D1C17] font-['Lexend']">6.2/yr</p>
+                    <p className="text-[#45A180] text-sm font-['Lexend']">
+                      Purchase Frequency
+                    </p>
+                    <p className="text-2xl sm:text-3xl font-bold text-[#0D1C17] font-['Lexend']">
+                      6.2/yr
+                    </p>
                   </div>
                   <Calendar className="w-8 h-8 text-[#45A180]" />
                 </div>
@@ -158,8 +179,12 @@ export default function PurchasePatterns() {
               <CardContent className="p-4 sm:p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-[#45A180] text-sm font-['Lexend']">Growth Rate</p>
-                    <p className="text-2xl sm:text-3xl font-bold text-[#0D1C17] font-['Lexend']">+15.3%</p>
+                    <p className="text-[#45A180] text-sm font-['Lexend']">
+                      Growth Rate
+                    </p>
+                    <p className="text-2xl sm:text-3xl font-bold text-[#0D1C17] font-['Lexend']">
+                      +15.3%
+                    </p>
                   </div>
                   <TrendingUp className="w-8 h-8 text-[#45A180]" />
                 </div>
@@ -180,20 +205,17 @@ export default function PurchasePatterns() {
                 <div className="h-64 sm:h-80">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={monthlyTrends}>
-                      <XAxis 
-                        dataKey="month" 
+                      <XAxis
+                        dataKey="month"
                         tick={{ fontSize: 12 }}
                         axisLine={false}
                       />
-                      <YAxis 
-                        tick={{ fontSize: 12 }}
-                        axisLine={false}
-                      />
+                      <YAxis tick={{ fontSize: 12 }} axisLine={false} />
                       <Tooltip />
-                      <Line 
-                        type="monotone" 
-                        dataKey="purchases" 
-                        stroke="#45A180" 
+                      <Line
+                        type="monotone"
+                        dataKey="purchases"
+                        stroke="#45A180"
                         strokeWidth={2}
                         dot={{ fill: "#45A180", strokeWidth: 2, r: 4 }}
                       />
@@ -246,7 +268,10 @@ export default function PurchasePatterns() {
             <CardContent className="p-4 sm:p-6 pt-0">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
                 {segmentationData.map((segment, index) => (
-                  <div key={index} className="p-4 border border-[#E5E8EB] rounded-lg bg-[#F7FCFA]">
+                  <div
+                    key={index}
+                    className="p-4 border border-[#E5E8EB] rounded-lg bg-[#F7FCFA]"
+                  >
                     <div className="flex items-center justify-between mb-3">
                       <h3 className="text-base font-bold text-[#0D1C17] font-['Lexend']">
                         {segment.segment}
@@ -255,19 +280,27 @@ export default function PurchasePatterns() {
                         {segment.customers} customers
                       </span>
                     </div>
-                    
+
                     <p className="text-sm text-[#45A180] font-['Lexend'] mb-3 leading-relaxed">
                       {segment.description}
                     </p>
-                    
+
                     <div className="space-y-2 text-xs font-['Lexend']">
                       <div>
-                        <span className="font-medium text-[#0D1C17]">Revenue: </span>
-                        <span className="text-[#45A180]">${segment.revenue.toLocaleString()}</span>
+                        <span className="font-medium text-[#0D1C17]">
+                          Revenue:{" "}
+                        </span>
+                        <span className="text-[#45A180]">
+                          ${segment.revenue.toLocaleString()}
+                        </span>
                       </div>
                       <div>
-                        <span className="font-medium text-[#0D1C17]">Potential Savings: </span>
-                        <span className="text-[#45A180]">{segment.potentialSavings}</span>
+                        <span className="font-medium text-[#0D1C17]">
+                          Potential Savings:{" "}
+                        </span>
+                        <span className="text-[#45A180]">
+                          {segment.potentialSavings}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -314,7 +347,10 @@ export default function PurchasePatterns() {
                     </thead>
                     <tbody>
                       {customerPatternsData.map((customer, index) => (
-                        <tr key={index} className="border-b border-[#F0F0F0] hover:bg-[#F7FCFA]">
+                        <tr
+                          key={index}
+                          className="border-b border-[#F0F0F0] hover:bg-[#F7FCFA]"
+                        >
                           <td className="py-3 px-2 sm:px-4">
                             <div>
                               <div className="font-medium text-[#0D1C17] text-sm font-['Lexend']">

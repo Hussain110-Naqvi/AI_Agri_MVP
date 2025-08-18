@@ -195,7 +195,9 @@ export default function Header() {
                 key={item.path}
                 to={item.path}
                 className={`text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] hover:bg-[#F7FCFA] py-3 px-2 rounded-lg transition-colors ${
-                  isActive(item.path) ? "font-semibold text-[#45A180] bg-[#F7FCFA]" : ""
+                  isActive(item.path)
+                    ? "font-semibold text-[#45A180] bg-[#F7FCFA]"
+                    : ""
                 } ${
                   item.featured
                     ? "bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200"
@@ -217,7 +219,9 @@ export default function Header() {
                   key={item.path}
                   to={item.path}
                   className={`text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] hover:bg-[#F7FCFA] py-3 px-2 rounded-lg transition-colors block ${
-                    isActive(item.path) ? "font-semibold text-[#45A180] bg-[#F7FCFA]" : ""
+                    isActive(item.path)
+                      ? "font-semibold text-[#45A180] bg-[#F7FCFA]"
+                      : ""
                   }`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >

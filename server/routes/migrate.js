@@ -1,22 +1,22 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { Client } = require('pg');
+const { Client } = require("pg");
 
 /**
  * @route POST /api/migrate/run
  * @desc Run database migration to Supabase
  * @access Public (for setup)
  */
-router.post('/run', async (req, res) => {
+router.post("/run", async (req, res) => {
   const client = new Client({
-    host: 'db.tikavcrrcteebxsrwfzi.supabase.co',
+    host: "db.tikavcrrcteebxsrwfzi.supabase.co",
     port: 5432,
-    database: 'postgres',
-    user: 'postgres',
-    password: '9UG%Lhj2B96Lb%k',
+    database: "postgres",
+    user: "postgres",
+    password: "9UG%Lhj2B96Lb%k",
     ssl: {
-      rejectUnauthorized: false
-    }
+      rejectUnauthorized: false,
+    },
   });
 
   const createTablesSQL = `
@@ -239,28 +239,32 @@ router.post('/run', async (req, res) => {
   `;
 
   try {
-    console.log('🚀 Starting Supabase database migration...');
-    
+    console.log("🚀 Starting Supabase database migration...");
+
     // Connect to database
     await client.connect();
-    console.log('✅ Connected to Supabase PostgreSQL database');
+    console.log("✅ Connected to Supabase PostgreSQL database");
 
     // Execute the main schema creation
-    console.log('📋 Creating database tables and schema...');
+    console.log("📋 Creating database tables and schema...");
     await client.query(createTablesSQL);
-    console.log('✅ Database schema created successfully');
+    console.log("✅ Database schema created successfully");
 
     // Insert sample data
-    console.log('📊 Inserting sample data...');
+    console.log("📊 Inserting sample data...");
     await client.query(insertSampleDataSQL);
-    console.log('✅ Sample data inserted successfully');
+    console.log("✅ Sample data inserted successfully");
 
     // Test the connection by querying tables
-    console.log('🔍 Testing database queries...');
-    const testResult = await client.query('SELECT COUNT(*) as org_count FROM organizations');
+    console.log("🔍 Testing database queries...");
+    const testResult = await client.query(
+      "SELECT COUNT(*) as org_count FROM organizations",
+    );
     const orgCount = testResult.rows[0].org_count;
-    
-    const inventoryResult = await client.query('SELECT COUNT(*) as inv_count FROM inventory');
+
+    const inventoryResult = await client.query(
+      "SELECT COUNT(*) as inv_count FROM inventory",
+    );
     const invCount = inventoryResult.rows[0].inv_count;
 
     // List all tables
@@ -272,27 +276,27 @@ router.post('/run', async (req, res) => {
       ORDER BY table_name
     `);
 
-    const tables = tablesResult.rows.map(row => row.table_name);
+    const tables = tablesResult.rows.map((row) => row.table_name);
 
     res.json({
       success: true,
-      message: 'Supabase database migration completed successfully!',
+      message: "Supabase database migration completed successfully!",
       data: {
-        database: 'tikavcrrcteebxsrwfzi',
+        database: "tikavcrrcteebxsrwfzi",
         organizationCount: parseInt(orgCount),
         inventoryCount: parseInt(invCount),
         tablesCreated: tables,
-        supabaseUrl: 'https://tikavcrrcteebxsrwfzi.supabase.co',
-        dashboardUrl: 'https://supabase.com/dashboard/project/tikavcrrcteebxsrwfzi'
-      }
+        supabaseUrl: "https://tikavcrrcteebxsrwfzi.supabase.co",
+        dashboardUrl:
+          "https://supabase.com/dashboard/project/tikavcrrcteebxsrwfzi",
+      },
     });
-
   } catch (error) {
-    console.error('❌ Migration failed:', error);
+    console.error("❌ Migration failed:", error);
     res.status(500).json({
       success: false,
-      message: 'Database migration failed',
-      error: error.message
+      message: "Database migration failed",
+      error: error.message,
     });
   } finally {
     await client.end();
@@ -304,21 +308,21 @@ router.post('/run', async (req, res) => {
  * @desc Check database tables status
  * @access Public
  */
-router.get('/status', async (req, res) => {
+router.get("/status", async (req, res) => {
   const client = new Client({
-    host: 'db.tikavcrrcteebxsrwfzi.supabase.co',
+    host: "db.tikavcrrcteebxsrwfzi.supabase.co",
     port: 5432,
-    database: 'postgres',
-    user: 'postgres',
-    password: '9UG%Lhj2B96Lb%k',
+    database: "postgres",
+    user: "postgres",
+    password: "9UG%Lhj2B96Lb%k",
     ssl: {
-      rejectUnauthorized: false
-    }
+      rejectUnauthorized: false,
+    },
   });
 
   try {
     await client.connect();
-    
+
     // Check if tables exist
     const tablesResult = await client.query(`
       SELECT table_name 
@@ -328,13 +332,24 @@ router.get('/status', async (req, res) => {
       ORDER BY table_name
     `);
 
-    const tables = tablesResult.rows.map(row => row.table_name);
+    const tables = tablesResult.rows.map((row) => row.table_name);
     const requiredTables = [
-      'organizations', 'users', 'suppliers', 'inventory', 'orders',
-      'market_data', 'reports', 'predictions', 'alerts', 'customers', 'purchase_transactions'
+      "organizations",
+      "users",
+      "suppliers",
+      "inventory",
+      "orders",
+      "market_data",
+      "reports",
+      "predictions",
+      "alerts",
+      "customers",
+      "purchase_transactions",
     ];
 
-    const missingTables = requiredTables.filter(table => !tables.includes(table));
+    const missingTables = requiredTables.filter(
+      (table) => !tables.includes(table),
+    );
 
     res.json({
       success: true,
@@ -344,15 +359,14 @@ router.get('/status', async (req, res) => {
         requiredTables: requiredTables,
         missingTables: missingTables,
         migrationNeeded: missingTables.length > 0,
-        status: missingTables.length === 0 ? 'ready' : 'needs_migration'
-      }
+        status: missingTables.length === 0 ? "ready" : "needs_migration",
+      },
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Failed to check database status',
-      error: error.message
+      message: "Failed to check database status",
+      error: error.message,
     });
   } finally {
     await client.end();

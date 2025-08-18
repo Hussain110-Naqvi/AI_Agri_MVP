@@ -1,6 +1,11 @@
 import React from "react";
 import Layout from "../components/Layout";
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Link } from "react-router-dom";
 import { Bot, ArrowRight, Lightbulb, TrendingUp, Database } from "lucide-react";
@@ -37,11 +42,12 @@ export default function AIBotSimple() {
                         Natural Language Processing
                       </h4>
                       <p className="text-[#45A180] text-xs font-['Lexend']">
-                        Ask questions in plain English and get intelligent responses
+                        Ask questions in plain English and get intelligent
+                        responses
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-3">
                     <TrendingUp className="w-5 h-5 text-green-500 mt-0.5" />
                     <div>
@@ -53,7 +59,7 @@ export default function AIBotSimple() {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-3">
                     <Database className="w-5 h-5 text-blue-500 mt-0.5" />
                     <div>
@@ -85,17 +91,23 @@ export default function AIBotSimple() {
                       <ArrowRight className="w-4 h-4 ml-auto" />
                     </Button>
                   </Link>
-                  
+
                   <Link to="/data-sync">
-                    <Button variant="outline" className="w-full justify-start border-[#E5E8EB] hover:bg-[#F7FCFA]">
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start border-[#E5E8EB] hover:bg-[#F7FCFA]"
+                    >
                       <Database className="w-4 h-4 mr-2" />
                       Data Sync Dashboard
                       <ArrowRight className="w-4 h-4 ml-auto" />
                     </Button>
                   </Link>
-                  
+
                   <Link to="/dashboard">
-                    <Button variant="outline" className="w-full justify-start border-[#E5E8EB] hover:bg-[#F7FCFA]">
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start border-[#E5E8EB] hover:bg-[#F7FCFA]"
+                    >
                       <TrendingUp className="w-4 h-4 mr-2" />
                       Back to Dashboard
                       <ArrowRight className="w-4 h-4 ml-auto" />
@@ -123,7 +135,7 @@ export default function AIBotSimple() {
                     Get inventory alerts and recommendations
                   </p>
                 </div>
-                
+
                 <div className="p-4 bg-[#F7FCFA] rounded-lg border border-[#E5E8EB]">
                   <h4 className="font-medium text-[#0D1C17] font-['Lexend'] text-sm mb-2">
                     "Show me current market trends"
@@ -132,7 +144,7 @@ export default function AIBotSimple() {
                     Analyze commodity prices and market data
                   </p>
                 </div>
-                
+
                 <div className="p-4 bg-[#F7FCFA] rounded-lg border border-[#E5E8EB]">
                   <h4 className="font-medium text-[#0D1C17] font-['Lexend'] text-sm mb-2">
                     "What are my top selling products?"
@@ -141,7 +153,7 @@ export default function AIBotSimple() {
                     Get sales insights and customer analytics
                   </p>
                 </div>
-                
+
                 <div className="p-4 bg-[#F7FCFA] rounded-lg border border-[#E5E8EB]">
                   <h4 className="font-medium text-[#0D1C17] font-['Lexend'] text-sm mb-2">
                     "Generate inventory report"

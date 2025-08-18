@@ -25,10 +25,11 @@ const NotFound = () => {
               Page Not Found
             </h2>
             <p className="text-[#45A180] font-['Lexend'] mb-6">
-              Oops! The page you're looking for doesn't exist. It might have been moved or deleted.
+              Oops! The page you're looking for doesn't exist. It might have
+              been moved or deleted.
             </p>
           </div>
-          
+
           <div className="space-y-3">
             <Link
               to="/"
@@ -37,7 +38,7 @@ const NotFound = () => {
               <Home className="w-4 h-4" />
               Return to Dashboard
             </Link>
-            
+
             <button
               onClick={() => window.history.back()}
               className="block w-full text-[#45A180] font-['Lexend'] hover:underline"
@@ -52,16 +53,28 @@ const NotFound = () => {
               Quick Links:
             </h3>
             <div className="space-y-1 text-sm">
-              <Link to="/" className="block text-[#45A180] hover:underline font-['Lexend']">
+              <Link
+                to="/"
+                className="block text-[#45A180] hover:underline font-['Lexend']"
+              >
                 • Dashboard
               </Link>
-              <Link to="/supplies" className="block text-[#45A180] hover:underline font-['Lexend']">
+              <Link
+                to="/supplies"
+                className="block text-[#45A180] hover:underline font-['Lexend']"
+              >
                 • Inventory Management
               </Link>
-              <Link to="/ai-bot" className="block text-[#45A180] hover:underline font-['Lexend']">
+              <Link
+                to="/ai-bot"
+                className="block text-[#45A180] hover:underline font-['Lexend']"
+              >
                 • AI Assistant
               </Link>
-              <Link to="/alerts" className="block text-[#45A180] hover:underline font-['Lexend']">
+              <Link
+                to="/alerts"
+                className="block text-[#45A180] hover:underline font-['Lexend']"
+              >
                 • Alerts & Notifications
               </Link>
             </div>
