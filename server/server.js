@@ -48,6 +48,7 @@ app.use("/api/ai-bot", aiBotRoutes);
 app.use("/api/data-sync", dataSyncRoutes);
 app.use("/api/test-bigquery", testBigQueryRoutes);
 app.use("/api/system-status", systemStatusRoutes);
+app.use("/api/migrate", migrateRoutes);
 
 // Root route handler
 app.get("/", (req, res) => {
