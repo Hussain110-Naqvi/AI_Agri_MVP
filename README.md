@@ -584,7 +584,7 @@ Special thanks to:
 
 _Transforming agriculture through technology, one farm at a time._
 
-[![GitHub stars](https://img.shields.io/github/stars/agrisupply-insights/platform?style=social)](https://github.com/agrisupply-insights/platform)
-[![Follow on Twitter](https://img.shields.io/twitter/follow/AgriSupplyInsights?style=social)](https://twitter.com/AgriSupplyInsights)
+[![GitHub stars](https://img.shields.io/github/stars/agrisupply-insights/platform?style=social)]([https://github.com/agrisupply-insights/platform](https://github.com/Nabeel70/AI_Agri_MVP)
+[![Follow on Twitter](https://img.shields.io/twitter/follow/AgriSupplyInsights?style=social)]([https://twitter.com/AgriSupplyInsights](https://x.com/NabeelAmin70rb)
 
 </div>
