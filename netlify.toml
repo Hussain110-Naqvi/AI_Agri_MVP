@@ -5,8 +5,17 @@
 
 
 [functions]
-  external_node_modules = ["express", "dotenv"]
   node_bundler = "esbuild"
+  external_node_modules = [
+    "express",
+    "dotenv",
+    "pg",
+    "@supabase/supabase-js",
+    "jsonwebtoken",
+    "express-validator",
+    "@google-cloud/bigquery"
+  ]
+
   
 [[redirects]]
   force = true
