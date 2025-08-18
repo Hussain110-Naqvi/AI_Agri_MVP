@@ -1,389 +1,352 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Search, Menu, X } from "lucide-react";
+import React, { useState } from "react";
+import Layout from "../components/Layout";
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
+import { Button } from "../components/ui/button";
+import { Badge } from "../components/ui/badge";
+import {
+  Search,
+  Package,
+  TrendingUp,
+  AlertTriangle,
+  Plus,
+  Filter,
+  Download,
+  Eye,
+  Edit,
+  MoreHorizontal,
+} from "lucide-react";
+
+const inventoryData = [
+  {
+    id: 1,
+    name: "Nitrogen Fertilizer 50lb",
+    sku: "FERT-N-50",
+    category: "Fertilizer",
+    currentStock: 45,
+    reorderLevel: 50,
+    unitCost: 25.50,
+    unitPrice: 35.00,
+    supplier: "AgriCorp Supplies",
+    lastOrdered: "2 weeks ago",
+    status: "low",
+  },
+  {
+    id: 2,
+    name: "Corn Seeds - Hybrid",
+    sku: "SEED-CORN-H1",
+    category: "Seeds",
+    currentStock: 120,
+    reorderLevel: 75,
+    unitCost: 45.00,
+    unitPrice: 65.00,
+    supplier: "AgriCorp Supplies",
+    lastOrdered: "1 month ago",
+    status: "good",
+  },
+  {
+    id: 3,
+    name: "Glyphosate Herbicide",
+    sku: "HERB-GLYPH-32",
+    category: "Pesticides",
+    currentStock: 25,
+    reorderLevel: 30,
+    unitCost: 18.75,
+    unitPrice: 28.50,
+    supplier: "AgriCorp Supplies",
+    lastOrdered: "3 weeks ago",
+    status: "critical",
+  },
+  {
+    id: 4,
+    name: "Potassium Fertilizer",
+    sku: "FERT-K-40",
+    category: "Fertilizer",
+    currentStock: 85,
+    reorderLevel: 40,
+    unitCost: 22.00,
+    unitPrice: 32.00,
+    supplier: "Farm Equipment Co",
+    lastOrdered: "1 week ago",
+    status: "good",
+  },
+  {
+    id: 5,
+    name: "Soybean Seeds",
+    sku: "SEED-SOY-P1",
+    category: "Seeds",
+    currentStock: 60,
+    reorderLevel: 50,
+    unitCost: 38.00,
+    unitPrice: 52.00,
+    supplier: "AgriCorp Supplies",
+    lastOrdered: "2 weeks ago",
+    status: "good",
+  },
+];
+
+const inventoryStats = [
+  { label: "Total Items", value: 156, icon: Package, color: "bg-blue-500" },
+  { label: "Low Stock", value: 8, icon: AlertTriangle, color: "bg-orange-500" },
+  { label: "Critical", value: 3, icon: AlertTriangle, color: "bg-red-500" },
+  { label: "Total Value", value: "$47,850", icon: TrendingUp, color: "bg-green-500" },
+];
+
+const categories = ["All", "Fertilizer", "Seeds", "Pesticides", "Equipment"];
 
 export default function SupplyDetails() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedStatus, setSelectedStatus] = useState("all");
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "critical": return "bg-red-100 text-red-800 border-red-200";
+      case "low": return "bg-yellow-100 text-yellow-800 border-yellow-200";
+      case "good": return "bg-green-100 text-green-800 border-green-200";
+      default: return "bg-gray-100 text-gray-800 border-gray-200";
+    }
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case "critical": return <AlertTriangle className="w-4 h-4 text-red-600" />;
+      case "low": return <AlertTriangle className="w-4 h-4 text-yellow-600" />;
+      case "good": return <Package className="w-4 h-4 text-green-600" />;
+      default: return <Package className="w-4 h-4 text-gray-600" />;
+    }
+  };
+
+  const filteredInventory = inventoryData.filter(item => {
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         item.sku.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
+    const matchesStatus = selectedStatus === "all" || item.status === selectedStatus;
+    
+    return matchesSearch && matchesCategory && matchesStatus;
+  });
 
   return (
-    <div className="min-h-screen bg-[#F7FCFA] flex flex-col">
-      {/* Header */}
-      <header className="bg-white border-b border-[#E5E8EB] px-4 sm:px-10 py-3 flex-shrink-0">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4 sm:gap-8">
-            <h1 className="text-[#0D1C17] text-lg font-bold font-['Lexend']">
-              AgriSupply Insights
-            </h1>
-            <nav className="hidden sm:flex items-center gap-6 lg:gap-9">
-              <Link
-                to="/"
-                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180]"
-              >
-                Dashboard
-              </Link>
-              <Link
-                to="/supplies"
-                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180]"
-              >
-                Supplies
-              </Link>
-              <Link
-                to="/purchase-patterns"
-                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180]"
-              >
-                Insights
-              </Link>
-              <Link
-                to="/market-trends"
-                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180]"
-              >
-                Market Trends
-              </Link>
-              <Link
-                to="/alerts"
-                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180]"
-              >
-                Alerts
-              </Link>
-            </nav>
-            <button
-              className="sm:hidden p-2 -m-2"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle mobile menu"
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-5 h-5 text-[#0D1C17]" />
-              ) : (
-                <Menu className="w-5 h-5 text-[#0D1C17]" />
-              )}
-            </button>
-          </div>
-          <div className="flex items-center gap-4 sm:gap-8">
-            <div className="flex items-center bg-[#E5F5F0] rounded-xl overflow-hidden min-w-[160px] max-w-[256px]">
-              <div className="pl-4 flex items-center">
-                <Search className="w-5 h-5 sm:w-6 sm:h-6 text-[#45A180]" />
+    <Layout>
+      <div className="flex-1 p-4 sm:p-6 lg:p-8 bg-[#F7FCFA] overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="mb-6 lg:mb-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold text-[#0D1C17] font-['Lexend'] mb-2">
+                  Inventory Management
+                </h1>
+                <p className="text-[#45A180] text-sm sm:text-base font-['Lexend']">
+                  Monitor stock levels and manage your agricultural supplies
+                </p>
               </div>
-              <input
-                type="text"
-                placeholder="Search"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-transparent px-2 py-2 text-[#45A180] placeholder-[#45A180] text-base font-['Lexend'] outline-none flex-1"
-              />
+              <div className="flex flex-wrap items-center gap-2">
+                <Button size="sm" className="text-xs">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Item
+                </Button>
+                <Button variant="outline" size="sm" className="text-xs">
+                  <Filter className="w-4 h-4 mr-2" />
+                  Filter
+                </Button>
+                <Button variant="outline" size="sm" className="text-xs">
+                  <Download className="w-4 h-4 mr-2" />
+                  Export
+                </Button>
+              </div>
             </div>
-            <img
-              src="https://api.builder.io/api/v1/image/assets/TEMP/ac63d6656f0d5680e82b0e05c278c86945f01652?width=80"
-              alt="Profile"
-              className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
-            />
-          </div>
-        </div>
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="sm:hidden border-t border-[#E5E8EB] bg-white px-4 py-3">
-            <nav className="flex flex-col space-y-3">
-              <Link
-                to="/"
-                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Dashboard
-              </Link>
-              <Link
-                to="/supplies"
-                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Supplies
-              </Link>
-              <Link
-                to="/purchase-patterns"
-                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Insights
-              </Link>
-              <Link
-                to="/market-trends"
-                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Market Trends
-              </Link>
-              <Link
-                to="/alerts"
-                className="text-[#0D1C17] text-sm font-normal font-['Lexend'] hover:text-[#45A180] py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Alerts
-              </Link>
-            </nav>
-          </div>
-        )}
-      </header>
-
-      {/* Main Content */}
-      <main className="flex-1 px-5 sm:px-20 lg:px-40 py-5">
-        <div className="max-w-6xl mx-auto space-y-6">
-          {/* Header Section */}
-          <div className="px-4 py-4">
-            <h2 className="text-[#0D1C17] text-[32px] font-bold font-['Lexend'] leading-10 mb-3">
-              Supply Details
-            </h2>
-            <p className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
-              Detailed insights for each supply item, including inventory,
-              pricing, and AI-driven forecasts.
-            </p>
           </div>
 
-          {/* Supply Overview */}
-          <section>
-            <h3 className="text-[#0D1C17] text-lg font-bold font-['Lexend'] leading-[23px] mb-2 px-4 pt-4 pb-2">
-              Supply Overview
-            </h3>
-            <div className="px-4 py-3">
-              <div className="bg-[#F7FCFA] border border-[#CCE8DE] rounded-xl overflow-hidden">
-                {/* Table Header */}
-                <div className="hidden sm:grid grid-cols-6 gap-4 p-4 bg-[#F7FCFA]">
-                  <span className="text-[#0D1C17] text-sm font-medium font-['Lexend'] leading-[21px]">
-                    Supply Name
-                  </span>
-                  <span className="text-[#0D1C17] text-sm font-medium font-['Lexend'] leading-[21px]">
-                    Category
-                  </span>
-                  <span className="text-[#0D1C17] text-sm font-medium font-['Lexend'] leading-[21px]">
-                    Current Inventory
-                  </span>
-                  <span className="text-[#0D1C17] text-sm font-medium font-['Lexend'] leading-[21px]">
-                    Unit Price
-                  </span>
-                  <span className="text-[#0D1C17] text-sm font-medium font-['Lexend'] leading-[21px]">
-                    Supplier
-                  </span>
-                  <span className="text-[#0D1C17] text-sm font-medium font-['Lexend'] leading-[21px]">
-                    Last Updated
-                  </span>
-                </div>
-
-                {/* Table Row */}
-                <div className="border-t border-[#E5E8EB]">
-                  {/* Mobile Card Layout */}
-                  <div className="sm:hidden p-4">
-                    <div className="space-y-2">
-                      <div className="text-[#0D1C17] text-sm font-bold font-['Lexend']">
-                        Nitrogen Fertilizer
-                      </div>
-                      <div className="grid grid-cols-2 gap-2 text-sm">
-                        <div>
-                          <span className="text-[#0D1C17] font-medium font-['Lexend']">
-                            Category:
-                          </span>
-                          <span className="text-[#45A180] font-['Lexend']">
-                            {" "}
-                            Fertilizers
-                          </span>
-                        </div>
-                        <div>
-                          <span className="text-[#0D1C17] font-medium font-['Lexend']">
-                            Stock:
-                          </span>
-                          <span className="text-[#45A180] font-['Lexend']">
-                            {" "}
-                            5000 lbs
-                          </span>
-                        </div>
-                        <div>
-                          <span className="text-[#0D1C17] font-medium font-['Lexend']">
-                            Price:
-                          </span>
-                          <span className="text-[#45A180] font-['Lexend']">
-                            {" "}
-                            $0.50/lb
-                          </span>
-                        </div>
-                        <div>
-                          <span className="text-[#0D1C17] font-medium font-['Lexend']">
-                            Supplier:
-                          </span>
-                          <span className="text-[#45A180] font-['Lexend']">
-                            {" "}
-                            AgriChem Inc.
-                          </span>
-                        </div>
-                      </div>
-                      <div className="text-[#45A180] text-xs font-['Lexend']">
-                        Updated: 2024-07-26
-                      </div>
+          {/* Inventory Statistics */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
+            {inventoryStats.map((stat, index) => (
+              <Card key={index} className="bg-white border border-[#E5E8EB] shadow-sm">
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-10 h-10 rounded-lg ${stat.color} bg-opacity-10 flex items-center justify-center`}>
+                      <stat.icon className={`w-5 h-5 ${stat.color.replace('bg-', 'text-')}`} />
+                    </div>
+                    <div>
+                      <p className="text-2xl sm:text-3xl font-bold text-[#0D1C17] font-['Lexend']">
+                        {stat.value}
+                      </p>
+                      <p className="text-[#45A180] text-sm font-['Lexend']">
+                        {stat.label}
+                      </p>
                     </div>
                   </div>
-                  {/* Desktop Table Layout */}
-                  <div className="hidden sm:grid grid-cols-6 gap-4 p-4 min-h-[72px] items-center">
-                    <span className="text-[#0D1C17] text-sm font-normal font-['Lexend'] leading-[21px]">
-                      Nitrogen Fertilizer
-                    </span>
-                    <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
-                      Fertilizers
-                    </span>
-                    <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
-                      5000 lbs
-                    </span>
-                    <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
-                      $0.50/lb
-                    </span>
-                    <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
-                      AgriChem Inc.
-                    </span>
-                    <span className="text-[#45A180] text-sm font-normal font-['Lexend'] leading-[21px]">
-                      2024-07-26
-                    </span>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Search and Filters */}
+          <Card className="bg-white border border-[#E5E8EB] shadow-sm mb-6">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex flex-col lg:flex-row gap-4">
+                {/* Search */}
+                <div className="flex-1">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#45A180] w-4 h-4" />
+                    <input
+                      type="text"
+                      placeholder="Search by name or SKU..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2 border border-[#E5E8EB] rounded-lg text-sm font-['Lexend'] focus:outline-none focus:ring-2 focus:ring-[#45A180] focus:border-transparent"
+                    />
                   </div>
                 </div>
-              </div>
-            </div>
-          </section>
 
-          {/* Pricing Trends */}
-          <section>
-            <h3 className="text-[#0D1C17] text-lg font-bold font-['Lexend'] leading-[23px] mb-2 px-4 pt-4 pb-2">
-              Pricing Trends
-            </h3>
-            <div className="px-4 py-6">
-              <div className="border border-[#CCE8DE] rounded-xl p-6">
-                <h4 className="text-[#0D1C17] text-base font-medium font-['Lexend'] leading-6 mb-2">
-                  Price per Pound Over Time
-                </h4>
-                <p className="text-[#0D1C17] text-[32px] font-bold font-['Lexend'] leading-10 mb-2">
-                  $0.50
-                </p>
-                <div className="flex items-center gap-1 mb-8">
-                  <span className="text-[#45A180] text-base font-normal font-['Lexend'] leading-6">
-                    Last 12 Months
+                {/* Category Filter */}
+                <div className="flex flex-wrap gap-2">
+                  <span className="text-sm font-medium text-[#0D1C17] font-['Lexend'] flex items-center">
+                    Category:
                   </span>
-                  <span className="text-[#08872E] text-base font-medium font-['Lexend'] leading-6">
-                    +5%
+                  {categories.map((category) => (
+                    <Button
+                      key={category}
+                      variant={selectedCategory === category ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setSelectedCategory(category)}
+                      className="text-xs"
+                    >
+                      {category}
+                    </Button>
+                  ))}
+                </div>
+
+                {/* Status Filter */}
+                <div className="flex flex-wrap gap-2">
+                  <span className="text-sm font-medium text-[#0D1C17] font-['Lexend'] flex items-center">
+                    Status:
                   </span>
-                </div>
-                {/* Chart SVG */}
-                <div className="mb-8">
-                  <svg
-                    className="w-full h-[148px]"
-                    viewBox="0 0 878 148"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g clipPath="url(#clip0_1_1346)">
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M5.51046 200.213C38.8557 200.213 38.8557 38.5732 72.2012 38.5732C105.546 38.5732 105.546 75.3096 138.892 75.3096C172.237 75.3096 172.237 170.824 205.582 170.824C238.928 170.824 238.928 60.6151 272.274 60.6151C305.619 60.6151 305.619 185.519 338.963 185.519C372.309 185.519 372.309 112.046 405.654 112.046C439 112.046 439 82.6569 472.346 82.6569C505.691 82.6569 505.691 222.255 539.037 222.255C572.381 222.255 572.381 273.686 605.726 273.686C639.072 273.686 639.072 1.83682 672.418 1.83682C705.763 1.83682 705.763 148.782 739.109 148.782C772.453 148.782 772.453 236.95 805.798 236.95C839.144 236.95 839.144 45.9205 872.49 45.9205V273.686H605.726H5.51046V200.213Z"
-                        fill="url(#paint0_linear_1_1346)"
-                      />
-                      <path
-                        d="M5.51046 200.213C38.8557 200.213 38.8557 38.5732 72.2012 38.5732C105.546 38.5732 105.546 75.3096 138.892 75.3096C172.237 75.3096 172.237 170.824 205.582 170.824C238.928 170.824 238.928 60.6151 272.274 60.6151C305.619 60.6151 305.619 185.519 338.963 185.519C372.309 185.519 372.309 112.046 405.654 112.046C439 112.046 439 82.6569 472.346 82.6569C505.691 82.6569 505.691 222.255 539.037 222.255C572.381 222.255 572.381 273.686 605.726 273.686C639.072 273.686 639.072 1.83682 672.418 1.83682C705.763 1.83682 705.763 148.782 739.109 148.782C772.453 148.782 772.453 236.95 805.798 236.95C839.144 236.95 839.144 45.9205 872.49 45.9205"
-                        stroke="#45A180"
-                        strokeWidth="3"
-                      />
-                    </g>
-                    <defs>
-                      <linearGradient
-                        id="paint0_linear_1_1346"
-                        x1="-439"
-                        y1="0"
-                        x2="-439"
-                        y2="148"
-                        gradientUnits="userSpaceOnUse"
-                      >
-                        <stop stopColor="#E6F5F0" />
-                        <stop
-                          offset="0.5"
-                          stopColor="#E6F5F0"
-                          stopOpacity="0"
-                        />
-                      </linearGradient>
-                      <clipPath id="clip0_1_1346">
-                        <rect width="878" height="148" fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg>
-                </div>
-                <div className="flex justify-between text-[13px] font-bold text-[#45A180] font-['Lexend'] leading-5">
-                  <span>Jan</span>
-                  <span>Feb</span>
-                  <span>Mar</span>
-                  <span>Apr</span>
-                  <span>May</span>
-                  <span>Jun</span>
-                  <span>Jul</span>
+                  {[
+                    { id: "all", label: "All" },
+                    { id: "critical", label: "Critical" },
+                    { id: "low", label: "Low Stock" },
+                    { id: "good", label: "Good" },
+                  ].map((status) => (
+                    <Button
+                      key={status.id}
+                      variant={selectedStatus === status.id ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setSelectedStatus(status.id)}
+                      className="text-xs"
+                    >
+                      {status.label}
+                    </Button>
+                  ))}
                 </div>
               </div>
-            </div>
-          </section>
+            </CardContent>
+          </Card>
 
-          {/* Demand Forecast */}
-          <section>
-            <h3 className="text-[#0D1C17] text-lg font-bold font-['Lexend'] leading-[23px] mb-2 px-4 pt-4 pb-2">
-              Demand Forecast
-            </h3>
-            <div className="px-4 py-6">
-              <div className="border border-[#CCE8DE] rounded-xl p-6">
-                <h4 className="text-[#0D1C17] text-base font-medium font-['Lexend'] leading-6 mb-2">
-                  Projected Demand for Next 6 Months
-                </h4>
-                <p className="text-[#0D1C17] text-[32px] font-bold font-['Lexend'] leading-10 mb-2">
-                  6000 lbs
-                </p>
-                <div className="flex items-center gap-1 mb-4">
-                  <span className="text-[#45A180] text-base font-normal font-['Lexend'] leading-6">
-                    Next 6 Months
-                  </span>
-                  <span className="text-[#08872E] text-base font-medium font-['Lexend'] leading-6">
-                    +10%
-                  </span>
+          {/* Inventory Table */}
+          <Card className="bg-white border border-[#E5E8EB] shadow-sm">
+            <CardHeader className="p-4 sm:p-6">
+              <CardTitle className="text-lg font-bold text-[#0D1C17] font-['Lexend']">
+                Inventory Items ({filteredInventory.length})
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              {filteredInventory.length === 0 ? (
+                <div className="p-8 text-center">
+                  <Package className="w-12 h-12 text-[#45A180] mx-auto mb-4 opacity-50" />
+                  <p className="text-[#45A180] font-['Lexend']">No inventory items found</p>
                 </div>
-                {/* Bar Chart */}
-                <div className="flex items-end gap-6 h-[137px] px-3 mb-6">
-                  {["Aug", "Sep", "Oct", "Nov", "Dec", "Jan"].map(
-                    (month, index) => (
-                      <div
-                        key={month}
-                        className="flex flex-col items-center gap-6 flex-1"
-                      >
-                        <div className="bg-[#E5F5F0] border-t-2 border-[#757575] w-full h-[137px]"></div>
-                      </div>
-                    ),
-                  )}
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-[#F7FCFA] border-b border-[#E5E8EB]">
+                      <tr>
+                        <th className="text-left py-3 px-4 sm:px-6 text-[#45A180] text-sm font-medium font-['Lexend']">
+                          Product
+                        </th>
+                        <th className="text-left py-3 px-4 sm:px-6 text-[#45A180] text-sm font-medium font-['Lexend'] hidden sm:table-cell">
+                          SKU
+                        </th>
+                        <th className="text-left py-3 px-4 sm:px-6 text-[#45A180] text-sm font-medium font-['Lexend']">
+                          Stock
+                        </th>
+                        <th className="text-left py-3 px-4 sm:px-6 text-[#45A180] text-sm font-medium font-['Lexend'] hidden md:table-cell">
+                          Unit Price
+                        </th>
+                        <th className="text-left py-3 px-4 sm:px-6 text-[#45A180] text-sm font-medium font-['Lexend'] hidden lg:table-cell">
+                          Supplier
+                        </th>
+                        <th className="text-left py-3 px-4 sm:px-6 text-[#45A180] text-sm font-medium font-['Lexend']">
+                          Status
+                        </th>
+                        <th className="text-left py-3 px-4 sm:px-6 text-[#45A180] text-sm font-medium font-['Lexend']">
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-[#F0F0F0]">
+                      {filteredInventory.map((item) => (
+                        <tr key={item.id} className="hover:bg-[#F7FCFA] transition-colors">
+                          <td className="py-3 px-4 sm:px-6">
+                            <div>
+                              <div className="font-medium text-[#0D1C17] text-sm font-['Lexend']">
+                                {item.name}
+                              </div>
+                              <div className="text-[#45A180] text-xs font-['Lexend']">
+                                {item.category}
+                              </div>
+                              <div className="text-[#45A180] text-xs font-['Lexend'] sm:hidden">
+                                SKU: {item.sku}
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-3 px-4 sm:px-6 text-[#0D1C17] text-sm font-['Lexend'] hidden sm:table-cell">
+                            {item.sku}
+                          </td>
+                          <td className="py-3 px-4 sm:px-6">
+                            <div className="text-[#0D1C17] text-sm font-bold font-['Lexend']">
+                              {item.currentStock}
+                            </div>
+                            <div className="text-[#45A180] text-xs font-['Lexend']">
+                              Reorder: {item.reorderLevel}
+                            </div>
+                          </td>
+                          <td className="py-3 px-4 sm:px-6 text-[#0D1C17] text-sm font-bold font-['Lexend'] hidden md:table-cell">
+                            ${item.unitPrice}
+                          </td>
+                          <td className="py-3 px-4 sm:px-6 text-[#0D1C17] text-sm font-['Lexend'] hidden lg:table-cell">
+                            {item.supplier}
+                          </td>
+                          <td className="py-3 px-4 sm:px-6">
+                            <div className="flex items-center gap-2">
+                              {getStatusIcon(item.status)}
+                              <Badge className={`text-xs ${getStatusColor(item.status)}`}>
+                                {item.status}
+                              </Badge>
+                            </div>
+                          </td>
+                          <td className="py-3 px-4 sm:px-6">
+                            <div className="flex items-center gap-1">
+                              <Button variant="ghost" size="sm" className="text-xs p-1">
+                                <Eye className="w-3 h-3" />
+                              </Button>
+                              <Button variant="ghost" size="sm" className="text-xs p-1">
+                                <Edit className="w-3 h-3" />
+                              </Button>
+                              <Button variant="ghost" size="sm" className="text-xs p-1">
+                                <MoreHorizontal className="w-3 h-3" />
+                              </Button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-                <div className="flex justify-between text-[13px] font-bold text-[#45A180] font-['Lexend'] leading-5">
-                  <span>Aug</span>
-                  <span>Sep</span>
-                  <span>Oct</span>
-                  <span>Nov</span>
-                  <span>Dec</span>
-                  <span>Jan</span>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* AI Insights */}
-          <section>
-            <h3 className="text-[#0D1C17] text-lg font-bold font-['Lexend'] leading-[23px] mb-2 px-4 pt-4 pb-2">
-              AI Insights
-            </h3>
-            <div className="px-4 py-1 pb-3">
-              <p className="text-[#0D1C17] text-base font-normal font-['Lexend'] leading-6">
-                Based on current market trends and consumer demand, the optimal
-                time to purchase Nitrogen Fertilizer is in late August to early
-                September. Prices are expected to be slightly lower due to
-                seasonal factors, and demand is projected to increase in the
-                following months. Consider purchasing around 6000 lbs to meet
-                anticipated needs.
-              </p>
-            </div>
-          </section>
+              )}
+            </CardContent>
+          </Card>
         </div>
-      </main>
-    </div>
+      </div>
+    </Layout>
   );
 }
