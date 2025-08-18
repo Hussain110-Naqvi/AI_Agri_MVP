@@ -1,5 +1,11 @@
+import React from "react";
 import Layout from "../components/Layout";
-import { Card } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
 import {
   LineChart,
   Line,
@@ -8,7 +14,13 @@ import {
   ResponsiveContainer,
   BarChart,
   Bar,
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
 } from "recharts";
+import { TrendingUp, Users, DollarSign, Calendar, Eye } from "lucide-react";
 
 const segmentationData = [
   {
@@ -19,6 +31,8 @@ const segmentationData = [
       "Increased fertilizer and pesticide needs over the next quarter.",
     optimalPurchaseTime: "Purchase during off-peak season to maximize savings.",
     potentialSavings: "$5,000 - $10,000",
+    customers: 156,
+    revenue: 245000,
   },
   {
     segment: "Specialty Crops",
@@ -27,6 +41,8 @@ const segmentationData = [
     predictedNeeds: "Consistent need for specific nutrients and pest control.",
     optimalPurchaseTime: "Optimal purchase times vary; monitor market trends.",
     potentialSavings: "$2,000 - $5,000",
+    customers: 89,
+    revenue: 178000,
   },
   {
     segment: "Livestock Feed",
@@ -35,6 +51,8 @@ const segmentationData = [
     optimalPurchaseTime:
       "Purchase in bulk during harvest season for cost efficiency.",
     potentialSavings: "$3,000 - $7,000",
+    customers: 124,
+    revenue: 298000,
   },
 ];
 
@@ -45,316 +63,326 @@ const customerPatternsData = [
     frequency: "Monthly",
     averageSpend: "$1,500",
     predictedNext: "In 2 weeks",
+    segment: "High-Demand Crops",
+    totalSpend: "$18,000",
   },
   {
     customer: "Olivia Bennett",
     lastPurchase: "1 month ago",
     frequency: "Quarterly",
-    averageSpend: "$3,000",
+    averageSpend: "$3,200",
     predictedNext: "In 2 months",
+    segment: "Specialty Crops",
+    totalSpend: "$12,800",
   },
   {
-    customer: "Noah Thompson",
+    customer: "Marcus Johnson",
     lastPurchase: "3 weeks ago",
     frequency: "Bi-monthly",
-    averageSpend: "$2,000",
+    averageSpend: "$2,800",
     predictedNext: "In 3 weeks",
+    segment: "Livestock Feed",
+    totalSpend: "$16,800",
   },
   {
-    customer: "Ava Harper",
-    lastPurchase: "2 months ago",
-    frequency: "Semi-annually",
-    averageSpend: "$5,000",
-    predictedNext: "In 4 months",
-  },
-  {
-    customer: "Liam Foster",
+    customer: "Sarah Wilson",
     lastPurchase: "1 week ago",
     frequency: "Monthly",
     averageSpend: "$1,200",
     predictedNext: "In 3 weeks",
+    segment: "High-Demand Crops",
+    totalSpend: "$14,400",
   },
 ];
 
-const predictionsChartData = [
-  { week: "Week 1", value: 92 },
-  { week: "Week 2", value: 18 },
-  { week: "Week 3", value: 35 },
-  { week: "Week 4", value: 79 },
-  { week: "Week 5", value: 28 },
-  { week: "Week 6", value: 86 },
-  { week: "Week 7", value: 52 },
+const monthlyTrends = [
+  { month: "Jan", purchases: 45, revenue: 128000 },
+  { month: "Feb", purchases: 52, revenue: 142000 },
+  { month: "Mar", purchases: 48, revenue: 135000 },
+  { month: "Apr", purchases: 61, revenue: 168000 },
+  { month: "May", purchases: 58, revenue: 159000 },
+  { month: "Jun", purchases: 67, revenue: 184000 },
 ];
 
-const purchaseWindowsData = [
-  { month: "Jan", value: 85 },
-  { month: "Feb", value: 85 },
-  { month: "Mar", value: 85 },
-  { month: "Apr", value: 85 },
-  { month: "May", value: 85 },
-  { month: "Jun", value: 85 },
-  { month: "Jul", value: 85 },
+const segmentDistribution = [
+  { name: "High-Demand Crops", value: 42, color: "#45A180" },
+  { name: "Specialty Crops", value: 24, color: "#7DD3FC" },
+  { name: "Livestock Feed", value: 34, color: "#FB7185" },
 ];
 
 export default function PurchasePatterns() {
   return (
     <Layout>
-      <div className="w-full px-40 py-5 bg-[#F7FCFA]">
-        <div className="max-w-6xl mx-auto">
+      <div className="flex-1 p-4 sm:p-6 lg:p-8 bg-[#F7FCFA] overflow-hidden">
+        <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="p-4 mb-4">
-            <h1 className="text-[32px] font-bold text-[#0D1C17] font-['Lexend'] mb-3">
-              Customer Purchase Patterns
+          <div className="mb-6 lg:mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#0D1C17] font-['Lexend'] mb-2">
+              Customer Insights & Purchase Patterns
             </h1>
-            <p className="text-sm text-[#45A180] font-['Lexend']">
-              AI-driven insights on customer purchasing patterns, predicted
-              future needs, and optimal purchasing times.
+            <p className="text-[#45A180] text-sm sm:text-base font-['Lexend']">
+              Analyze customer behavior and predict future purchasing trends
             </p>
           </div>
 
-          {/* Customer Segmentation */}
-          <div className="mb-6">
-            <h2 className="text-[22px] font-bold text-[#0D1C17] font-['Lexend'] px-4 py-5">
-              Customer Segmentation
-            </h2>
-            <div className="px-4">
-              <Card className="border border-[#CCE8DE] bg-[#F7FCFA] rounded-xl">
-                <div className="overflow-hidden">
-                  {/* Table Header */}
-                  <div className="grid grid-cols-5 bg-[#F7FCFA]">
-                    <div className="p-4 text-sm font-medium text-[#0D1C17] font-['Lexend']">
-                      Segment
-                    </div>
-                    <div className="p-4 text-sm font-medium text-[#0D1C17] font-['Lexend']">
-                      Description
-                    </div>
-                    <div className="p-4 text-sm font-medium text-[#0D1C17] font-['Lexend']">
-                      Predicted Needs
-                    </div>
-                    <div className="p-4 text-sm font-medium text-[#0D1C17] font-['Lexend']">
-                      Optimal Purchase Time
-                    </div>
-                    <div className="p-4 text-sm font-medium text-[#0D1C17] font-['Lexend']">
-                      Potential Savings
-                    </div>
+          {/* Key Metrics */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
+            <Card className="bg-white border border-[#E5E8EB] shadow-sm">
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[#45A180] text-sm font-['Lexend']">
+                      Total Customers
+                    </p>
+                    <p className="text-2xl sm:text-3xl font-bold text-[#0D1C17] font-['Lexend']">
+                      369
+                    </p>
                   </div>
-
-                  {/* Table Body */}
-                  {segmentationData.map((row, index) => (
-                    <div
-                      key={index}
-                      className="grid grid-cols-5 border-t border-[#E5E8EB]"
-                    >
-                      <div className="p-4 flex items-center min-h-[101px]">
-                        <span className="text-sm text-[#0D1C17] font-['Lexend']">
-                          {row.segment}
-                        </span>
-                      </div>
-                      <div className="p-4 flex items-center min-h-[101px]">
-                        <span className="text-sm text-[#45A180] font-['Lexend']">
-                          {row.description}
-                        </span>
-                      </div>
-                      <div className="p-4 flex items-center min-h-[101px]">
-                        <span className="text-sm text-[#45A180] font-['Lexend']">
-                          {row.predictedNeeds}
-                        </span>
-                      </div>
-                      <div className="p-4 flex items-center min-h-[101px]">
-                        <span className="text-sm text-[#45A180] font-['Lexend']">
-                          {row.optimalPurchaseTime}
-                        </span>
-                      </div>
-                      <div className="p-4 flex items-center min-h-[101px]">
-                        <span className="text-sm text-[#45A180] font-['Lexend']">
-                          {row.potentialSavings}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+                  <Users className="w-8 h-8 text-[#45A180]" />
                 </div>
-              </Card>
-            </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white border border-[#E5E8EB] shadow-sm">
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[#45A180] text-sm font-['Lexend']">
+                      Avg Purchase
+                    </p>
+                    <p className="text-2xl sm:text-3xl font-bold text-[#0D1C17] font-['Lexend']">
+                      $2,150
+                    </p>
+                  </div>
+                  <DollarSign className="w-8 h-8 text-[#45A180]" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white border border-[#E5E8EB] shadow-sm">
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[#45A180] text-sm font-['Lexend']">
+                      Purchase Frequency
+                    </p>
+                    <p className="text-2xl sm:text-3xl font-bold text-[#0D1C17] font-['Lexend']">
+                      6.2/yr
+                    </p>
+                  </div>
+                  <Calendar className="w-8 h-8 text-[#45A180]" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white border border-[#E5E8EB] shadow-sm">
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[#45A180] text-sm font-['Lexend']">
+                      Growth Rate
+                    </p>
+                    <p className="text-2xl sm:text-3xl font-bold text-[#0D1C17] font-['Lexend']">
+                      +15.3%
+                    </p>
+                  </div>
+                  <TrendingUp className="w-8 h-8 text-[#45A180]" />
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Purchase Predictions */}
-          <div className="mb-6">
-            <h2 className="text-[22px] font-bold text-[#0D1C17] font-['Lexend'] px-4 py-5">
-              Purchase Predictions
-            </h2>
-            <div className="px-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {/* Predicted Needs Over Time */}
-              <Card className="border border-[#CCE8DE] rounded-xl p-6">
-                <div className="mb-2">
-                  <h3 className="text-base font-medium text-[#0D1C17] font-['Lexend']">
-                    Predicted Needs Over Time
-                  </h3>
-                </div>
-                <div className="mb-2">
-                  <span className="text-[32px] font-bold text-[#0D1C17] font-['Lexend']">
-                    15%
-                  </span>
-                </div>
-                <div className="flex items-center gap-1 mb-6">
-                  <span className="text-base text-[#45A180] font-['Lexend']">
-                    Next 3 Months
-                  </span>
-                  <span className="text-base font-medium text-[#08872E] font-['Lexend']">
-                    +5%
-                  </span>
-                </div>
-                <div className="h-37 mb-8">
-                  <ResponsiveContainer width="100%" height={148}>
-                    <LineChart data={predictionsChartData}>
+          {/* Charts Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-6 lg:mb-8">
+            {/* Monthly Trends */}
+            <Card className="bg-white border border-[#E5E8EB] shadow-sm">
+              <CardHeader className="p-4 sm:p-6 pb-2">
+                <CardTitle className="text-lg font-bold text-[#0D1C17] font-['Lexend']">
+                  Monthly Purchase Trends
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-4 sm:p-6 pt-0">
+                <div className="h-64 sm:h-80">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={monthlyTrends}>
+                      <XAxis
+                        dataKey="month"
+                        tick={{ fontSize: 12 }}
+                        axisLine={false}
+                      />
+                      <YAxis tick={{ fontSize: 12 }} axisLine={false} />
+                      <Tooltip />
                       <Line
                         type="monotone"
-                        dataKey="value"
+                        dataKey="purchases"
                         stroke="#45A180"
-                        strokeWidth={3}
-                        dot={false}
-                        fill="url(#gradient)"
+                        strokeWidth={2}
+                        dot={{ fill: "#45A180", strokeWidth: 2, r: 4 }}
                       />
-                      <defs>
-                        <linearGradient
-                          id="gradient"
-                          x1="0"
-                          y1="0"
-                          x2="0"
-                          y2="1"
-                        >
-                          <stop offset="0%" stopColor="#E6F5F0" />
-                          <stop
-                            offset="100%"
-                            stopColor="#E6F5F0"
-                            stopOpacity="0"
-                          />
-                        </linearGradient>
-                      </defs>
                     </LineChart>
                   </ResponsiveContainer>
                 </div>
-                <div className="flex justify-between">
-                  {predictionsChartData.map((item) => (
-                    <span
-                      key={item.week}
-                      className="text-[13px] font-bold text-[#45A180] font-['Lexend']"
-                    >
-                      {item.week}
-                    </span>
-                  ))}
-                </div>
-              </Card>
+              </CardContent>
+            </Card>
 
-              {/* Optimal Purchase Windows */}
-              <Card className="border border-[#CCE8DE] rounded-xl p-6">
-                <div className="mb-2">
-                  <h3 className="text-base font-medium text-[#0D1C17] font-['Lexend']">
-                    Optimal Purchase Windows
-                  </h3>
-                </div>
-                <div className="mb-2">
-                  <span className="text-[32px] font-bold text-[#0D1C17] font-['Lexend']">
-                    20%
-                  </span>
-                </div>
-                <div className="flex items-center gap-1 mb-6">
-                  <span className="text-base text-[#45A180] font-['Lexend']">
-                    Next 3 Months
-                  </span>
-                  <span className="text-base font-medium text-[#E82E08] font-['Lexend']">
-                    -2%
-                  </span>
-                </div>
-                <div className="h-[180px] mb-4">
-                  <div className="flex items-end gap-3 h-[137px] mb-4">
-                    {purchaseWindowsData.map((item) => (
-                      <div
-                        key={item.month}
-                        className="flex flex-col items-center flex-1"
+            {/* Customer Segments */}
+            <Card className="bg-white border border-[#E5E8EB] shadow-sm">
+              <CardHeader className="p-4 sm:p-6 pb-2">
+                <CardTitle className="text-lg font-bold text-[#0D1C17] font-['Lexend']">
+                  Customer Segments
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-4 sm:p-6 pt-0">
+                <div className="h-64 sm:h-80">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={segmentDistribution}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={40}
+                        outerRadius={80}
+                        paddingAngle={5}
+                        dataKey="value"
                       >
-                        <div className="w-full h-[137px] bg-[#E5F5F0] border-t-2 border-[#757575]"></div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex justify-between px-1">
-                    {purchaseWindowsData.map((item) => (
-                      <span
-                        key={item.month}
-                        className="text-[13px] font-bold text-[#45A180] font-['Lexend'] text-center flex-1"
-                      >
-                        {item.month}
+                        {segmentDistribution.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                      <Legend />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Customer Segments Analysis */}
+          <Card className="bg-white border border-[#E5E8EB] shadow-sm mb-6 lg:mb-8">
+            <CardHeader className="p-4 sm:p-6">
+              <CardTitle className="text-lg font-bold text-[#0D1C17] font-['Lexend']">
+                Customer Segmentation Analysis
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-4 sm:p-6 pt-0">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
+                {segmentationData.map((segment, index) => (
+                  <div
+                    key={index}
+                    className="p-4 border border-[#E5E8EB] rounded-lg bg-[#F7FCFA]"
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-base font-bold text-[#0D1C17] font-['Lexend']">
+                        {segment.segment}
+                      </h3>
+                      <span className="text-xs bg-[#45A180] text-white px-2 py-1 rounded-full font-['Lexend']">
+                        {segment.customers} customers
                       </span>
-                    ))}
-                  </div>
-                </div>
-              </Card>
-            </div>
-          </div>
+                    </div>
 
-          {/* Customer Purchasing Patterns */}
-          <div className="mb-6">
-            <h2 className="text-[22px] font-bold text-[#0D1C17] font-['Lexend'] px-4 py-5">
-              Customer Purchasing Patterns
-            </h2>
-            <div className="px-4">
-              <Card className="border border-[#CCE8DE] bg-[#F7FCFA] rounded-xl">
-                <div className="overflow-hidden">
-                  {/* Table Header */}
-                  <div className="grid grid-cols-5 bg-[#F7FCFA]">
-                    <div className="p-4 text-sm font-medium text-[#0D1C17] font-['Lexend']">
-                      Customer
-                    </div>
-                    <div className="p-4 text-sm font-medium text-[#0D1C17] font-['Lexend']">
-                      Last Purchase
-                    </div>
-                    <div className="p-4 text-sm font-medium text-[#0D1C17] font-['Lexend']">
-                      Frequency
-                    </div>
-                    <div className="p-4 text-sm font-medium text-[#0D1C17] font-['Lexend']">
-                      Average Spend
-                    </div>
-                    <div className="p-4 text-sm font-medium text-[#0D1C17] font-['Lexend']">
-                      Predicted Next Purchase
+                    <p className="text-sm text-[#45A180] font-['Lexend'] mb-3 leading-relaxed">
+                      {segment.description}
+                    </p>
+
+                    <div className="space-y-2 text-xs font-['Lexend']">
+                      <div>
+                        <span className="font-medium text-[#0D1C17]">
+                          Revenue:{" "}
+                        </span>
+                        <span className="text-[#45A180]">
+                          ${segment.revenue.toLocaleString()}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="font-medium text-[#0D1C17]">
+                          Potential Savings:{" "}
+                        </span>
+                        <span className="text-[#45A180]">
+                          {segment.potentialSavings}
+                        </span>
+                      </div>
                     </div>
                   </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
 
-                  {/* Table Body */}
-                  {customerPatternsData.map((row, index) => (
-                    <div
-                      key={index}
-                      className="grid grid-cols-5 border-t border-[#E5E8EB]"
-                    >
-                      <div className="p-4 flex items-center h-18">
-                        <span className="text-sm text-[#0D1C17] font-['Lexend']">
-                          {row.customer}
-                        </span>
-                      </div>
-                      <div className="p-4 flex items-center h-18">
-                        <span className="text-sm text-[#45A180] font-['Lexend']">
-                          {row.lastPurchase}
-                        </span>
-                      </div>
-                      <div className="p-4 flex items-center h-18">
-                        <span className="text-sm text-[#45A180] font-['Lexend']">
-                          {row.frequency}
-                        </span>
-                      </div>
-                      <div className="p-4 flex items-center h-18">
-                        <span className="text-sm text-[#45A180] font-['Lexend']">
-                          {row.averageSpend}
-                        </span>
-                      </div>
-                      <div className="p-4 flex items-center h-18">
-                        <span className="text-sm text-[#45A180] font-['Lexend']">
-                          {row.predictedNext}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+          {/* Customer Purchase Patterns Table */}
+          <Card className="bg-white border border-[#E5E8EB] shadow-sm">
+            <CardHeader className="p-4 sm:p-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <CardTitle className="text-lg font-bold text-[#0D1C17] font-['Lexend']">
+                  Individual Customer Patterns
+                </CardTitle>
+                <button className="text-[#45A180] text-sm font-medium font-['Lexend'] hover:underline flex items-center gap-1">
+                  <Eye className="w-4 h-4" />
+                  View All Customers
+                </button>
+              </div>
+            </CardHeader>
+            <CardContent className="p-4 sm:p-6 pt-0">
+              <div className="overflow-x-auto -mx-4 sm:mx-0">
+                <div className="inline-block min-w-full align-middle">
+                  <table className="min-w-full">
+                    <thead>
+                      <tr className="border-b border-[#E5E8EB]">
+                        <th className="text-left py-3 px-2 sm:px-4 text-[#45A180] text-sm font-medium font-['Lexend']">
+                          Customer
+                        </th>
+                        <th className="text-left py-3 px-2 sm:px-4 text-[#45A180] text-sm font-medium font-['Lexend'] hidden sm:table-cell">
+                          Segment
+                        </th>
+                        <th className="text-left py-3 px-2 sm:px-4 text-[#45A180] text-sm font-medium font-['Lexend']">
+                          Frequency
+                        </th>
+                        <th className="text-left py-3 px-2 sm:px-4 text-[#45A180] text-sm font-medium font-['Lexend'] hidden md:table-cell">
+                          Avg Spend
+                        </th>
+                        <th className="text-left py-3 px-2 sm:px-4 text-[#45A180] text-sm font-medium font-['Lexend']">
+                          Next Purchase
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {customerPatternsData.map((customer, index) => (
+                        <tr
+                          key={index}
+                          className="border-b border-[#F0F0F0] hover:bg-[#F7FCFA]"
+                        >
+                          <td className="py-3 px-2 sm:px-4">
+                            <div>
+                              <div className="font-medium text-[#0D1C17] text-sm font-['Lexend']">
+                                {customer.customer}
+                              </div>
+                              <div className="text-[#45A180] text-xs font-['Lexend'] sm:hidden">
+                                {customer.segment}
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-3 px-2 sm:px-4 text-[#0D1C17] text-sm font-['Lexend'] hidden sm:table-cell">
+                            {customer.segment}
+                          </td>
+                          <td className="py-3 px-2 sm:px-4 text-[#0D1C17] text-sm font-['Lexend']">
+                            {customer.frequency}
+                          </td>
+                          <td className="py-3 px-2 sm:px-4 text-[#0D1C17] text-sm font-bold font-['Lexend'] hidden md:table-cell">
+                            {customer.averageSpend}
+                          </td>
+                          <td className="py-3 px-2 sm:px-4">
+                            <span className="text-[#45A180] text-sm font-['Lexend'] bg-[#E5F5F0] px-2 py-1 rounded-full">
+                              {customer.predictedNext}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-              </Card>
-            </div>
-          </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </Layout>

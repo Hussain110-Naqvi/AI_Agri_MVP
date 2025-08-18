@@ -11,6 +11,7 @@ import MarketTrends from "./pages/MarketTrends";
 import Alerts from "./pages/Alerts";
 import AIBot from "./pages/AIBot";
 import AIBotSimple from "./pages/AIBotSimple";
+import DataSync from "./pages/DataSync";
 import Index from "./pages/Index";
 import TestRoute from "./pages/TestRoute";
 import NotFound from "./pages/NotFound";
@@ -37,6 +38,7 @@ export default function App() {
               <Route path="/alerts" element={<Alerts />} />
               <Route path="/ai-bot" element={<AIBot />} />
               <Route path="/ai-bot-simple" element={<AIBotSimple />} />
+              <Route path="/data-sync" element={<DataSync />} />
               <Route path="/test" element={<TestRoute />} />
 
               {/* Case variations for common URL patterns */}
@@ -50,6 +52,8 @@ export default function App() {
               <Route path="/Market-Trends" element={<MarketTrends />} />
               <Route path="/PurchasePatterns" element={<PurchasePatterns />} />
               <Route path="/Purchase-Patterns" element={<PurchasePatterns />} />
+              <Route path="/DataSync" element={<DataSync />} />
+              <Route path="/Data-Sync" element={<DataSync />} />
 
               {/* 404 fallback */}
               <Route path="*" element={<NotFound />} />

@@ -1,15 +1,39 @@
 require("dotenv").config();
+const { BigQuery } = require('@google-cloud/bigquery');
 
 // BigQuery service for integrating with client's data
 class BigQueryService {
   constructor() {
-    this.baseUrl =
-      process.env.BIGQUERY_API_URL ||
-      "https://bigquery.googleapis.com/bigquery/v2";
     this.projectId = process.env.BIGQUERY_PROJECT_ID;
     this.datasetId = process.env.BIGQUERY_DATASET_ID;
-    this.apiKey = process.env.BIGQUERY_API_KEY;
     this.serviceAccountKey = process.env.BIGQUERY_SERVICE_ACCOUNT_KEY;
+
+    // Initialize BigQuery client
+    this.bigquery = null;
+    this.initializeBigQuery();
+  }
+
+  /**
+   * Initialize BigQuery client with proper authentication
+   */
+  initializeBigQuery() {
+    try {
+      if (this.serviceAccountKey && this.projectId) {
+        // Parse service account key from environment variable
+        const credentials = JSON.parse(this.serviceAccountKey);
+
+        this.bigquery = new BigQuery({
+          projectId: this.projectId,
+          credentials: credentials
+        });
+
+        console.log('✅ BigQuery client initialized with service account');
+      } else {
+        console.log('⚠️ BigQuery credentials missing');
+      }
+    } catch (error) {
+      console.error('❌ Failed to initialize BigQuery:', error.message);
+    }
   }
 
   /**
@@ -20,33 +44,26 @@ class BigQueryService {
    */
   async executeQuery(query, parameters = {}) {
     try {
-      const requestBody = {
-        query: query,
-        useLegacySql: false,
-        parameterMode: Object.keys(parameters).length > 0 ? "NAMED" : undefined,
-        queryParameters: this.formatParameters(parameters),
-      };
-
-      const response = await fetch(
-        `${this.baseUrl}/projects/${this.projectId}/queries`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${await this.getAccessToken()}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error(
-          `BigQuery API error: ${response.status} ${response.statusText}`,
-        );
+      if (!this.bigquery) {
+        throw new Error('BigQuery client not initialized');
       }
 
-      const data = await response.json();
-      return this.formatResults(data);
+      // Prepare query options
+      const options = {
+        query: query,
+        useLegacySql: false,
+      };
+
+      // Add parameters if provided
+      if (Object.keys(parameters).length > 0) {
+        options.params = parameters;
+      }
+
+      // Execute query
+      const [rows] = await this.bigquery.query(options);
+
+      console.log(`✅ BigQuery query executed successfully: ${rows.length} rows returned`);
+      return rows;
     } catch (error) {
       console.error("BigQuery query execution failed:", error);
       throw error;
@@ -367,12 +384,24 @@ class BigQueryService {
    */
   async testConnection() {
     try {
+      if (!this.bigquery) {
+        console.log("❌ BigQuery client not initialized");
+        return false;
+      }
+
+      // Simple test query
       const testQuery = `SELECT 1 as test_value`;
-      await this.executeQuery(testQuery);
-      console.log("✅ BigQuery connection successful");
-      return true;
+      const results = await this.executeQuery(testQuery);
+
+      if (results && results.length > 0) {
+        console.log("✅ BigQuery connection successful");
+        return true;
+      } else {
+        console.log("❌ BigQuery connection failed - no results");
+        return false;
+      }
     } catch (error) {
-      console.error("❌ BigQuery connection failed:", error);
+      console.error("❌ BigQuery connection failed:", error.message);
       return false;
     }
   }

@@ -5,15 +5,30 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
 
-// Create Supabase client for general operations
-const supabase = createClient(supabaseUrl, supabaseKey);
+// Create Supabase client for general operations (with fallback for testing)
+let supabase = null;
+let supabaseAdmin = null;
 
-// Create Supabase client with service role for admin operations
-const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+try {
+  if (supabaseUrl && supabaseKey && supabaseUrl !== 'https://mock-project.supabase.co') {
+    supabase = createClient(supabaseUrl, supabaseKey);
+    supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+    console.log('✅ Supabase clients initialized');
+  } else {
+    console.log('⚠️ Supabase running in mock mode (no real credentials)');
+  }
+} catch (error) {
+  console.log('⚠️ Supabase initialization failed, running without database:', error.message);
+}
 
 // Test Supabase connection
 const testSupabaseConnection = async () => {
   try {
+    if (!supabase) {
+      console.log("⚠️ Supabase not initialized (running in mock mode)");
+      return false;
+    }
+
     const { data, error } = await supabase
       .from("users")
       .select("count", { count: "exact", head: true });
@@ -27,7 +42,7 @@ const testSupabaseConnection = async () => {
     return true;
   } catch (error) {
     console.error("❌ Supabase connection failed:", error.message);
-    throw error;
+    return false;
   }
 };
 
@@ -52,6 +67,10 @@ const supabaseQuery = {
   // Select with filters
   select: async (table, columns = "*", filters = {}) => {
     try {
+      if (!supabase) {
+        throw new Error('Supabase not initialized');
+      }
+
       let query = supabase.from(table).select(columns);
 
       Object.entries(filters).forEach(([key, value]) => {
