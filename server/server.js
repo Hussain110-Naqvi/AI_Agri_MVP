@@ -13,6 +13,9 @@ const testBigQueryRoutes = require("./routes/test-bigquery");
 const systemStatusRoutes = require("./routes/system-status");
 const migrateRoutes = require("./routes/migrate");
 
+// Import LlamaIndex routes
+const llamaindexRoutes = require("./routes/llamaindex");
+
 const app = express();
 
 // CORS configuration
@@ -50,6 +53,9 @@ app.use("/api/test-bigquery", testBigQueryRoutes);
 app.use("/api/system-status", systemStatusRoutes);
 app.use("/api/migrate", migrateRoutes);
 
+// LlamaIndex routes
+app.use("/api/llamaindex", llamaindexRoutes);
+
 // Root route handler
 app.get("/", (req, res) => {
   res.json({
@@ -68,6 +74,14 @@ app.get("/", (req, res) => {
       "POST /api/data-sync/sync - Sync all data from BigQuery to Supabase",
       "GET /api/data-sync/status - Get sync status and statistics",
       "GET /api/data-sync/health - Check BigQuery and Supabase connections",
+      "GET /api/llamaindex/test - Test LlamaIndex connection",
+      "POST /api/llamaindex/insights - Get agricultural insights",
+      "GET /api/llamaindex/market-trends/:commodity - Market trends analysis",
+      "GET /api/llamaindex/planting-intentions - Planting intentions analysis",
+      "GET /api/llamaindex/fertilizer-analysis - Fertilizer analysis",
+      "GET /api/llamaindex/weather-impact - Weather impact analysis",
+      "POST /api/llamaindex/comprehensive-report - Comprehensive report",
+      "GET /api/llamaindex/schemas - Available schemas",
     ],
   });
 });
@@ -95,6 +109,14 @@ app.listen(PORT, () => {
   console.log(`   - POST /api/auth/logout`);
   console.log(`   - GET  /api/dashboard/overview`);
   console.log(`   - GET  /api/alerts/stats/overview`);
+  console.log(`   - GET  /api/llamaindex/test`);
+  console.log(`   - POST /api/llamaindex/insights`);
+  console.log(`   - GET  /api/llamaindex/market-trends/:commodity`);
+  console.log(`   - GET  /api/llamaindex/planting-intentions`);
+  console.log(`   - GET  /api/llamaindex/fertilizer-analysis`);
+  console.log(`   - GET  /api/llamaindex/weather-impact`);
+  console.log(`   - POST /api/llamaindex/comprehensive-report`);
+  console.log(`   - GET  /api/llamaindex/schemas`);
 });
 
 module.exports = app;
